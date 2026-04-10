@@ -6,29 +6,52 @@
   <title>Polkadot Blockchain Academy</title>
   <link rel="icon" href="./assets/favicon.svg" />
   <link rel="shortcut icon" href="./assets/favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
-    @font-face {
-      font-family: 'Unbounded';
-      font-style: normal;
-      font-weight: 300;
-      src: url('./fonts/unbounded/Unbounded-Light.woff2') format('woff2'),
-        url('./fonts/unbounded/Unbounded-Light.ttf') format('truetype');
-    }
+    /* Theme tokens (light mode). Add .dark to <html> to switch.
+       Never hardcode colors — semantic vars handle mode switching. */
+    :root {
+      --color-neutral-white: #ffffff;
+      --color-neutral-50: #fafafa;
+      --color-neutral-100: #f5f5f5;
+      --color-neutral-150: #ebebeb;
+      --color-neutral-200: #e5e5e5;
+      --color-neutral-300: #d4d4d4;
+      --color-neutral-400: #a3a3a3;
+      --color-neutral-500: #737373;
+      --color-neutral-600: #525252;
+      --color-neutral-700: #404040;
+      --color-neutral-800: #262626;
+      --color-neutral-850: #1f1f1f;
+      --color-neutral-900: #171717;
+      --color-neutral-950: #0a0a0a;
+      --color-neutral-black: #000000;
 
-    @font-face {
-      font-family: 'Unbounded';
-      font-style: normal;
-      font-weight: 400;
-      src: url('./fonts/unbounded/Unbounded-Regular.woff2') format('woff2'),
-        url('./fonts/unbounded/Unbounded-Regular.ttf') format('truetype');
-    }
+      --fg-primary: var(--color-neutral-950);
+      --fg-primary-inverted: var(--color-neutral-100);
+      --fg-secondary: var(--color-neutral-600);
+      --fg-secondary-hover: var(--color-neutral-black);
+      --fg-tertiary: var(--color-neutral-500);
 
-    @font-face {
-      font-family: 'Unbounded';
-      font-style: normal;
-      font-weight: 700;
-      src: url('./fonts/unbounded/Unbounded-Bold.woff2') format('woff2'),
-        url('./fonts/unbounded/Unbounded-Bold.ttf') format('truetype');
+      --bg-surface-main: var(--color-neutral-50);
+      --bg-surface-container: var(--color-neutral-white);
+      --bg-surface-container-inverted: var(--color-neutral-900);
+      --bg-action-primary: var(--color-neutral-black);
+      --bg-action-primary-hover: var(--color-neutral-850);
+      --bg-selection-container-hover: var(--color-neutral-50);
+
+      --border-divider: var(--color-neutral-100);
+
+      --focus-ring: #000000;
+
+      --shadow-1: 0 4px 24px -4px rgba(0, 0, 0, 0.16);
+      --shadow-3: 0 12px 48px -8px rgba(0, 0, 0, 0.24);
+
+      --radius-container: 16px;
+      --radius-small: 8px;
+      --radius-full: 9999px;
     }
 
     * {
@@ -37,11 +60,19 @@
       box-sizing: border-box;
     }
 
+    *:focus-visible {
+      outline: 2px solid var(--focus-ring);
+      outline-offset: 2px;
+      box-shadow: none;
+    }
+
     body {
-      font-family: 'Unbounded', sans-serif;
-      background-color: #f0f0f0;
-      color: #1a1a1a;
+      font-family: 'Inter', system-ui, sans-serif;
+      background-color: var(--bg-surface-main);
+      color: var(--fg-primary);
       min-height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
 
     /* Header */
@@ -49,120 +80,163 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 1.5rem 3rem;
-      background-color: #1a1a1a;
+      padding: 1.25rem 2.5rem;
+      background-color: var(--bg-surface-container-inverted);
     }
 
     .site-logo {
-      height: 2.5rem;
+      height: 2rem;
+    }
+
+    .header-link {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      text-decoration: none;
+      color: var(--fg-primary-inverted);
+      transition: opacity 200ms ease;
+      cursor: pointer;
+    }
+
+    .header-link:hover {
+      opacity: 0.7;
     }
 
     .header-title {
-      font-size: 1rem;
-      font-weight: 300;
-      color: #ffffff;
-      letter-spacing: 0.05em;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: inherit;
+      letter-spacing: 0.02em;
     }
 
-    /* Main content */
+    .github-icon {
+      width: 1.25rem;
+      height: 1.25rem;
+    }
+
+    /* Main */
     .site-main {
-      max-width: 1200px;
+      max-width: 1120px;
       margin: 0 auto;
       padding: 3rem 2rem 4rem;
+      width: 100%;
+      flex: 1;
     }
 
-    /* Section */
+    /* Sections */
     .section {
       margin-bottom: 3rem;
     }
 
     .section-title {
-      font-size: 1.4rem;
-      font-weight: 700;
-      color: #1a1a1a;
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.75rem;
+      font-weight: 400;
+      color: var(--fg-primary);
+      line-height: 1.25;
       margin-bottom: 1.5rem;
     }
 
-    /* PBP cards row */
-    .card-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 1.5rem;
-      max-width: 420px;
+    .section-title-legacy {
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--fg-tertiary);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      line-height: 1.25;
+      margin-bottom: 1.25rem;
     }
 
+    /* Card grid */
+    .card-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+      max-width: 400px;
+    }
+
+    .card-grid-legacy {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 1rem;
+    }
+
+    /* Card */
     .card {
-      background: #ffffff;
-      border-radius: 1rem;
+      background: var(--bg-surface-container);
+      border-radius: var(--radius-container);
       overflow: hidden;
       text-decoration: none;
       color: inherit;
-      transition: transform 200ms ease, box-shadow 200ms ease;
       display: flex;
       flex-direction: column;
+      box-shadow: var(--shadow-1);
+      transition: transform 200ms ease, box-shadow 200ms ease;
+      cursor: pointer;
     }
 
     .card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-3);
     }
 
     .card-image {
       width: 100%;
-      max-height: 200px;
+      height: 200px;
       object-fit: cover;
+      display: block;
     }
 
     .card-body {
       padding: 1.25rem 1.5rem 1.5rem;
       display: flex;
       flex-direction: column;
-      align-items: flex-start;
-      gap: 0.6rem;
+      gap: 0.375rem;
     }
 
     .card-badge {
-      display: inline-block;
-      padding: 0.3rem 0.9rem;
-      border-radius: 2rem;
-      font-size: 0.7rem;
-      font-weight: 700;
+      display: inline-flex;
+      align-self: flex-start;
+      padding: 0.25rem 0.75rem;
+      border-radius: var(--radius-full);
+      font-size: 0.6875rem;
+      font-weight: 600;
       letter-spacing: 0.04em;
       text-transform: uppercase;
-    }
-
-    .badge-pbp {
-      background-color: #1a1a1a;
-      color: #ffffff;
-    }
-
-    .badge-legacy {
-      background-color: #e0e0e0;
-      color: #555555;
+      background-color: var(--bg-action-primary);
+      color: var(--fg-primary-inverted);
+      margin-bottom: 0.25rem;
     }
 
     .card-title {
       font-size: 1rem;
-      font-weight: 700;
-      color: #1a1a1a;
+      font-weight: 600;
+      color: var(--fg-primary);
+      line-height: 1.25;
     }
 
     .card-description {
-      font-size: 0.75rem;
-      font-weight: 300;
-      color: #666666;
-      line-height: 1.6;
+      font-size: 0.8125rem;
+      font-weight: 400;
+      color: var(--fg-secondary);
+      line-height: 1.5;
     }
 
-    /* Legacy grid — smaller cards */
-    .card-grid-legacy {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 1.25rem;
+    /* Legacy cards */
+    .card-legacy {
+      box-shadow: none;
+      background: var(--bg-surface-container);
+    }
+
+    .card-legacy:hover {
+      box-shadow: var(--shadow-1);
     }
 
     .card-legacy .card-image {
-      max-height: 200px;
+      height: auto;
+      object-fit: cover;
+      aspect-ratio: 16 / 7;
     }
 
     .card-legacy .card-body {
@@ -170,30 +244,24 @@
     }
 
     .card-legacy .card-title {
-      font-size: 0.85rem;
+      font-size: 0.875rem;
     }
 
     .card-legacy .card-description {
-      font-size: 0.7rem;
-    }
-
-    /* Divider */
-    .section-divider {
-      border: none;
-      border-top: 1px solid #d0d0d0;
-      margin: 1rem 0 2rem;
+      font-size: 0.75rem;
+      color: var(--fg-tertiary);
     }
 
     /* Footer */
     .site-footer {
       text-align: center;
-      padding: 2rem;
-      background-color: #1a1a1a;
+      padding: 1.5rem;
+      background-color: var(--bg-surface-container-inverted);
     }
 
     .footer-logo {
-      height: 2rem;
-      opacity: 0.6;
+      height: 1.5rem;
+      opacity: 0.5;
     }
   </style>
 </head>
@@ -201,20 +269,22 @@
 <body>
 
   <header class="site-header">
-    <img class="site-logo" src="./assets/PBA_Logo_white.png" alt="PBA Logo" />
-    <span class="header-title">Slides &amp; Resources</span>
+    <img class="site-logo" src="./assets/PBA_Logo_white.png" alt="Polkadot Blockchain Academy" />
+    <a class="header-link" href="https://github.com/Polkadot-Blockchain-Academy/pba-content" target="_blank" rel="noopener noreferrer">
+      <span class="header-title">Slides & Resources</span>
+      <svg class="github-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+    </a>
   </header>
 
   <main class="site-main">
 
     <section class="section">
       <h2 class="section-title">Protocol Builders Program</h2>
-      <hr class="section-divider" />
       <div class="card-grid">
         <a href="current/index.html" title="PBP Lisbon 2026" class="card" target="_blank">
           <img class="card-image" src="./assets/pbp-lisbon.jpg" alt="Lisbon venue" />
           <div class="card-body">
-            <span class="card-badge badge-pbp">Current</span>
+            <span class="card-badge">Current</span>
             <span class="card-title">Lisbon 2026</span>
             <span class="card-description">Two-week intensive program combining foundational lectures with hands-on project work on the Polkadot stack.</span>
           </div>
@@ -223,53 +293,52 @@
     </section>
 
     <section class="section">
-      <h2 class="section-title">PBA Campus (Legacy)</h2>
-      <hr class="section-divider" />
+      <h2 class="section-title-legacy">PBA Campus (Legacy)</h2>
       <div class="card-grid-legacy">
         <a href="bali-2025/index.html" title="Bali 2025" class="card card-legacy" target="_blank">
-          <img class="card-image" src="./assets/7-bali2.jpg" alt="Bali 2025" />
+          <img class="card-image" src="./assets/7-bali2.jpg" alt="Bali" />
           <div class="card-body">
             <span class="card-title">Bali</span>
             <span class="card-description">August 2025</span>
           </div>
         </a>
         <a href="lucerne-2025/index.html" title="Lucerne 2025" class="card card-legacy" target="_blank">
-          <img class="card-image" src="./assets/6-Lucerne.jpg" alt="Lucerne 2025" />
+          <img class="card-image" src="./assets/6-Lucerne.jpg" alt="Lucerne" />
           <div class="card-body">
             <span class="card-title">Lucerne</span>
             <span class="card-description">2025</span>
           </div>
         </a>
         <a href="singapore-2024/index.html" title="Singapore 2024" class="card card-legacy" target="_blank">
-          <img class="card-image" src="./assets/5-singapore.jpg" alt="Singapore 2024" />
+          <img class="card-image" src="./assets/5-singapore.jpg" alt="Singapore" />
           <div class="card-body">
             <span class="card-title">Singapore</span>
             <span class="card-description">June 2024</span>
           </div>
         </a>
         <a href="hong-kong-2024/index.html" title="Hong Kong 2024" class="card card-legacy" target="_blank">
-          <img class="card-image" src="./assets/4-polyu.jpg" alt="Hong Kong 2024" />
+          <img class="card-image" src="./assets/4-polyu.jpg" alt="Hong Kong" />
           <div class="card-body">
             <span class="card-title">Hong Kong</span>
             <span class="card-description">January 2024</span>
           </div>
         </a>
         <a href="berkeley-2023/index.html" title="Berkeley 2023" class="card card-legacy" target="_blank">
-          <img class="card-image" src="./assets/3-berkeley.jpg" alt="Berkeley 2023" />
+          <img class="card-image" src="./assets/3-berkeley.jpg" alt="Berkeley" />
           <div class="card-body">
             <span class="card-title">Berkeley</span>
             <span class="card-description">July 2023</span>
           </div>
         </a>
         <a href="buenos-aires-2023/index.html" title="Buenos Aires 2023" class="card card-legacy" target="_blank">
-          <img class="card-image" src="./assets/2-buenosaires.jpg" alt="Buenos Aires 2023" />
+          <img class="card-image" src="./assets/2-buenosaires.jpg" alt="Buenos Aires" />
           <div class="card-body">
             <span class="card-title">Buenos Aires</span>
             <span class="card-description">January 2023</span>
           </div>
         </a>
         <a href="cambridge-2022/index.html" title="Cambridge 2022" class="card card-legacy" target="_blank">
-          <img class="card-image" src="./assets/1-cambridge.jpg" alt="Cambridge 2022" />
+          <img class="card-image" src="./assets/1-cambridge.jpg" alt="Cambridge" />
           <div class="card-body">
             <span class="card-title">Cambridge</span>
             <span class="card-description">August 2022</span>
@@ -281,7 +350,7 @@
   </main>
 
   <footer class="site-footer">
-    <img class="footer-logo" src="./assets/PBA_Logo_white.png" alt="PBA Logo" />
+    <img class="footer-logo" src="./assets/PBA_Logo_white.png" alt="Polkadot Blockchain Academy" />
   </footer>
 
 </body>
