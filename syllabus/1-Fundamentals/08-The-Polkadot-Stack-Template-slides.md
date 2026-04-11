@@ -1,7 +1,7 @@
 ---
 title: The Polkadot Stack Template
-description: A hands-on introduction to the polkadot-stack-template project.
-duration: 1 hour
+description: Introduction to the polkadot-stack-template and the course project.
+duration: 30 minutes
 owner: Shawn Tabrizi
 ---
 
@@ -11,48 +11,32 @@ owner: Shawn Tabrizi
 
 ---
 
-## Your Course Project
+## The polkadot-stack-template
 
-Throughout this course, you will build a project using the **polkadot-stack-template**.
-
-This template demonstrates the full Polkadot stack through a single concept: **Proof of Existence**.
-
-The same idea (claim a file hash on-chain) is implemented three ways:
-
-- A **FRAME pallet** (native Substrate)
-- A **Solidity contract on EVM** (Ethereum bytecode)
-- A **Solidity contract on PVM** (PolkaVM / RISC-V bytecode)
-
-Notes:
-
-The polkadot-stack-template is your hands-on project for this course. It's a full-stack application that touches every layer of the Polkadot ecosystem. The idea is simple: prove that a file existed at a certain time by recording its hash on-chain. But we implement it three different ways to show you the different development paths available on Polkadot. You'll also build a React frontend and a Rust CLI to interact with all three implementations.
-
----
-
-## Template Overview
+A reference project demonstrating the full Polkadot stack through **Proof of Existence**: claim a file hash on-chain.
 
 <div class="text-small">
 
 | Component | Path | Tech Stack |
 |-----------|------|------------|
 | **FRAME Pallet** | `blockchain/` | Rust, FRAME, Cumulus, polkadot-omni-node |
-| **EVM Contract** | `contracts/evm/` | Solidity, Hardhat, solc, viem |
-| **PVM Contract** | `contracts/pvm/` | Solidity, Hardhat, resolc, `@parity/hardhat-polkadot` |
-| **React Frontend** | `web/` | React, Vite, TypeScript, PAPI, viem, Zustand |
-| **Rust CLI** | `cli/` | Rust, subxt, alloy, clap |
+| **EVM Contract** | `contracts/evm/` | Solidity, Hardhat, solc |
+| **PVM Contract** | `contracts/pvm/` | Solidity, Hardhat, resolc |
+| **React Frontend** | `web/` | React, Vite, PAPI, viem |
+| **Rust CLI** | `cli/` | Rust, subxt, alloy |
 | **Dev Scripts** | `scripts/` | Zombienet, docker-compose |
 
 </div>
 
-Every component is **optional and removable**. Teams keep the slices they need.
+Every component is **optional and removable**. Use it as a starting point, not a constraint.
 
 Notes:
 
-Here's the complete layout of the stack template. Five major components, each demonstrating a different part of the Polkadot developer experience. The blockchain directory contains a full parachain runtime with a custom pallet. The contracts directory has the same Solidity contract compiled to two targets. The web directory is a React frontend that talks to all three implementations. The CLI is a Rust tool that does the same. And the scripts directory orchestrates local development with zombienet.
+The polkadot-stack-template is a full-stack reference application. It implements one simple idea, Proof of Existence, three different ways: as a FRAME pallet, an EVM smart contract, and a PVM smart contract. It also includes a React frontend and a Rust CLI that interact with all three. The idea is to show you every layer of the Polkadot developer experience in one place. You'll use this as the foundation for your own project.
 
 ---
 
-## The Complete Flow
+## The End-to-End Flow
 
 <diagram class="mermaid">
 graph TB
@@ -91,175 +75,175 @@ graph TB
 
 Notes:
 
-Here's the end-to-end flow. A developer writes their pallet in Rust, their contracts in Solidity, and their frontend in React. The pallet deploys as part of a parachain runtime via coretime. The contracts deploy to Asset Hub through eth-rpc. The frontend uploads to IPFS via the Bulletin Chain and gets a .dot domain via DotNS. A user opens a Triangle host, types the .dot name, and the host resolves it, fetches the frontend, and renders it in a sandbox. The frontend talks to the blockchain through the host's bridge, using PAPI for pallets and viem for contracts. No centralized servers anywhere in the chain.
+Here's the end-to-end flow the template demonstrates. Backend logic deploys to a parachain or Asset Hub. The frontend uploads to IPFS via the Bulletin Chain and gets a .dot domain. A user opens a Triangle host, types the .dot name, and the host resolves it, fetches the frontend from IPFS, and renders it in a sandbox. No centralized servers anywhere in the chain. Your project will follow this same pattern.
 
 ---
 
-## The Pallet
+<!-- .slide: data-background-color="#000000" -->
 
-```rust
-#[pallet::storage]
-pub type Claims<T: Config> =
-    StorageMap<_, Blake2_128Concat, H256, Claim<T>>;
-
-#[pallet::call]
-impl<T: Config> Pallet<T> {
-    #[pallet::weight(T::WeightInfo::create_claim())]
-    pub fn create_claim(
-        origin: OriginFor<T>,
-        hash: H256,
-    ) -> DispatchResult {
-        let sender = ensure_signed(origin)?;
-        ensure!(!Claims::<T>::contains_key(hash), Error::<T>::AlreadyClaimed);
-        let claim = Claim { owner: sender.clone(), block: frame_system::Pallet::<T>::block_number() };
-        Claims::<T>::insert(hash, claim);
-        Self::deposit_event(Event::ClaimCreated { who: sender, hash });
-        Ok(())
-    }
-}
-```
-
-Notes:
-
-Here's the actual pallet code from the template. It's a clean, minimal FRAME pallet. A StorageMap maps 32-byte blake2 hashes to Claims, which record the owner and block number. The create_claim function checks that the hash isn't already claimed, creates a new claim, inserts it into storage, and emits an event. This is the pattern you'll learn throughout the FRAME module of this course.
-
----
-
-## The Contract
-
-```solidity
-contract ProofOfExistence {
-    struct Claim {
-        address owner;
-        uint256 blockNumber;
-    }
-
-    mapping(bytes32 => Claim) public claims;
-
-    function createClaim(bytes32 documentHash) external {
-        require(claims[documentHash].owner == address(0), "Already claimed");
-        claims[documentHash] = Claim(msg.sender, block.number);
-        emit ClaimCreated(msg.sender, documentHash);
-    }
-}
-```
-
-Same logic, same ABI. Compiles to **EVM** (solc) and **PVM** (resolc).
-
-Notes:
-
-And here's the Solidity version of the same logic. Same concept, same structure, just in Solidity instead of Rust. The remarkable thing is that this exact same source file gets compiled to two different bytecode formats. solc produces traditional EVM bytecode, and resolc produces PolkaVM RISC-V bytecode. Both are deployed to the same chain through pallet-revive, and both are accessible through the eth-rpc sidecar. The frontend and CLI can interact with both using the same ABI.
-
----
-
-## The Frontend
-
-<div class="grid grid-cols-2">
-<div class="text-left">
-
-**Six pages:**
-1. Home
-2. Pallet PoE (via PAPI)
-3. EVM PoE (via viem)
-4. PVM PoE (via viem)
-5. Statements
-6. Accounts
-
-**Smart host detection:**
-- Running inside Triangle host? Use host wallet
-- Standalone browser? Use browser extensions
-
-</div>
-<div class="text-left">
-
-```typescript
-// Pallet interaction (PAPI)
-const api = client.getTypedApi(descriptors);
-await api.tx.TemplatePallet
-  .create_claim({ hash })
-  .signAndSubmit(signer);
-
-// Contract interaction (viem)
-const tx = await walletClient
-  .writeContract({
-    address: evmContract,
-    abi,
-    functionName: "createClaim",
-    args: [hash],
-  });
-```
-
-</div>
-</div>
-
-Notes:
-
-The React frontend demonstrates both access paths side by side. For pallet interactions, it uses PAPI with typed descriptors. For contract interactions, it uses viem. Both are talking to the same chain. The frontend also has smart host detection: if it's running inside a Triangle User Agent like Polkadot Desktop, it uses the host's wallet for accounts. If it's running standalone in a browser, it falls back to browser extension wallets like Polkadot.js or Talisman.
-
----
-
-## The CLI
-
-<div class="grid grid-cols-2">
-<div class="text-left">
-
-**Commands:**
-
-```
-stack-cli pallet create-claim <hash>
-stack-cli pallet get-claim <hash>
-
-stack-cli contract create-claim evm <hash>
-stack-cli contract create-claim pvm <hash>
-
-stack-cli chain info
-stack-cli chain blocks
-
-stack-cli prove <file>
-```
-
-</div>
-<div class="text-left">
-
-**Tech mapping:**
-
-| Target | Library |
-|--------|---------|
-| Pallets | subxt (Substrate WS) |
-| Contracts | alloy (eth-rpc HTTP) |
-| Chain info | subxt |
-| Prove | both + bulletin chain |
-
-The `prove` command does it all: hash, claim, and optionally upload to the Bulletin Chain.
-
-</div>
-</div>
-
-Notes:
-
-The Rust CLI mirrors everything the frontend does, but from the command line. Pallet commands use subxt for native Substrate interaction. Contract commands use alloy through the eth-rpc adapter. The prove command is the all-in-one: it hashes a file, creates a claim on either the pallet or contract, and optionally uploads the file to the Bulletin Chain for persistent storage. This is a great reference for building Rust backend services.
+# Your Project
 
 ---
 
 ## What You Will Build
 
+Every student ships a **solo project** with:
+
 <div class="text-left">
 
-During this course, using the **polkadot-stack-template**, you will:
+**One backend** (pick one):
+- Substrate Pallet
+- Solidity smart contract on EVM
+- Solidity smart contract on PVM
+- Rust smart contract on PVM
 
-1. Build a **FRAME pallet** with custom storage, calls, events, and errors
-2. Write and deploy **Solidity contracts** to both EVM and PVM targets
-3. Build a **React frontend** using PAPI and viem
-4. Build a **Rust CLI** using subxt and alloy
-5. Run a **local test network** with zombienet
-6. Deploy to **IPFS** and register a **.dot domain**
-7. Optionally integrate with the **Bulletin Chain** for data storage
+**One frontend** (pick one):
+- Web app (React, Svelte, Vue, etc.)
+- CLI++ (TUI or MCP server)
+
+**Mandatory**: deploy to **Bulletin Chain + DotNS**
+
+</div>
+
+> Full details: [`projects/PBP-Lisbon-2026/project-guidelines.md`](../../projects/PBP-Lisbon-2026/project-guidelines.md)
+
+Notes:
+
+Your project has hard requirements. You pick one backend path and one frontend path, and every project must be deployed to the Bulletin Chain with a DotNS name. The stack template gives you a working example of each path. You'll fork it, strip the parts you don't need, and build your own idea on top. Read the full project guidelines document for all the details on evaluation, deliverables, and timeline.
+
+---
+
+## Path Confidence
+
+Not all paths are equally battle-tested. Pick based on your appetite for risk.
+
+| Backend | Confidence | Notes |
+|---------|-----------|-------|
+| **Pallet** | ~100% | Well-trodden, full curriculum support |
+| **Solidity on EVM** | ~90% | Mature tooling, standard ecosystem |
+| **Solidity on PVM** | ~70% | Expect toolchain quirks |
+| **Rust on PVM** | ~50% | Bleeding edge. Real chance you hit walls nobody has hit yet |
+
+**Getting stuck is not failure** as long as you document it well.
+
+A good bug report or PR against the stack is a legitimate deliverable.
+
+Notes:
+
+This is an honest assessment of the stack maturity. The pallet path is rock solid. EVM contracts are almost there. PVM paths are newer and rougher. Riskier paths have a higher ceiling though. If you ship a working Rust-on-PVM project, that's a strong signal. And if you can't ship but you file precise bug reports or PRs, that's valued too. You're helping us discover the shape of the stack.
+
+---
+
+## Think of This as Onboarding
+
+There are **no grades**. This program is your **2-week onboarding at Parity**.
+
+<div class="text-left">
+
+- You have Parity engineers on staff the entire time as **mentors**
+- You are given real tools, real code, and the freedom to **build anything**
+- We are evaluating you as if this were your **first two weeks on the job**
+- At the end, your project is reviewed directly by Parity for **hiring consideration**
+
+</div>
+
+> The question we are asking: _"Would I want this person on my team?"_
+
+Notes:
+
+This is the most important framing for the entire program. We're not grading you on an exam. We're watching how you work. How you onboard into a new codebase, how you handle getting stuck, how you collaborate, how you communicate. The Parity engineers here aren't just lecturers, they're your mentors and potential future colleagues. Treat this like your first two weeks at a new job, because that's exactly how we'll evaluate it.
+
+---
+
+## What We're Looking For
+
+The behaviors that stand out to us:
+
+<div class="text-left">
+
+- **Self-starters** - You don't wait to be told what to do. You explore, you try things, you ask when stuck.
+- **Builders with taste** - You pick a problem worth solving and build something that takes advantage of what Web3 actually provides.
+- **Stack improvers** - You find a bug? You open an issue. You can fix it? You open a PR. This is the strongest signal you can give us.
+- **Collaborators** - You help others, share what you learn, and make the people around you better.
+- **Honest communicators** - You say what works, what doesn't, and what you'd do differently. No hiding.
 
 </div>
 
 Notes:
 
-So what does this mean for you? Over the course of this program, you'll get hands-on experience with every layer of the stack. You'll learn FRAME deeply in the FRAME module, build smart contracts, create frontends, and deploy the full application. The stack template is designed so you can keep the pieces you need and discard the rest. Some teams will focus on the pallet, others on contracts, others on the full stack. The goal is that by the end, you can build and deploy a complete Polkadot application from scratch.
+These are the things that get people hired. Not just shipping a polished demo, but showing how you work. Did you file a bug report when something broke? Did you help a classmate who was stuck? Did you dig into the source code when the docs weren't enough? Did you build something that actually leverages decentralization, not just a web app with a blockchain bolted on? These are the signals that tell us you'd be a great Parity engineer.
+
+---
+
+## Project Ideas: Practical Apps
+
+<div class="text-small">
+
+| Idea | What It Is | Suggested Paths |
+|------|-----------|-----------------|
+| **Versioned Markdown Wiki** | A wiki where snapshots are stored on Bulletin Chain, with on-chain ACL and version history | Pallet + Web |
+| **On-Chain Invoicing** | Create invoices, pay them, both sides get verifiable records | Pallet or Solidity + Web |
+| **Ticketing / Event Passes** | Issue tickets as on-chain assets. Transferable, verifiable, gate access via signature | Pallet + Web or TUI |
+| **Ephemeral File Drop** | WeTransfer-style share via Bulletin Chain. Upload, get a .dot link, file expires after retention window | Pallet + Web or CLI++ |
+
+</div>
+
+Notes:
+
+These are practical apps with clear user value. The wiki is a great full-stack exercise, touching Bulletin Chain for storage and on-chain logic for access control. Invoicing is the bread-and-butter payments use case. Ticketing maps cleanly to on-chain assets. The file drop is an honest fit for what Bulletin Chain actually is: a content-addressed blob layer with a two-week retention window. All of these are in the idea bank.
+
+---
+
+## Project Ideas: Games & Protocols
+
+<div class="text-small">
+
+| Idea | What It Is | Suggested Paths |
+|------|-----------|-----------------|
+| **On-Chain Turn-Based Game** | Chess, cards, strategy - all state on-chain, turns enforced by backend | Pallet + Web or TUI |
+| **Tournament / Leaderboard** | Verifiable leaderboards, brackets, prize pools that any game can plug into | Pallet or Solidity + Web |
+| **Protocol Port** | Take something interesting from another chain and bring it to Polkadot | Any path |
+
+</div>
+
+<br />
+
+## Project Ideas: Pallet Design
+
+<div class="text-small">
+
+| Idea | What It Is |
+|------|-----------|
+| **Direct Delegation PoS** | Validators, delegators, active set selection, reward splitting |
+| **Stateful Multisig** | On-chain multisig addresses with propose → vote → execute lifecycle |
+| **Free Transaction Pallet** | Lock tokens to earn weight credits for fee-free transactions |
+| **Multi-Token Treasury** | Multi-asset treasury with governance-gated spending tracks |
+
+</div>
+
+> Full idea bank with details: [`projects/ideas.md`](../../projects/ideas.md)
+
+Notes:
+
+Games are memorable demos. A clean on-chain game is one of the strongest things you can ship. Protocol ports are interesting because they widen the ecosystem, take something that works on another chain and bring it to Polkadot. The pallet design ideas are more systems-focused, great if you love mechanism design. All of these have been done before so they're sure to work, but the best version is one you make your own. And remember: wildcards are welcome. The best projects are often the weird ones a student actually cared about.
+
+---
+
+## Advice for Success
+
+<div class="text-left">
+
+- **Explore fearlessly.** Clone repos, read source code, run examples. Don't just read docs.
+- **Ask early, not late.** Faculty are here as mentors. "I'm stuck after 2 hours" is a good conversation. "I'm stuck after 2 days" is a missed opportunity.
+- **Build something only Web3 can do.** If your project works just as well on a centralized server, it's not the most interesting version of itself.
+- **Contribute upstream.** An issue, a bug report, a small PR to polkadot-sdk or any tool you use — this is the strongest signal of all.
+- **Ship honest work.** A smaller project that works and is well-documented beats a big project that's half-broken and unexplained.
+
+</div>
+
+Notes:
+
+This is practical advice from people who have hired engineers this way. Explore the codebase like it's your first week at a company. Don't be afraid to dig into the Polkadot SDK source when something doesn't make sense. Ask the engineers here questions, that's what they're here for. And think about what makes your project uniquely Web3. Decentralized storage, trustless verification, censorship resistance, these are the properties that matter. If you can also improve the tools you're using along the way, that's the gold standard.
 
 ---
 
@@ -268,9 +252,13 @@ So what does this mean for you? Over the course of this program, you'll get hand
 <div class="grid grid-cols-2">
 <div class="text-left">
 
+**Your starting points:**
+- `polkadot-stack-template` - Fork this
+- `projects/PBP-Lisbon-2026/` - Project guidelines
+- `projects/ideas.md` - Idea bank
+
 **Repositories:**
 - `polkadot-sdk` - Core SDK
-- `polkadot-stack-template` - Your project
 - `host-sdk` - Triangle host SDK
 - `dotns` - .dot name service
 - `polkadot-bulletin-chain` - Data storage
@@ -295,7 +283,7 @@ So what does this mean for you? Over the course of this program, you'll get hand
 
 Notes:
 
-Here are the key resources you'll need throughout the course. The polkadot-stack-template is your starting point. The PAPI docs at papi.how are excellent for frontend development. The Polkadot SDK docs cover everything about pallets and runtimes. Blockscout is your go-to block explorer, especially for smart contracts. And zombienet is essential for local development and testing.
+Here are the key resources. Start with the stack template and the project guidelines. The idea bank has project suggestions if you need inspiration, but you're free to invent your own. Use office hours with faculty, especially if you're on a riskier path.
 
 ---
 
