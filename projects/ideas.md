@@ -77,13 +77,20 @@ Issue tickets as on-chain assets. Transferable, verifiable, optionally revocable
 - **Paths**: Pallet + Web; Solidity-EVM + Web; Pallet + TUI (for gate-checker terminals).
 - **Why**: Real demand, clean scope, many directions to take it (loyalty, membership, etc.).
 
-### 2.3 Multi-Token Treasury
+### 2.3 Investment DAO / Collective Treasury
 
-A pallet managing a multi-asset treasury with governance-gated spending tracks, sensible handling of insufficient balances and existential deposits across assets.
+A system for pooling funds with friends or strangers and investing collectively with transparent rules. Members deposit assets, vote on proposals (spending, investments, membership changes), and share returns. Think: an on-chain investment club, grant committee, or shared savings account.
 
-- **Paths**: Pallet + Web (treasury dashboard / governance UI); Pallet + TUI.
-- **Why**: Treasury mechanics are a real Polkadot need, and this exercises governance APIs and asset handling at the same time.
-- **Scope note**: Don't try to build a price oracle or DOT↔USD conversion in MVP; pick fixed token denominations and one or two spending tracks.
+- **Paths**: Pallet + Web (treasury dashboard / governance UI); Solidity-EVM + Web.
+- **Why**: Collective money management is a real use case — from informal friend groups to formal grant programs. The design space covers governance, multi-asset handling, and access control.
+- **Scope note**: Start with a simple voting mechanism (e.g., threshold-based approval). Don't try to build a price oracle or complex DeFi integrations in the MVP.
+
+### 2.4 Expense Splitting / Group Payments
+
+A Splitwise-style app for tracking shared expenses and settling debts. Friends add expenses, the system calculates who owes whom, and settlements happen on-chain. Could extend to recurring payments, remittances, or cross-border transfers.
+
+- **Paths**: Solidity-EVM + Web; Solidity-PVM + Web; Pallet + Web.
+- **Why**: A relatable everyday problem with clear Web3 advantages — transparent ledger, no platform fees, works across borders. Good scope for a 2-week project.
 
 ---
 
