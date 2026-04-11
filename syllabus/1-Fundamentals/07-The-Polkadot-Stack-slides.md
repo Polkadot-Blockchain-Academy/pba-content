@@ -170,24 +170,6 @@ Polkadot delivers this vision through three layers. At the bottom is the Platfor
 
 ---
 
-## What Are We Building?
-
-Throughout this course, you will build a project using the **polkadot-stack-template**.
-
-This template demonstrates the full Polkadot stack through a single concept: **Proof of Existence**.
-
-The same idea (claim a file hash on-chain) is implemented three ways:
-
-- A **FRAME pallet** (native Substrate)
-- A **Solidity contract on EVM** (Ethereum bytecode)
-- A **Solidity contract on PVM** (PolkaVM / RISC-V bytecode)
-
-Notes:
-
-The polkadot-stack-template is your hands-on project for this course. It's a full-stack application that touches every layer of the Polkadot ecosystem. The idea is simple: prove that a file existed at a certain time by recording its hash on-chain. But we implement it three different ways to show you the different development paths available on Polkadot. You'll also build a React frontend and a Rust CLI to interact with all three implementations.
-
----
-
 ## Agenda
 
 1. **Why Polkadot Exists** - The Decentralized Web
@@ -407,30 +389,32 @@ FRAME is what you'll spend most of this course learning. Each pallet is a self-c
 
 ## Smart Contracts: pallet-revive
 
-Write **Solidity** and deploy to Polkadot.
+Write **Solidity** or **Rust** and deploy to Polkadot.
 
 <diagram class="mermaid">
 graph LR
     SOL["Solidity<br/>Source Code"]
     SOL -->|"solc"| EVM["EVM Bytecode<br/>(REVM)"]
     SOL -->|"resolc"| PVM["PVM Bytecode<br/>(PolkaVM / RISC-V)"]
+    RUST["Rust<br/>Source Code"]
+    RUST -->|"rustc + revive"| PVM
     EVM --> PR["pallet-revive<br/>(Asset Hub)"]
     PVM --> PR
 </diagram>
 
 <div class="text-left">
 
-- **Same Solidity source** compiles to two targets
+- **Solidity** compiles to two targets: **EVM** (via `solc`) and **PVM** (via `resolc`)
+- **Rust** compiles directly to **PVM** (PolkaVM / RISC-V) for native performance
 - **EVM**: traditional Ethereum bytecode, runs in REVM interpreter
 - **PVM**: PolkaVM (RISC-V based), native to Polkadot, more efficient
-- Both deployed through the same chain, same tooling
-- `resolc` is the Solidity-to-PolkaVM compiler (from the `revive` project)
+- All deployed through the same chain, same pallet
 
 </div>
 
 Notes:
 
-One of the most exciting developments in Polkadot is pallet-revive. It lets you write Solidity smart contracts and deploy them to Polkadot. The same Solidity source code can be compiled to two different targets: traditional EVM bytecode using the standard solc compiler, or PolkaVM bytecode using resolc, which compiles Solidity to RISC-V instructions. PolkaVM is Polkadot's own virtual machine, designed for security and performance. In the stack template, we deploy the exact same Proof of Existence contract to both targets.
+One of the most exciting developments in Polkadot is pallet-revive. It lets you write smart contracts in Solidity or Rust and deploy them to Polkadot. Solidity can be compiled to two different targets: traditional EVM bytecode using solc, or PolkaVM bytecode using resolc. Rust contracts compile directly to PolkaVM's RISC-V target, giving Rust developers a native smart contract path without needing Solidity at all. PolkaVM is Polkadot's own virtual machine, designed for security and performance. In the stack template, we deploy the same Proof of Existence contract to both EVM and PVM targets.
 
 ---
 
@@ -458,41 +442,6 @@ graph LR
 Notes:
 
 The eth-rpc sidecar is the magic that makes Ethereum tooling work with Polkadot. It's a separate process that speaks Ethereum JSON-RPC on port 8545, just like Geth or Hardhat Network. Under the hood, it translates those calls into Substrate RPC calls using the subxt library. This means you can use MetaMask to sign transactions, Hardhat to deploy contracts, Foundry to test, and any Ethereum library to interact with your contracts, all while running on a Polkadot chain.
-
----
-
-## Two Developer Access Paths
-
-<diagram class="mermaid">
-graph TB
-    subgraph Native["Native Substrate Path"]
-        PAPI["PAPI<br/>(TypeScript)"]
-        SUBXT["subxt<br/>(Rust)"]
-    end
-
-    subgraph Ethereum["Ethereum-Compatible Path"]
-        VIEM["viem / ethers.js<br/>(TypeScript)"]
-        ALLOY["alloy<br/>(Rust)"]
-    end
-
-    Native -->|"WebSocket<br/>Substrate JSON-RPC"| NODE["Substrate Node"]
-    Ethereum -->|"HTTP<br/>Ethereum JSON-RPC"| ETHRPC["eth-rpc Sidecar"]
-    ETHRPC --> NODE
-</diagram>
-
-<div class="text-left">
-
-Both paths talk to the **same chain**, the **same state**, the **same contracts**.
-
-Choose based on what you're interacting with:
-- **Pallets** (native logic) -> use PAPI or subxt
-- **Smart Contracts** (Solidity) -> use viem/alloy through eth-rpc
-
-</div>
-
-Notes:
-
-This is a key architectural insight. There are two parallel paths to interact with the same Polkadot chain. The native Substrate path uses PAPI for TypeScript or subxt for Rust, connecting directly to the node via WebSocket. The Ethereum-compatible path uses viem or alloy, connecting through the eth-rpc sidecar. Both paths access the same chain state. In the stack template, the frontend uses PAPI for pallet interactions and viem for contract interactions. The CLI uses subxt and alloy respectively.
 
 ---
 
@@ -591,7 +540,6 @@ subxt is the Rust counterpart to PAPI. If you're building a backend service, a C
 
 Use your existing Ethereum skills and tools.
 
-<div class="grid grid-cols-2">
 <div class="text-left">
 
 **Frontend (TypeScript):**
@@ -608,206 +556,10 @@ Use your existing Ethereum skills and tools.
 - **MetaMask** - wallet
 
 </div>
-<div>
-
-```typescript
-import { createPublicClient, http }
-  from "viem";
-
-// Connect through eth-rpc
-const client = createPublicClient({
-  transport: http(
-    "http://localhost:8545"
-  ),
-});
-
-// Read contract (same as Ethereum!)
-const claim = await client
-  .readContract({
-    address: contractAddress,
-    abi: proofOfExistenceAbi,
-    functionName: "getClaim",
-    args: [documentHash],
-  });
-```
-
-</div>
-</div>
 
 Notes:
 
 If you already know Ethereum development, you can bring all of that knowledge to Polkadot. viem, ethers.js, Hardhat, Foundry, MetaMask, all work through the eth-rpc sidecar. The code looks identical to what you'd write for Ethereum. In the stack template, Hardhat with the @parity/hardhat-polkadot plugin handles compiling contracts to both EVM and PVM targets, and deploying them through eth-rpc. The frontend uses viem for all contract interactions.
-
----
-
-## The polkadot-stack-template
-
-<div class="text-small">
-
-| Component | Path | Tech Stack |
-|-----------|------|------------|
-| **FRAME Pallet** | `blockchain/` | Rust, FRAME, Cumulus, polkadot-omni-node |
-| **EVM Contract** | `contracts/evm/` | Solidity, Hardhat, solc, viem |
-| **PVM Contract** | `contracts/pvm/` | Solidity, Hardhat, resolc, `@parity/hardhat-polkadot` |
-| **React Frontend** | `web/` | React, Vite, TypeScript, PAPI, viem, Zustand |
-| **Rust CLI** | `cli/` | Rust, subxt, alloy, clap |
-| **Dev Scripts** | `scripts/` | Zombienet, docker-compose |
-
-</div>
-
-<div class="text-left">
-
-Every component is **optional and removable**. Teams keep the slices they need.
-
-Notes:
-
-Here's the complete layout of the stack template. Five major components, each demonstrating a different part of the Polkadot developer experience. The blockchain directory contains a full parachain runtime with a custom pallet. The contracts directory has the same Solidity contract compiled to two targets. The web directory is a React frontend that talks to all three implementations. The CLI is a Rust tool that does the same. And the scripts directory orchestrates local development with zombienet.
-
----
-
-## Stack Template: The Pallet
-
-```rust
-#[pallet::storage]
-pub type Claims<T: Config> =
-    StorageMap<_, Blake2_128Concat, H256, Claim<T>>;
-
-#[pallet::call]
-impl<T: Config> Pallet<T> {
-    #[pallet::weight(T::WeightInfo::create_claim())]
-    pub fn create_claim(
-        origin: OriginFor<T>,
-        hash: H256,
-    ) -> DispatchResult {
-        let sender = ensure_signed(origin)?;
-        ensure!(!Claims::<T>::contains_key(hash), Error::<T>::AlreadyClaimed);
-        let claim = Claim { owner: sender.clone(), block: frame_system::Pallet::<T>::block_number() };
-        Claims::<T>::insert(hash, claim);
-        Self::deposit_event(Event::ClaimCreated { who: sender, hash });
-        Ok(())
-    }
-}
-```
-
-Notes:
-
-Here's the actual pallet code from the template. It's a clean, minimal FRAME pallet. A StorageMap maps 32-byte blake2 hashes to Claims, which record the owner and block number. The create_claim function checks that the hash isn't already claimed, creates a new claim, inserts it into storage, and emits an event. This is the pattern you'll learn throughout the FRAME module of this course.
-
----
-
-## Stack Template: The Contract
-
-```solidity
-contract ProofOfExistence {
-    struct Claim {
-        address owner;
-        uint256 blockNumber;
-    }
-
-    mapping(bytes32 => Claim) public claims;
-
-    function createClaim(bytes32 documentHash) external {
-        require(claims[documentHash].owner == address(0), "Already claimed");
-        claims[documentHash] = Claim(msg.sender, block.number);
-        emit ClaimCreated(msg.sender, documentHash);
-    }
-}
-```
-
-Same logic, same ABI. Compiles to **EVM** (solc) and **PVM** (resolc).
-
-Notes:
-
-And here's the Solidity version of the same logic. Same concept, same structure, just in Solidity instead of Rust. The remarkable thing is that this exact same source file gets compiled to two different bytecode formats. solc produces traditional EVM bytecode, and resolc produces PolkaVM RISC-V bytecode. Both are deployed to the same chain through pallet-revive, and both are accessible through the eth-rpc sidecar. The frontend and CLI can interact with both using the same ABI.
-
----
-
-## Stack Template: The Frontend
-
-<div class="grid grid-cols-2">
-<div class="text-left">
-
-**Six pages:**
-1. Home
-2. Pallet PoE (via PAPI)
-3. EVM PoE (via viem)
-4. PVM PoE (via viem)
-5. Statements
-6. Accounts
-
-**Smart host detection:**
-- Running inside Triangle host? Use host wallet
-- Standalone browser? Use browser extensions
-
-</div>
-<div class="text-left">
-
-```typescript
-// Pallet interaction (PAPI)
-const api = client.getTypedApi(descriptors);
-await api.tx.TemplatePallet
-  .create_claim({ hash })
-  .signAndSubmit(signer);
-
-// Contract interaction (viem)
-const tx = await walletClient
-  .writeContract({
-    address: evmContract,
-    abi,
-    functionName: "createClaim",
-    args: [hash],
-  });
-```
-
-</div>
-</div>
-
-Notes:
-
-The React frontend demonstrates both access paths side by side. For pallet interactions, it uses PAPI with typed descriptors. For contract interactions, it uses viem. Both are talking to the same chain. The frontend also has smart host detection: if it's running inside a Triangle User Agent like Polkadot Desktop, it uses the host's wallet for accounts. If it's running standalone in a browser, it falls back to browser extension wallets like Polkadot.js or Talisman.
-
----
-
-## Stack Template: The CLI
-
-<div class="grid grid-cols-2">
-<div class="text-left">
-
-**Commands:**
-
-```
-stack-cli pallet create-claim <hash>
-stack-cli pallet get-claim <hash>
-
-stack-cli contract create-claim evm <hash>
-stack-cli contract create-claim pvm <hash>
-
-stack-cli chain info
-stack-cli chain blocks
-
-stack-cli prove <file>
-```
-
-</div>
-<div class="text-left">
-
-**Tech mapping:**
-
-| Target | Library |
-|--------|---------|
-| Pallets | subxt (Substrate WS) |
-| Contracts | alloy (eth-rpc HTTP) |
-| Chain info | subxt |
-| Prove | both + bulletin chain |
-
-The `prove` command does it all: hash, claim, and optionally upload to the Bulletin Chain.
-
-</div>
-</div>
-
-Notes:
-
-The Rust CLI mirrors everything the frontend does, but from the command line. Pallet commands use subxt for native Substrate interaction. Contract commands use alloy through the eth-rpc adapter. The prove command is the all-in-one: it hashes a file, creates a claim on either the pallet or contract, and optionally uploads the file to the Bulletin Chain for persistent storage. This is a great reference for building Rust backend services.
 
 ---
 
@@ -1214,63 +966,6 @@ Notes:
 
 Here's the end-to-end flow. A developer writes their pallet in Rust, their contracts in Solidity, and their frontend in React. The pallet deploys as part of a parachain runtime via coretime. The contracts deploy to Asset Hub through eth-rpc. The frontend uploads to IPFS via the Bulletin Chain and gets a .dot domain via DotNS. A user opens a Triangle host, types the .dot name, and the host resolves it, fetches the frontend, and renders it in a sandbox. The frontend talks to the blockchain through the host's bridge, using PAPI for pallets and viem for contracts. No centralized servers anywhere in the chain.
 
----
-
-## What You Will Build
-
-<div class="text-left">
-
-During this course, using the **polkadot-stack-template**, you will:
-
-1. Build a **FRAME pallet** with custom storage, calls, events, and errors
-2. Write and deploy **Solidity contracts** to both EVM and PVM targets
-3. Build a **React frontend** using PAPI and viem
-4. Build a **Rust CLI** using subxt and alloy
-5. Run a **local test network** with zombienet
-6. Deploy to **IPFS** and register a **.dot domain**
-7. Optionally integrate with the **Bulletin Chain** for data storage
-
-</div>
-
-Notes:
-
-So what does this mean for you? Over the course of this program, you'll get hands-on experience with every layer of the stack. You'll learn FRAME deeply in the FRAME module, build smart contracts, create frontends, and deploy the full application. The stack template is designed so you can keep the pieces you need and discard the rest. Some teams will focus on the pallet, others on contracts, others on the full stack. The goal is that by the end, you can build and deploy a complete Polkadot application from scratch.
-
----
-
-## Key Resources
-
-<div class="grid grid-cols-2">
-<div class="text-left">
-
-**Repositories:**
-- `polkadot-sdk` - Core SDK
-- `polkadot-stack-template` - Your project
-- `host-sdk` - Triangle host SDK
-- `dotns` - .dot name service
-- `polkadot-bulletin-chain` - Data storage
-- `polkadot-api` - PAPI
-
-</div>
-<div class="text-left">
-
-**Documentation:**
-- papi.how - PAPI docs
-- paritytech.github.io/polkadot-sdk - SDK docs
-- Blockscout explorer
-- Polkadot Wiki
-
-**Tools:**
-- Polkadot.js Apps - Chain explorer
-- Zombienet - Local networks
-- psvm - SDK version manager
-
-</div>
-</div>
-
-Notes:
-
-Here are the key resources you'll need throughout the course. The polkadot-stack-template is your starting point. The PAPI docs at papi.how are excellent for frontend development. The Polkadot SDK docs cover everything about pallets and runtimes. Blockscout is your go-to block explorer, especially for smart contracts. And zombienet is essential for local development and testing.
 
 ---
 

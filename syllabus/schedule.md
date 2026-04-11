@@ -29,6 +29,7 @@
 - 3:30 - 5:00
   - Shawn Tabrizi
   - [The Polkadot Stack](1-Fundamentals/07-The-Polkadot-Stack-slides.md)
+  - [The Polkadot Stack Template](1-Fundamentals/08-The-Polkadot-Stack-Template-slides.md)
 - Evening
   - PBA staff and faculty dinner (Maciej, Kian, Shawn)
 
