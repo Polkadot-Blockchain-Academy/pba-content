@@ -91,7 +91,7 @@ Two modes for local development:
 #### Standalone Mode
 
 - Single parachain node
-- `polkadot-omni-node` + your runtime WASM
+- `polkadot-omni-node` + your Wasm runtime
 - Fastest to start, good for pallet and contract dev
 - No relay chain, no cross-chain features
 
@@ -112,7 +112,7 @@ Two modes for local development:
 
 Notes:
 
-There are two ways to run the template locally. Standalone mode uses polkadot-omni-node, a generic parachain binary that can load any runtime WASM blob. It boots a single chain in seconds, perfect for pallet development and contract testing. Zombienet mode spins up a full network: relay chain validators, your parachain as a collator, and system chains. You need zombienet for anything that involves the Statement Store, cross-chain messaging, or testing how your chain behaves in the real Polkadot topology. The template includes config files for both.
+There are two ways to run the template locally. Standalone mode uses polkadot-omni-node, a generic parachain binary that can load any Wasm runtime blob. It boots a single chain in seconds, perfect for pallet development and contract testing. Zombienet mode spins up a full network: relay chain validators, your parachain as a collator, and system chains. You need zombienet for anything that involves the Statement Store, cross-chain messaging, or testing how your chain behaves in the real Polkadot topology. The template includes config files for both.
 
 ---
 
@@ -123,13 +123,15 @@ There are two ways to run the template locally. Standalone mode uses polkadot-om
 <div class="text-left">
 
 - You don't compile a custom node binary
-  - You compile only the **runtime WASM**
+  - You compile only the **Wasm runtime**
 - The omni-node loads your runtime at startup via the **chain spec**
 - Includes everything except your business logic
   - Networking, consensus, RPC server, database
 - Works with **any** FRAME-based runtime
 
 </div>
+
+<div class="text-small">
 
 ```bash
 # Build your runtime
@@ -141,6 +143,8 @@ chain-spec-builder create -r your_runtime.wasm default
 # Run it
 polkadot-omni-node --chain chain-spec.json --dev
 ```
+
+</div>
 
 Notes:
 
@@ -154,7 +158,7 @@ The omni-node is a key piece of the modern Polkadot developer experience. In the
 
 | Component | How It Deploys | Where It Lives |
 |-----------|---------------|----------------|
-| **Pallet** | Compile runtime WASM → register parachain via Coretime | Your parachain on the Polkadot network |
+| **Pallet** | Compile Wasm runtime → register parachain via Coretime | Your parachain on the Polkadot network |
 | **EVM Contract** | `npx hardhat deploy` through eth-rpc sidecar | Asset Hub (or your parachain) |
 | **PVM Contract** | `npx hardhat deploy` with `@parity/hardhat-polkadot` plugin | Asset Hub (or your parachain) |
 | **Frontend** | Build static bundle → upload to Bulletin Chain → register .dot name via DotNS | IPFS, accessible via any Triangle host |
