@@ -22,12 +22,15 @@ If your project would work just as well on a centralized server, it's probably n
 
 > Rebuild the apps people already use, but trustless. The scope is well understood, the user need is obvious, and the design space is rich.
 
-**High-level directions:**
+Think about the tools people and professionals rely on every day — and what breaks when a single company controls them:
 
-- **Collaborative documents** — Google Docs, but your data lives on Bulletin Chain, not Google's servers
-- **Chat and messaging** — Signal-like messaging where the protocol is open; no company can read or kill it
-- **Social networks** — Own your identity, your followers, your content; move between apps freely
-- **File sharing** — WeTransfer, but censorship-resistant with a .dot link
+- **Productivity & collaboration** — documents, spreadsheets, wikis, project management
+- **Communication** — messaging, email, video calls, forums
+- **Social & media** — social networks, content platforms, streaming
+- **Storage & sharing** — file hosting, backups, transfer services
+- **Identity & access** — logins, credentials, permissions
+
+Pick one. Make it trustless. Ship a version that works.
 
 **Concrete ideas:**
 
