@@ -25,20 +25,23 @@ The Polkadot stack is reaching for a **fully decentralized application stack**: 
 
 ---
 
-## 2. Hiring Reality Check
+## 2. Think of This as Onboarding
 
-There are **no grades** in PBP. Instead, **your project will be reviewed directly by Parity for hiring consideration**.
+There are **no grades** in PBP. Think of this program as your **2-week onboarding at Parity**.
 
-This matters more than a grade would. A grade is a line in a transcript. A project is a thing a hiring manager can read, run, and argue about. Some of you will be talking to Parity about roles because of what you ship here.
+You have Parity engineers on staff the entire time as mentors. You are given real tools, real code, and the freedom to build anything. At the end, your project is reviewed directly by Parity for hiring consideration.
+
+The question we are asking: _"Would I want this person on my team?"_
 
 What reviewers will look for:
 
-- **Taste.** Did you choose a problem worth solving? Is your scope sane?
+- **Self-starters.** You don't wait to be told what to do. You explore, you try things, you ask when stuck.
+- **Builders with taste.** Did you choose a problem worth solving? Does the project take advantage of what Web3 actually provides?
+- **Stack improvers.** You find a bug? You open an issue. You can fix it? You open a PR. This is the strongest signal you can give us.
+- **Collaborators.** You help others, share what you learn, and make the people around you better.
 - **Shipping discipline.** Does the repo run? Is the README clear about what works and what doesn't?
-- **Judgment under uncertainty.** When you got stuck, how did you reason about it? Did you pick a good next move?
-- **Transparency.** Document what broke. Hiding limitations wastes everyone's time — reviewers will find them anyway.
-- **Cleanliness.** Readable code. Meaningful commits. Not a dump.
-- **Voice.** We can tell when a README was written by a human who understood the project. We can also tell when it wasn't.
+- **Code quality.** Readable code. Meaningful commits. No dead code or leftover scaffolding.
+- **Active communicators.** You say what works, what doesn't, and what you'd do differently.
 
 ---
 
@@ -62,9 +65,13 @@ Every student ships, **solo**, a project with exactly these components:
 
 ### 3.3 Mandatory integration
 
-- **Web deploy on Bulletin Chain + DotNS.** Every project ships a web presence hosted on Bulletin Chain and reachable via a DotNS name. For web-app frontends, this _is_ your app. For CLI++ frontends (TUI or MCP server), you still ship a web presence - at minimum a product / landing page describing what the project does, how to install it, and how to use it. No project is exempt. The point is that every student touches the decentralized deploy path end-to-end.
+- **Deploy to Paseo with Bulletin Chain + DotNS.** Every project ships a web presence hosted on Bulletin Chain and reachable via a DotNS name on the **Paseo** testnet. For web-app frontends, this _is_ your app. For CLI++ frontends (TUI or MCP server), you still ship a web presence - at minimum a product / landing page describing what the project does, how to install it, and how to use it. No project is exempt. The point is that every student touches the decentralized deploy path end-to-end.
 
-### 3.4 Scope rule
+### 3.4 Note on parachain projects
+
+If you are building a **pallet** (custom parachain runtime), you do **not** need to launch a public parachain or acquire coretime. Your parachain should work locally with **zombienet** — that is sufficient for the demo. Your frontend still needs to be deployed on Paseo via Bulletin Chain + DotNS (section 3.3), and should connect to your local zombienet for the demo.
+
+### 3.5 Scope rule
 
 The backend + frontend combo is a **strict requirement**. Pure-infra projects (an indexer, a bridge, a standalone library) do not satisfy the rubric on their own. If you think you have a good reason to deviate, talk to faculty _before_ you start building.
 
@@ -175,13 +182,14 @@ A few things to internalise:
 At the end of the program you hand in:
 
 - [ ] **GitHub repo** with working code (backend + frontend)
+- [ ] **Deployed on Paseo** — live and reachable at your .dot name via Bulletin Chain
 - [ ] **README** covering:
   - [ ] What the project does
   - [ ] Which path you picked (backend + frontend)
   - [ ] How to run it end-to-end
   - [ ] What works and what doesn't
   - [ ] Known limitations and design compromises
-  - [ ] URL of your decentralized deployment
+  - [ ] URL of your decentralized deployment (.dot name)
 - [ ] **Meaningful commit history** (no `fix fix fix wip more`)
 - [ ] **Working demo** — live preferred, recorded fallback if live is risky (see section 9)
 - [ ] **5-minute pitch** with slides on pitch day (see section 9)
@@ -211,7 +219,7 @@ A final pass before you push your last commit. None of this is busywork - every 
 
 ### 8.3 Deployment
 
-- **Decentralized deploy is live and reachable** at your DotNS name (see section 3.3). If it isn't, reviewers can't see your work. Test it from a fresh browser session - not the one you've been developing in.
+- **Decentralized deploy is live and reachable** on Paseo at your DotNS name (see section 3.3). If it isn't, reviewers can't see your work. Test it from a fresh browser session - not the one you've been developing in.
 
 ### 8.4 Demo
 
@@ -261,8 +269,8 @@ Rough shape:
 
 ## 11. Process & Support
 
-- **Office hours with faculty** are available throughout project time. Use them.
-- **If you are on a risky path and stuck, come talk to us early.** "I am 48 hours into this and I don't know if it's possible" is a normal conversation to have. Waiting until day 10 to raise it is not.
+- **Parity engineers and faculty are here as mentors** throughout project time. Use them.
+- **Ask early, not late.** If you're stuck on something small, ask for help after ~30 minutes. Time is limited and mentors know tricks that commonly unblock people in seconds. "I've been stuck for 2 days" is a missed opportunity — don't let that happen.
 - **Project ideas**: see [`../ideas.md`](../ideas.md) for a living idea bank. You are free to invent your own, or pick from the bank and make it yours.
 - **Bug reports against the stack**: faculty will point you at the right repos (Substrate, PVM, Bulletin Chain, Polkadot Desktop) during week 1. When in doubt, ask before filing.
 
