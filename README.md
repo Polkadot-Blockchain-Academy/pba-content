@@ -1,19 +1,30 @@
 # Polkadot Blockchain Academy
 
-The Polkadot Blockchain Academy is an intensive academic program teaching Blockchain, Substrate and Polkadot to talented developers.
+The Polkadot Blockchain Academy is an intensive educational program teaching Blockchain, Substrate and Polkadot to talented developers. The program has evolved from big in-person campus cohorts that lasted up to 5 weeks into the **Protocol Builders Program (PBP)**, a project-driven format where students build real applications on the Polkadot stack in 2 weeks.
 
-This program aims at:
+## Protocol Builders Program (PBP)
 
-- Improving our core dev hiring pipeline in both quantity and quality of candidates
-- Seeding the industry with Substrate knowledge and advocates
-- Building a surplus of developers for lesser product prototyping if they’re not hired out
-- Improving our non-dev onboarding processes
+PBP is a two-week intensive program combining foundational lectures with hands-on project work. Students learn the core curriculum and then build a working product on the decentralized stack, producing hiring-level deliverables by the end of the program.
 
-Selected through an admission process, candidates will receive an intensive education taught by a mix of professionals from Parity, Web3 and some visiting professors.
+### Syllabus
 
-## Curriculum Versions
+The curriculum is organized into five modules covering Fundamentals, Polkadot, Substrate, FRAME and XCM.
 
-The curriculum is expected to change per cohort in the first run. You can find the snapshot of the slides at the end of each cohort here:
+- [Syllabus overview](./syllabus/README.md)
+- [Day-by-day schedule](./syllabus/schedule.md)
+
+### Projects
+
+Student projects are a first-class part of the program. Each student builds a backend, a frontend, and deploys to the decentralized stack.
+
+- [Project guidelines (Lisbon 2026)](./projects/PBP-Lisbon-2026/project-guidelines.md)
+- [Retrospective template](./projects/PBP-Lisbon-2026/retrospective-template.md)
+- [Project ideas](./projects/ideas.md)
+- [Projects directory](./projects/)
+
+## Campus (Legacy)
+
+The original program ran as in-person campus cohorts between 2022 and 2025. Snapshots of the curriculum at the end of each cohort are preserved on dedicated branches:
 
 - [Cambridge - August 2022](https://github.com/Polkadot-Blockchain-Academy/pba-content/tree/cambridge-2022)
 - [Buenos Aires - January 2023](https://github.com/Polkadot-Blockchain-Academy/pba-content/tree/buenos-aires-2023)
@@ -23,9 +34,9 @@ The curriculum is expected to change per cohort in the first run. You can find t
 - [Lucerne - 2025](https://github.com/Polkadot-Blockchain-Academy/pba-content/tree/lucerne-2025)
 - [Bali - August 2025](https://github.com/Polkadot-Blockchain-Academy/pba-content/tree/bali-2025)
 
-## Venue Suggestions
+### Venue Suggestions
 
-This curriculum is designed to be taught as an in-person course with ~25-60 students. (Although it may be somewhat useful for online or independent learning). The venue where the course is taught should provide the following. These may be a single space with flexible seating, or two different spaces for lecture- and collaboration-style work.
+This curriculum is designed to be taught as an in-person course with ~25-60 students. The venue should provide:
 
 - Overhead projector that all students can easily see
 - Aisles for instructors to easily move among students to answer questions or help debug
@@ -34,13 +45,7 @@ This curriculum is designed to be taught as an in-person course with ~25-60 stud
 - Internet connection that can support >10Mbps while all students are connected
 - LAN connection that allows P2P connections to start a private blockchain network
 
-## Useful links
-
-- [Polkadot Blockchain Academy Page](https://polkadot.academy/)
-- [Twitter](https://x.com/AcademyPolkadot)
-- [Youtube](https://www.youtube.com/@PolkadotBlockchainAcademyTV)
-
-## Video Lectures - Modules
+### Video Lectures
 
 - [Cryptography](https://www.youtube.com/playlist?list=PL-w_i5kwVqblgwQfXbR-n8pC1QE1IaxBZ)
 - [Economics](https://www.youtube.com/playlist?list=PL-w_i5kwVqbn6GDAHq4uzhpDLPY1Ay8zO)
@@ -51,6 +56,12 @@ This curriculum is designed to be taught as an in-person course with ~25-60 stud
 - [Polkadot](https://www.youtube.com/playlist?list=PL-w_i5kwVqbn3HCZDHg6P5UCx8P2tF6-M)
 - [XCM](https://www.youtube.com/playlist?list=PL-w_i5kwVqbmHkxS_mJTfXdCZnXKF5lDP)
 
+## Useful Links
+
+- [Polkadot Blockchain Academy Page](https://polkadot.academy/)
+- [Twitter](https://x.com/AcademyPolkadot)
+- [YouTube](https://www.youtube.com/@PolkadotBlockchainAcademyTV)
+
 ## Contributing
 
-Subject Matter Experts (SMEs) should explore [./CONTRIBUTING.md](./CONTRIBUTING.md) to learn how to use this repo.
+Subject Matter Experts (SMEs) should explore [CONTRIBUTING.md](./CONTRIBUTING.md) to learn how to use this repo.
