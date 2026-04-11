@@ -159,11 +159,10 @@ So what is Polkadot actually building? Think of it as a decentralized cloud prov
 
 Polkadot fulfills this vision across three layers:
 
-| Layer | Purpose | Components |
-|-------|---------|------------|
-| **Polkadot Triangle** | User Interfaces | Desktop App, Mobile App, Web App, Host SDK |
-| **Polkadot Stack** | Developer Tools | Polkadot SDK / FRAME, Smart Contracts, PAPI / subxt, Ethereum Tooling |
-| **Polkadot Platform** | Web3 Cloud Infrastructure | Relay Chain, Asset Hub, Bridge Hub, Bulletin Chain, Parachains |
+
+1. **Polkadot Triangle**: User Interfaces
+1. **Polkadot Stack**: Developer Tools
+1. **Polkadot Platform**: Web3 Cloud Infrastructure
 
 Notes:
 
@@ -213,17 +212,10 @@ Let's start with the foundation. The Polkadot Platform is the blockchain infrast
 
 The **heart** of the Polkadot network.
 
-<div class="grid grid-cols-2">
-<div class="text-left">
-
 - Provides **shared security** to all connected chains
-- Validates parachain blocks (the "auditing layer")
-- Runs NPoS (Nominated Proof of Stake) for validator selection
+- Validates and secures parachain blocks
 - Does **NOT** host user applications directly
-- Being slimmed down post-AHM (Asset Hub Migration)
-
-</div>
-<div>
+- The goal of being "Transaction-less"
 
 <diagram class="mermaid">
 graph TB
@@ -236,9 +228,6 @@ graph TB
     RC --- BC["Bulletin"]
     RC --- P1["Your Chain"]
 </diagram>
-
-</div>
-</div>
 
 Notes:
 
@@ -258,12 +247,7 @@ The **primary user-facing chain** in the Polkadot ecosystem.
 - Fungible assets (tokens)
 - NFTs (non-fungible tokens)
 - DEX / asset conversion
-
-**Governance (migrated from Relay):**
-- Treasury, Referenda, Bounties
-
-**Staking (migrating from Relay):**
-- Nomination Pools, Delegated Staking
+- DOT native stable coin
 
 </div>
 <div class="text-left">
@@ -273,14 +257,10 @@ The **primary user-facing chain** in the Polkadot ecosystem.
 - Deploy Solidity to both **EVM** and **PolkaVM**
 - Full Ethereum tooling support (MetaMask, Hardhat, Foundry)
 
-**Identity:**
-- Claims, Vesting
-
-**Utilities:**
-- Proxy, Multisig, Scheduler
-
 </div>
 </div>
+
+and Governance, Staking, Identity, Utilities, etc...
 
 Notes:
 
@@ -288,230 +268,33 @@ Asset Hub is becoming THE chain in Polkadot. It started as a simple chain for ma
 
 ---
 
-## Bridge Hub
+## Other System Chains & Parachains
 
-Connecting Polkadot to the outside world.
+Parachains chains share security from the Relay Chain and communicate via **XCM** (cross-consensus messaging).
 
-<diagram class="mermaid">
-graph LR
-    E["Ethereum"] <-->|"Snowbridge"| BH["Bridge Hub"]
-    K["Kusama"] <-->|"GRANDPA Bridge"| BH
-    BH <-->|"XCM"| AH["Asset Hub"]
-</diagram>
+<div class="text-small">
 
-<div class="grid grid-cols-2">
-<div class="text-left">
-
-**Kusama Bridge:**
-- GRANDPA light client verification
-- Bidirectional message passing
-- XCM routing between ecosystems
+| Chain | Purpose |
+|-------|---------|
+| **Bridge Hub** | Connects Polkadot to external networks like Bitcoin, Ethereum and Kusama |
+| **Coretime** | Marketplace for blockspace to buy cores for decentralized compute |
+| **People** | On-chain identity and Proof-of-Personhood for sybil resistance |
+| **Collectives** | Governance bodies, Technical Fellowship |
+| **Bulletin** | Persistent and IPFS-compatible data storage |
+| **Custom Parachains** | Build with Polkadot SDK (FRAME), deploy via Coretime, get shared security |
 
 </div>
-<div>
-
-**Ethereum Bridge (Snowbridge):**
-- Ethereum Beacon Chain light client
-- Inbound/outbound message queues
-- Token transfers between Polkadot and Ethereum
-
-</div>
-</div>
-
-Notes:
-
-Bridge Hub is the dedicated chain for cross-ecosystem bridges. It runs light clients of external chains to verify their state trustlessly. The Kusama bridge uses a GRANDPA light client, and the Ethereum bridge (Snowbridge) runs an Ethereum Beacon Chain light client. This means Polkadot can verify Ethereum blocks on-chain and vice versa, enabling trustless token transfers and message passing between ecosystems.
-
----
-
-## Coretime Chain
-
-The **marketplace for blockspace**.
-The Relay Chain has **cores**, each capable of progressing one parachain at a time.
-
-<diagram class="mermaid">
-graph TB
-    B["Broker Pallet<br/>(Coretime Chain)"]
-    B -->|"Bulk Sales"| C1["Core 1"]
-    B -->|"Bulk Sales"| C2["Core 2"]
-    OD["On-Demand<br/>(Relay Chain)"] -->|"Pay per Block"| C3["Core 3"]
-    C1 --> P1["Parachain A"]
-    C2 --> P2["Parachain B"]
-    C3 --> P3["Any Parachain"]
-</diagram>
-
-**Two ways to get coretime:**
-
-1. **Bulk Coretime** - Purchase cores in advance through periodic sales
-2. **On-Demand Coretime** - Pay per block, no commitment needed
 
 
 Notes:
 
-Think of Polkadot like a computer with multiple CPU cores. Each core can process one parachain's block at a time. The Coretime chain runs a marketplace where teams can purchase access to these cores. Bulk coretime is like reserving a server: you buy cores in advance for a period. On-demand coretime is like serverless: you pay per block when you need it. This is the "gas" of Polkadot, it's how you pay for your chain's execution. For development and testing, on-demand coretime is very accessible.
-
----
-
-## People Chain
-
-On-chain identity for the Polkadot ecosystem.
-
-<div class="text-left">
-
-- Register your on-chain identity (display name, email, web, social handles)
-- **Registrar system** for third-party identity verification
-- Username system (up to 32 characters)
-- Sub-accounts (up to 100 per identity)
-- Used by governance, staking, and the broader ecosystem
-
-</div>
-
-Notes:
-
-The People chain hosts Polkadot's identity system. If you've ever seen a verified identity on a Polkadot block explorer, that's coming from this chain. You can register your display name, email, website, and social handles, and then have registrars verify your identity. This is important for governance participation and building trust in the ecosystem.
-
----
-
-## Collectives Chain
-
-On-chain bodies that serve the Polkadot network.
-
-<div class="text-left">
-
-**Technical Fellowship:**
-- Ranked collective of protocol developers (Dan 1-9)
-- Can whitelist runtime upgrades
-- Has its own treasury and salary system
-
-**Ambassador Program:**
-- Community representatives (Candidate through Head Ambassador)
-- Funded through a dedicated sub-treasury
-
-**Secretary Collective:**
-- Administrative support
-
-</div>
-
-Notes:
-
-The Collectives chain hosts the governance bodies of Polkadot. The most important is the Technical Fellowship, which is a ranked collective of core protocol developers. They review and approve runtime upgrades, and members receive salaries funded by Polkadot's treasury. The Ambassador program manages community representation. These are all on-chain, transparent, and governed by the Polkadot community.
-
----
-
-## Bulletin Chain
-
-**Persistent data storage** for the Polkadot ecosystem.
-
-<div class="grid grid-cols-2">
-<div class="text-left">
-
-- Store arbitrary data on-chain (up to 2 MiB per transaction)
-- **IPFS-compatible**: data gets Blake2b CIDs, retrievable from IPFS
-- Automatic chunking for large files
-- Authorization-based access (no fees)
-- Default 2-week retention, renewable
-- SDKs in **Rust** and **TypeScript**
-
-</div>
-<div>
-
-```typescript
-// TypeScript SDK example
-import { AsyncBulletinClient } from
-  "@aspect-build/bulletin-sdk";
-
-const client = new AsyncBulletinClient(
-  api, signer
-);
-
-// Store data - gets an IPFS CID back
-await client.store(myData).send();
-```
-
-</div>
-</div>
-
-Notes:
-
-The Bulletin Chain is a specialized chain for data storage. Think of it as Polkadot's built-in IPFS pinning service. You can store data on-chain and it automatically becomes available via IPFS using standard content identifiers. This is perfect for storing dApp frontends, documents, or any data you want to be persistently and decentrally available. The SDK handles chunking large files automatically. We'll use this in the stack template for uploading frontend builds.
-
----
-
-## Custom Parachains
-
-Build your **own** application-specific blockchain.
-
-<div class="grid grid-cols-2">
-<div class="text-left">
-
-- Use the **Polkadot SDK** (Substrate + FRAME + Cumulus)
-- Fully customizable runtime logic
-- Deploy via **Coretime** (bulk or on-demand)
-- Get **shared security** from the Relay Chain
-- Communicate with other chains via **XCM**
-
-This is what makes Polkadot a **heterogeneous sharded network**: each parachain can have completely different logic while sharing the same security.
-
-</div>
-<div>
-
-<diagram class="mermaid">
-graph TB
-    SDK["Polkadot SDK"] --> R["Custom Runtime<br/>(FRAME Pallets)"]
-    R --> N["Parachain Node<br/>(Cumulus)"]
-    N --> RC["Relay Chain<br/>(Shared Security)"]
-</diagram>
-
-</div>
-</div>
-
-Notes:
-
-Beyond the system parachains that Polkadot provides, anyone can build their own parachain using the Polkadot SDK. This is the most powerful option: you get to define your own state transition function, your own storage model, your own transaction types, everything. It's like having your own blockchain that inherits Polkadot's security. You'll learn how to build runtimes with FRAME later in this course.
-
----
-
-## Platform Summary
-
-<diagram class="mermaid">
-graph TB
-    subgraph System["System Parachains"]
-        AH["Asset Hub<br/>Tokens, NFTs, DEX<br/>Governance, Staking<br/>Smart Contracts"]
-        BH["Bridge Hub<br/>Ethereum Bridge<br/>Kusama Bridge"]
-        CT["Coretime<br/>Blockspace Market"]
-        PC["People<br/>Identity"]
-        CO["Collectives<br/>Fellowship"]
-        BC["Bulletin<br/>Data Storage"]
-    end
-
-    subgraph Custom["Custom Parachains"]
-        P1["DeFi Chain"]
-        P2["Gaming Chain"]
-        P3["Your Chain"]
-    end
-
-    RC["Relay Chain<br/>(Shared Security + Validation)"]
-
-    RC --- AH
-    RC --- BH
-    RC --- CT
-    RC --- PC
-    RC --- CO
-    RC --- BC
-    RC --- P1
-    RC --- P2
-    RC --- P3
-</diagram>
-
-Notes:
-
-Here's the full picture of the Polkadot Platform. The Relay Chain sits at the center providing shared security. Around it are the system parachains, each serving a specific purpose. And then there are custom parachains that teams build for their specific applications. All of these chains can communicate with each other via XCM, the cross-consensus messaging format. This is the infrastructure your applications run on.
+Beyond Asset Hub, Polkadot has several specialized system chains. Bridge Hub connects Polkadot to Ethereum and Kusama using trustless on-chain light clients. The Coretime chain is a marketplace for blockspace, think of it like buying CPU time on a cloud provider. People chain handles on-chain identity. Collectives hosts governance bodies like the Technical Fellowship. The Bulletin Chain provides IPFS-compatible data storage. And anyone can build a custom parachain using the Polkadot SDK, with fully customizable logic that inherits Polkadot's shared security.
 
 ---
 
 # Polkadot Stack
 
-## Developer Tools & Experience
+## Developer Tools & SDKs
 
 Notes:
 
