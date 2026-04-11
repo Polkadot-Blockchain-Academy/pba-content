@@ -79,6 +79,97 @@ Here's the end-to-end flow the template demonstrates. Backend logic deploys to a
 
 ---
 
+## Running the Template
+
+Two modes for local development:
+
+<pba-cols>
+<pba-col>
+
+#### Standalone Mode
+
+- Single parachain node
+- `polkadot-omni-node` + your runtime WASM
+- Fastest to start, good for pallet and contract dev
+- No relay chain, no cross-chain features
+
+</pba-col>
+<pba-col>
+
+#### Zombienet Mode
+
+- Full multi-chain network
+- Relay chain + parachain + system chains
+- Required for **Statement Store**, XCM, and cross-chain testing
+- Configured via `scripts/zombienet.toml`
+
+</pba-col>
+</pba-cols>
+
+> Start with standalone for fast iteration. Switch to zombienet when you need the full network.
+
+Notes:
+
+There are two ways to run the template locally. Standalone mode uses polkadot-omni-node, a generic parachain binary that can load any runtime WASM blob. It boots a single chain in seconds, perfect for pallet development and contract testing. Zombienet mode spins up a full network: relay chain validators, your parachain as a collator, and system chains. You need zombienet for anything that involves the Statement Store, cross-chain messaging, or testing how your chain behaves in the real Polkadot topology. The template includes config files for both.
+
+---
+
+## The Omni-Node
+
+**`polkadot-omni-node`** is a generic parachain node binary.
+
+<div class="text-left">
+
+- You don't compile a custom node binary — you compile only the **runtime WASM**
+- The omni-node loads your runtime at startup via the **chain spec**
+- Includes: networking, consensus, RPC server, database — everything except your business logic
+- Works with **any** FRAME-based runtime
+
+</div>
+
+```bash
+# Build your runtime
+cargo build --release -p your-runtime
+
+# Generate a chain spec
+chain-spec-builder create -r your_runtime.wasm default
+
+# Run it
+polkadot-omni-node --chain chain-spec.json --dev
+```
+
+Notes:
+
+The omni-node is a key piece of the modern Polkadot developer experience. In the past, you had to compile a full custom node binary for every chain. Now, you only compile your runtime to WASM, and the omni-node provides everything else. This dramatically speeds up build times and simplifies deployment. The chain-spec-builder tool generates a chain specification from your runtime, and you pass that to the omni-node. The template is already set up to work this way.
+
+---
+
+## Deploying Your Project
+
+<div class="text-small">
+
+| Component | How It Deploys | Where It Lives |
+|-----------|---------------|----------------|
+| **Pallet** | Compile runtime WASM → register parachain via Coretime | Your parachain on the Polkadot network |
+| **EVM Contract** | `npx hardhat deploy` through eth-rpc sidecar | Asset Hub (or your parachain) |
+| **PVM Contract** | `npx hardhat deploy` with `@parity/hardhat-polkadot` plugin | Asset Hub (or your parachain) |
+| **Frontend** | Build static bundle → upload to Bulletin Chain → register .dot name via DotNS | IPFS, accessible via any Triangle host |
+
+</div>
+
+<div class="text-left">
+
+- **Local development**: deploy to your standalone node or zombienet
+- **Final project**: deploy to **Paseo** — the production network for your project
+
+</div>
+
+Notes:
+
+Here's the deployment story for each component. Pallets are compiled to WASM and deployed as part of a parachain runtime, you acquire coretime to run your chain. Smart contracts deploy through Hardhat, using the eth-rpc sidecar, same workflow as Ethereum. The frontend builds to a static bundle that gets uploaded to the Bulletin Chain, which makes it available on IPFS. Then you register a .dot name pointing to the IPFS content hash, and your app is live on the decentralized web. During development you'll work locally. Your final deliverable deploys to Paseo with a real .dot domain — that's where reviewers will see your work running.
+
+---
+
 <!-- .slide: data-background-color="#000000" -->
 
 # Your Project
