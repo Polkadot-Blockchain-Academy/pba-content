@@ -283,6 +283,32 @@ These are the things that get people hired. Not just shipping a polished demo, b
 
 ---
 
+## Deliverables
+
+What you hand in at the end of the program:
+
+<div class="text-left">
+
+- **Public GitHub repo**
+  - Working code (backend + frontend)
+  - Professional README: what it does, how to set up, how to use, known limitations
+- **Deployed on Paseo**
+  - Live and reachable at your **.dot name** via dot.li
+  - Frontend hosted on **Bulletin Chain**, backend on-chain
+- **5-minute pitch presentation**
+  - Describe and demo your project end-to-end
+  - Discuss next steps, learnings, and feedback for the stack
+- **Retrospective write-up**
+  - What worked, what didn't, and what you'd tell to Parity
+
+</div>
+
+Notes:
+
+These are the four things you hand in. A public GitHub repo with working code and an honest README. A live deployment on Paseo, reachable through your .dot name on dot.li, with the frontend hosted on Bulletin Chain. A 5-minute pitch on the final day where you demo the project and talk honestly about what broke. And a retrospective where you tell us what you'd change about the stack based on what you experienced. Reviewers read the retrospective carefully. It's not busywork. It's one of the most valuable things you produce.
+
+---
+
 ## What Should You Build?
 
 The best projects aren't "blockchain projects." They're **real products** that happen to be trustless and decentralized.
