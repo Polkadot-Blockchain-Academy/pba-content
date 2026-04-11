@@ -35,7 +35,7 @@ This is not a warning so you can lower your ambition. It is a warning so you can
 - **Hitting sharp edges is expected.** Things are still a work in progress.
 - **Filing a precise, reproducible bug report against the stack is valued.** A good bug report can be worth as much as a working feature.
 - **Submitting a PR that fixes a stack issue you hit is valued highest of all.** It is the clearest possible signal you can give us.
-- **Honest "here is what I tried, here is where I got stuck, here is what I learned" beats a polished demo that hides what broke.**
+- **A clear "here is what I tried, here is where I got stuck, here is what I learned" beats a polished demo that hides what broke.** Your struggles are valuable signal for us.
 
 You are helping us discover the shape of the stack at the same time as you are building on it.
 
@@ -54,9 +54,9 @@ This matters more than a grade would. A grade is a line in a transcript. A proje
 What reviewers will look for:
 
 - **Taste.** Did you choose a problem worth solving? Is your scope sane?
-- **Shipping discipline.** Does the repo run? Is the README honest about what works and what doesn't?
+- **Shipping discipline.** Does the repo run? Is the README clear about what works and what doesn't?
 - **Judgment under uncertainty.** When you got stuck, how did you reason about it? Did you pick a good next move?
-- **Honesty.** Hiding what broke is worse than reporting it clearly.
+- **Transparency.** Document what broke. Hiding limitations wastes everyone's time — reviewers will find them anyway.
 - **Cleanliness.** Readable code. Meaningful commits. Not a dump.
 - **Voice.** We can tell when a README was written by a human who understood the project. We can also tell when it wasn't.
 
@@ -183,7 +183,7 @@ In particular to your README. AI-generated prose is faster to produce than code,
 
 A few things to internalise:
 
-- **Humans read every word you ship.** AI generates them in seconds; we read them in minutes. A 4000-word README that nobody asked for is not "thorough" - it is wasting reviewer time. Length is not a virtue. Density and honesty are.
+- **Humans read every word you ship.** AI generates them in seconds; we read them in minutes. A 4000-word README that nobody asked for is not "thorough" - it is wasting reviewer time. Length is not a virtue. Density and clarity are.
 - **A wall of confident-sounding text is slop, even if every sentence is technically correct.** Reviewers can feel the difference between a README written by someone who built the thing and one assembled out of prompts. So can your peers.
 - **Rule of thumb for your README: 90% you, 10% AI.** Use AI for grammar, spelling, formatting cleanup, maybe rephrasing a clunky paragraph. Do **not** use it to draft the document. The structure, the framing, the choices about what to include and what to cut - those need to be yours. Same for the retrospective.
 - **If you expect us to read it, you should have read it yourself. Twice.** End to end. Out loud, even. If you can't be bothered, neither can we, and we will notice.
@@ -252,12 +252,12 @@ On the final day of the program, every student gives a short presentation. This 
 1. **The product.** What is it? In one sentence, then show us.
 2. **Why it's interesting / relevant.** Why did you pick this problem? Who is it for? Why does it belong on the Polkadot stack specifically?
 3. **The demo.** Walk through the thing working end-to-end - backend, frontend, decentralized deploy. This is the heart of the pitch. Spend time here.
-4. **Learnings, problems, and what broke.** The honest part. Sharp edges you hit on the stack, bug reports you filed, things that surprised you, things you'd do differently. Reviewers value this section more than you'd guess.
+4. **Learnings, problems, and what broke.** This is the part Parity cares most about. Sharp edges you hit on the stack, bug reports you filed, things that surprised you, things you'd do differently. Reviewers value this section more than you'd guess.
 5. **Next steps, future ideas, and feedback to the stack.** Where would you take this next? What's still rough? What should Parity know about the stack based on what you went through?
 
 ### 9.3 Tone
 
-Short, sharp, honest. The worst pitches hide what broke and pad the demo with filler. The best ones leave a reviewer thinking _"I want to clone that repo and run it."_ Aim for that.
+Short, sharp, direct. The worst pitches hide what broke and pad the demo with filler. The best ones leave a reviewer thinking _"I want to clone that repo and run it."_ Aim for that.
 
 ---
 
@@ -285,6 +285,6 @@ Rough shape:
 
 ## 12. A Final Note
 
-You are among the first cohorts building on the decentralized Polkadot app stack as a unified thing. A lot of what you find - good and bad - will directly shape how Parity builds this stack for the next few years. Take that seriously. Build something you would actually want to exist. Be honest about what happened. Have fun.
+You are among the first cohorts building on the decentralized Polkadot app stack as a unified thing. A lot of what you find - good and bad - will directly shape how Parity builds this stack for the next few years. Take that seriously. Build something you would actually want to exist. Document what you found — good and bad. Have fun.
 
 Good luck.
