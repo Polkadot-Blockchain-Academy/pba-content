@@ -28,7 +28,9 @@ A reference project demonstrating the full Polkadot stack through **Proof of Exi
 
 </div>
 
-Every component is **optional and removable**. Use it as a starting point, not a constraint.
+Every component is **minimal, modular, and removable**.
+
+Use the template as an **optional** starting point, not a constraint.
 
 Notes:
 
@@ -120,9 +122,11 @@ There are two ways to run the template locally. Standalone mode uses polkadot-om
 
 <div class="text-left">
 
-- You don't compile a custom node binary — you compile only the **runtime WASM**
+- You don't compile a custom node binary
+  - You compile only the **runtime WASM**
 - The omni-node loads your runtime at startup via the **chain spec**
-- Includes: networking, consensus, RPC server, database — everything except your business logic
+- Includes everything except your business logic
+  - Networking, consensus, RPC server, database
 - Works with **any** FRAME-based runtime
 
 </div>
@@ -250,13 +254,22 @@ This is the most important framing for the entire program. We're not grading you
 
 The behaviors that stand out to us:
 
-<div class="text-left">
+<div class="text-left text-small">
 
-- **Self-starters** - You don't wait to be told what to do. You explore, you try things, you ask when stuck.
-- **Builders with taste** - You pick a problem worth solving and build something that takes advantage of what Web3 actually provides.
-- **Stack improvers** - You find a bug? You open an issue. You can fix it? You open a PR. This is the strongest signal you can give us.
-- **Collaborators** - You help others, share what you learn, and make the people around you better.
-- **Honest communicators** - You say what works, what doesn't, and what you'd do differently. No hiding.
+- **Self-starters**
+  - You don't wait to be told what to do
+  - You explore, you try things, you ask when stuck
+- **Builders with taste**
+  - You pick a problem worth solving
+  - You build something that takes advantage of what Web3 actually provides
+- **Stack improvers**
+  - You find a bug? You open an issue
+  - You can fix it? You open a PR
+  - This is the strongest signal you can give us
+- **Collaborators**
+  - You help others, share what you learn, and make the people around you better
+- **Active communicators**
+  - You say what works, what doesn't, and what you'd do differently
 
 </div>
 
@@ -266,57 +279,114 @@ These are the things that get people hired. Not just shipping a polished demo, b
 
 ---
 
-## Project Ideas: Practical Apps
+## What Should You Build?
 
-<div class="text-small">
+The best projects aren't "blockchain projects." They're **real products** that happen to be trustless and decentralized.
 
-| Idea | What It Is | Suggested Paths |
-|------|-----------|-----------------|
-| **Versioned Markdown Wiki** | A wiki where snapshots are stored on Bulletin Chain, with on-chain ACL and version history | Pallet + Web |
-| **On-Chain Invoicing** | Create invoices, pay them, both sides get verifiable records | Pallet or Solidity + Web |
-| **Ticketing / Event Passes** | Issue tickets as on-chain assets. Transferable, verifiable, gate access via signature | Pallet + Web or TUI |
-| **Ephemeral File Drop** | WeTransfer-style share via Bulletin Chain. Upload, get a .dot link, file expires after retention window | Pallet + Web or CLI++ |
-
-</div>
+Ask yourself: _What existing app or system would be fundamentally better if no single entity controlled it?_
 
 Notes:
 
-These are practical apps with clear user value. The wiki is a great full-stack exercise, touching Bulletin Chain for storage and on-chain logic for access control. Invoicing is the bread-and-butter payments use case. Ticketing maps cleanly to on-chain assets. The file drop is an honest fit for what Bulletin Chain actually is: a content-addressed blob layer with a two-week retention window. All of these are in the idea bank.
+This is the key question. Don't start with "what can I build on a blockchain." Start with "what product would I want to exist that only Web3 can deliver." The blockchain is invisible to the user. What they see is a product that works, that they can trust, that nobody can shut down.
 
 ---
 
-## Project Ideas: Games & Protocols
+## Idea: Decentralized Everyday Apps
 
-<div class="text-small">
+Rebuild the apps people already use, but trustless.
 
-| Idea | What It Is | Suggested Paths |
-|------|-----------|-----------------|
-| **On-Chain Turn-Based Game** | Chess, cards, strategy - all state on-chain, turns enforced by backend | Pallet + Web or TUI |
-| **Tournament / Leaderboard** | Verifiable leaderboards, brackets, prize pools that any game can plug into | Pallet or Solidity + Web |
-| **Protocol Port** | Take something interesting from another chain and bring it to Polkadot | Any path |
+<div class="text-left">
 
-</div>
-
-<br />
-
-## Project Ideas: Pallet Design
-
-<div class="text-small">
-
-| Idea | What It Is |
-|------|-----------|
-| **Direct Delegation PoS** | Validators, delegators, active set selection, reward splitting |
-| **Stateful Multisig** | On-chain multisig addresses with propose → vote → execute lifecycle |
-| **Free Transaction Pallet** | Lock tokens to earn weight credits for fee-free transactions |
-| **Multi-Token Treasury** | Multi-asset treasury with governance-gated spending tracks |
+- **Collaborative documents**
+  - Google Docs, but your data lives on Bulletin Chain, not Google's servers
+- **Chat and messaging**
+  - Signal-like messaging where the protocol is open
+  - No company can read or kill it
+- **Social networks**
+  - Own your identity, your followers, your content
+  - Move between apps freely
+- **File sharing**
+  - WeTransfer, but censorship-resistant with a .dot link
 
 </div>
-
-> Full idea bank with details: [`projects/ideas.md`](../../projects/ideas.md)
 
 Notes:
 
-Games are memorable demos. A clean on-chain game is one of the strongest things you can ship. Protocol ports are interesting because they widen the ecosystem, take something that works on another chain and bring it to Polkadot. The pallet design ideas are more systems-focused, great if you love mechanism design. All of these have been done before so they're sure to work, but the best version is one you make your own. And remember: wildcards are welcome. The best projects are often the weird ones a student actually cared about.
+People already use Google Docs, WhatsApp, Twitter, WeTransfer every day. The demand is proven. The problem is that one company controls all of it, your data, your access, your identity. A decentralized version doesn't need to be better at everything, it just needs to provide the properties that centralized versions fundamentally cannot: censorship resistance, data ownership, and no single point of failure.
+
+---
+
+## Idea: New Financial Systems
+
+Build financial primitives that don't exist yet, or fix the ones that are broken.
+
+<div class="text-left">
+
+- **Payments, invoicing, and remittances**
+  - Pay back friends, send money home, settle invoices
+  - Verifiable, borderless, no middlemen
+- **Ticketing and event passes**
+  - Verifiable, transferable, no scalpers or platform fees
+- **Investment DAOs**
+  - Pool funds with friends or strangers
+  - Invest collectively with transparent rules
+- **Micropayments**
+  - Pay-per-use models that are impractical with traditional payment rails
+
+</div>
+
+Notes:
+
+DeFi proved that on-chain finance works. But most of what exists is trading infrastructure for crypto-native users. The opportunity is in financial systems that serve everyone: invoicing for freelancers, transparent treasuries for organizations, micropayment models that let creators get paid directly. These are products with real demand that traditional finance serves poorly.
+
+---
+
+## Idea: Decentralized Protocols
+
+Build new infrastructure that doesn't exist yet — composable building blocks the whole ecosystem can use.
+
+<div class="text-left">
+
+- **Reputation systems**
+  - Portable, verifiable reputation that follows you across apps
+- **Coordination protocols**
+  - Scheduling, voting, dispute resolution without a central authority
+- **Data layers**
+  - Indexing, curation, or discovery on top of Bulletin Chain and on-chain state
+- **Tooling for developers**
+  - Anything that makes the next person's job easier
+
+</div>
+
+Notes:
+
+Some of the highest-impact projects aren't end-user apps at all. They're protocols and tools that make everything else better. A reputation layer, a coordination protocol, a data indexing service — these are building blocks that other developers can compose with. If your project becomes something other people want to build on top of, that's an incredibly strong signal. And developer tooling counts too — if you hit a gap in the stack and build a tool to fill it, that's real contribution.
+
+---
+
+## Idea: Onboarding and Adoption
+
+Build systems that bring new users into Web3 — make the first experience seamless and rewarding.
+
+<div class="text-left">
+
+- **Games**
+  - The most intuitive way to onboard casual users
+  - They don't even realize it's Web3
+- **Incentive systems**
+  - Faucets, airdrops, reward programs
+  - Give people a reason to show up
+- **Free transactions**
+  - Remove the fee barrier entirely for new users
+- **Simple identity**
+  - One-click wallet creation, social login bridges
+  - Progressive decentralization
+
+</div>
+
+Notes:
+
+The hardest problem in Web3 isn't building the technology. It's getting people to use it. The first experience matters enormously. If a user has to understand gas fees, seed phrases, and wallet extensions before they can do anything, you've already lost them. Games are powerful because they provide intrinsic motivation — people play because it's fun, and the Web3 part is invisible. Incentive systems give people a reason to try. Free transactions remove the biggest friction point. And simple identity flows mean people can start using your app in seconds, not minutes.
 
 ---
 
@@ -340,36 +410,19 @@ This is practical advice from people who have hired engineers this way. Explore 
 
 ## Key Resources
 
-<div class="grid grid-cols-2">
 <div class="text-left">
 
-**Your starting points:**
-- `polkadot-stack-template` - Fork this
-- `projects/PBP-Lisbon-2026/` - Project guidelines
-- `projects/ideas.md` - Idea bank
+- **Stack Template**
+  - [github.com/shawntabrizi/polkadot-stack-template](https://github.com/shawntabrizi/polkadot-stack-template)
+  - Fork this to start your project
+- **Project Guidelines**
+  - [`projects/PBP-Lisbon-2026/project-guidelines.md`](../../projects/PBP-Lisbon-2026/project-guidelines.md)
+  - Requirements, evaluation, deliverables
+- **Git Repositories**
+  - [github.com/orgs/paritytech/teams/pba-lisbon-2026/repositories](https://github.com/orgs/paritytech/teams/pba-lisbon-2026/repositories)
+  - Access to private repos for the program
+  - Also check out the public repos at [github.com/paritytech](https://github.com/paritytech)
 
-**Repositories:**
-- `polkadot-sdk` - Core SDK
-- `host-sdk` - Triangle host SDK
-- `dotns` - .dot name service
-- `polkadot-bulletin-chain` - Data storage
-- `polkadot-api` - PAPI
-
-</div>
-<div class="text-left">
-
-**Documentation:**
-- papi.how - PAPI docs
-- paritytech.github.io/polkadot-sdk - SDK docs
-- Blockscout explorer
-- Polkadot Wiki
-
-**Tools:**
-- Polkadot.js Apps - Chain explorer
-- Zombienet - Local networks
-- psvm - SDK version manager
-
-</div>
 </div>
 
 Notes:
