@@ -6,26 +6,6 @@ Read it end to end before you start. If something here is unclear or contradicts
 
 ---
 
-## Quick Reference Checklist
-
-Use this as a sanity check throughout the project:
-
-**Requirements (all mandatory):**
-
-- [ ] **Backend** - one of: Pallet / Solidity on EVM / Solidity on PVM / Rust on PVM
-- [ ] **Frontend** - one of: Web app / TUI / MCP server
-- [ ] **Deployment** - live on Bulletin Chain with a DotNS name
-
-**Deliverables (due pitch day):**
-
-- [ ] GitHub repo with working code (builds, tests pass)
-- [ ] README covering: what it does, how to run it, what works/doesn't, deployment URL
-- [ ] Meaningful commit history (no `fix fix fix wip more`)
-- [ ] Retrospective filled in ([`retrospective-template.md`](./retrospective-template.md))
-- [ ] 5-minute pitch with slides and demo (live or recorded fallback)
-
----
-
 ## 1. You Are Building on an ever evolving Stack (Read This First)
 
 The Polkadot stack you will build on is ever evolving. Some of it like the Pallets are pretty battle tested, but new tech like - PVM smart contracts, Bulletin Chain, Statement Store, DotNS - is **effectively in alpha**. It is real, it works, and it is also still very much under active development. Components ship weekly. Interfaces shift. Some things you expect to work will not work, and the answer will sometimes be "nobody has tried that yet."
@@ -190,17 +170,22 @@ A few things to internalise:
 
 ---
 
-## 7. Deliverables
+## 7. Deliverables Checklist
 
 At the end of the program you hand in:
 
-1. **A GitHub repo** with:
-   - Working code (backend + frontend).
-   - A README covering: what the project does, which path you picked, how to run it end-to-end, what works, what doesn't, known limitations, design decisions and compromises you made (and would revisit), and the URL of your decentralized deployment.
-   - Meaningful commit history.
-2. **A working demo.** Live is preferred. A recorded fallback is always nice in case live is unsafe (e.g. testnet flakiness).
-3. **A 5-minute pitch / demo presentation** on pitch day. See section 9 for what this should look like.
-4. **A retrospective write-up** using [`retrospective-template.md`](./retrospective-template.md). This is the short post-mortem where you tell us what worked, what broke, and - most importantly - **what you'd tell the Parity team about the stack based on what you hit**. Reviewers read this carefully. It is not busywork.
+- [ ] **GitHub repo** with working code (backend + frontend)
+- [ ] **README** covering:
+  - [ ] What the project does
+  - [ ] Which path you picked (backend + frontend)
+  - [ ] How to run it end-to-end
+  - [ ] What works and what doesn't
+  - [ ] Known limitations and design compromises
+  - [ ] URL of your decentralized deployment
+- [ ] **Meaningful commit history** (no `fix fix fix wip more`)
+- [ ] **Working demo** — live preferred, recorded fallback if live is risky (see section 9)
+- [ ] **5-minute pitch** with slides on pitch day (see section 9)
+- [ ] **Retrospective** using [`retrospective-template.md`](./retrospective-template.md) — what worked, what broke, and what you'd tell Parity about the stack. Reviewers read this carefully.
 
 ---
 
@@ -221,7 +206,7 @@ A final pass before you push your last commit. None of this is busywork - every 
 ### 8.2 Repo
 
 - **Meaningful git history.** Reviewers will read your commits. `fix`, `wip`, `more` ten times in a row is a red flag (see section 6.4).
-- **README at the repo root**, covering everything listed in section 7 deliverable 1. Include the Bulletin Chain / DotNS URL of your deployment so reviewers can click straight through.
+- **README at the repo root**, covering everything in the section 7 checklist. Include the Bulletin Chain / DotNS URL so reviewers can click straight through.
 - **Retrospective filled in** using [`retrospective-template.md`](./retrospective-template.md). Don't leave this for the morning of pitch day.
 
 ### 8.3 Deployment
