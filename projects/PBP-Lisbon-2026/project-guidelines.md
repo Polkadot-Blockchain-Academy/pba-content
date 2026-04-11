@@ -6,6 +6,26 @@ Read it end to end before you start. If something here is unclear or contradicts
 
 ---
 
+## Quick Reference Checklist
+
+Use this as a sanity check throughout the project:
+
+**Requirements (all mandatory):**
+
+- [ ] **Backend** - one of: Pallet / Solidity on EVM / Solidity on PVM / Rust on PVM
+- [ ] **Frontend** - one of: Web app / TUI / MCP server
+- [ ] **Deployment** - live on Bulletin Chain with a DotNS name
+
+**Deliverables (due pitch day):**
+
+- [ ] GitHub repo with working code (builds, tests pass)
+- [ ] README covering: what it does, how to run it, what works/doesn't, deployment URL
+- [ ] Meaningful commit history (no `fix fix fix wip more`)
+- [ ] Retrospective filled in ([`retrospective-template.md`](./retrospective-template.md))
+- [ ] 5-minute pitch with slides and demo (live or recorded fallback)
+
+---
+
 ## 1. You Are Building on an ever evolving Stack (Read This First)
 
 The Polkadot stack you will build on is ever evolving. Some of it like the Pallets are pretty battle tested, but new tech like - PVM smart contracts, Bulletin Chain, Statement Store, DotNS - is **effectively in alpha**. It is real, it works, and it is also still very much under active development. Components ship weekly. Interfaces shift. Some things you expect to work will not work, and the answer will sometimes be "nobody has tried that yet."
@@ -21,7 +41,7 @@ You are helping us discover the shape of the stack at the same time as you are b
 
 ### The vision you are building toward
 
-The Polkadot stack is reaching for a **fully decentralized application stack**: on-chain logic, decentralized storage (Bulletin Chain), verifiable name resolution (DotNS), frictionless deployment and more that we wont use yet because its stil learly in the making. The long-term goal is that an indie developer can ship a real product with no centralized dependencies and no gatekeepers. Your project is a concrete test of how close we are.
+The Polkadot stack is reaching for a **fully decentralized application stack**: on-chain logic, decentralized storage (Bulletin Chain), verifiable name resolution (DotNS), frictionless deployment and more that we won't use yet because it's still early in the making. The long-term goal is that an indie developer can ship a real product with no centralized dependencies and no gatekeepers. Your project is a concrete test of how close we are.
 
 ---
 
