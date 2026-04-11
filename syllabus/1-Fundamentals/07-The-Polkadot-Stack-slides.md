@@ -159,33 +159,11 @@ So what is Polkadot actually building? Think of it as a decentralized cloud prov
 
 Polkadot fulfills this vision across three layers:
 
-<diagram class="mermaid">
-graph TB
-    subgraph Triangle["Polkadot Triangle"]
-        T1["Desktop App"]
-        T2["Mobile App"]
-        T3["Web App (dot.li)"]
-        T4["Host SDK"]
-    end
-
-    subgraph Stack["Polkadot Stack"]
-        S1["Polkadot SDK / FRAME"]
-        S2["Smart Contracts"]
-        S3["PAPI / subxt"]
-        S4["Ethereum Tooling"]
-    end
-
-    subgraph Platform["Polkadot Platform"]
-        P1["Relay Chain"]
-        P2["Asset Hub"]
-        P3["Bridge Hub"]
-        P4["Bulletin Chain"]
-        P5["Parachains"]
-    end
-
-    Triangle --> Stack
-    Stack --> Platform
-</diagram>
+| Layer | Purpose | Components |
+|-------|---------|------------|
+| **Polkadot Triangle** | User Interfaces | Desktop App, Mobile App, Web App, Host SDK |
+| **Polkadot Stack** | Developer Tools | Polkadot SDK / FRAME, Smart Contracts, PAPI / subxt, Ethereum Tooling |
+| **Polkadot Platform** | Web3 Cloud Infrastructure | Relay Chain, Asset Hub, Bridge Hub, Bulletin Chain, Parachains |
 
 Notes:
 
@@ -229,7 +207,7 @@ Notes:
 
 Let's start with the foundation. The Polkadot Platform is the blockchain infrastructure layer. Think of it as a decentralized cloud. It provides compute, storage, and networking that your applications run on. Unlike traditional cloud providers, this infrastructure is trustless, permissionless, and governed by its stakeholders.
 
----v
+---
 
 ## The Relay Chain
 
@@ -266,7 +244,7 @@ Notes:
 
 The Relay Chain is the central chain of Polkadot. Its primary job is to provide shared security to all connected parachains. It does this by coordinating a set of validators who verify parachain blocks without re-executing every transaction. Think of it as an auditing layer. Importantly, the Relay Chain itself is NOT where users submit transactions. That's what the system parachains are for. There's actually an ongoing migration called AHM, the Asset Hub Migration, which is moving even more functionality off the Relay Chain and onto Asset Hub, making the Relay Chain purely focused on validation and security.
 
----v
+---
 
 ## Asset Hub
 
@@ -308,11 +286,18 @@ Notes:
 
 Asset Hub is becoming THE chain in Polkadot. It started as a simple chain for managing assets, but it's evolving into the primary chain where users interact. It now hosts fungible tokens, NFTs, a DEX for asset conversion, and critically, smart contracts via pallet-revive. Governance and staking are migrating here from the Relay Chain. Post-AHM, if you want to do something on Polkadot, Asset Hub is probably where you'll do it. For your projects, this is the chain you'll be deploying to.
 
----v
+---
 
 ## Bridge Hub
 
 Connecting Polkadot to the outside world.
+
+<diagram class="mermaid">
+graph LR
+    E["Ethereum"] <-->|"Snowbridge"| BH["Bridge Hub"]
+    K["Kusama"] <-->|"GRANDPA Bridge"| BH
+    BH <-->|"XCM"| AH["Asset Hub"]
+</diagram>
 
 <div class="grid grid-cols-2">
 <div class="text-left">
@@ -322,20 +307,13 @@ Connecting Polkadot to the outside world.
 - Bidirectional message passing
 - XCM routing between ecosystems
 
+</div>
+<div>
+
 **Ethereum Bridge (Snowbridge):**
 - Ethereum Beacon Chain light client
 - Inbound/outbound message queues
 - Token transfers between Polkadot and Ethereum
-
-</div>
-<div>
-
-<diagram class="mermaid">
-graph LR
-    E["Ethereum"] <-->|"Snowbridge"| BH["Bridge Hub"]
-    K["Kusama"] <-->|"GRANDPA Bridge"| BH
-    BH <-->|"XCM"| AH["Asset Hub"]
-</diagram>
 
 </div>
 </div>
@@ -344,26 +322,12 @@ Notes:
 
 Bridge Hub is the dedicated chain for cross-ecosystem bridges. It runs light clients of external chains to verify their state trustlessly. The Kusama bridge uses a GRANDPA light client, and the Ethereum bridge (Snowbridge) runs an Ethereum Beacon Chain light client. This means Polkadot can verify Ethereum blocks on-chain and vice versa, enabling trustless token transfers and message passing between ecosystems.
 
----v
+---
 
 ## Coretime Chain
 
 The **marketplace for blockspace**.
-
-<div class="grid grid-cols-2">
-<div class="text-left">
-
 The Relay Chain has **cores**, each capable of progressing one parachain at a time.
-
-**Two ways to get coretime:**
-
-1. **Bulk Coretime** - Purchase cores in advance through periodic sales (Broker pallet)
-2. **On-Demand Coretime** - Pay per block, no commitment needed
-
-This replaced the legacy auction/lease system with a flexible market.
-
-</div>
-<div>
 
 <diagram class="mermaid">
 graph TB
@@ -376,14 +340,17 @@ graph TB
     C3 --> P3["Any Parachain"]
 </diagram>
 
-</div>
-</div>
+**Two ways to get coretime:**
+
+1. **Bulk Coretime** - Purchase cores in advance through periodic sales
+2. **On-Demand Coretime** - Pay per block, no commitment needed
+
 
 Notes:
 
 Think of Polkadot like a computer with multiple CPU cores. Each core can process one parachain's block at a time. The Coretime chain runs a marketplace where teams can purchase access to these cores. Bulk coretime is like reserving a server: you buy cores in advance for a period. On-demand coretime is like serverless: you pay per block when you need it. This is the "gas" of Polkadot, it's how you pay for your chain's execution. For development and testing, on-demand coretime is very accessible.
 
----v
+---
 
 ## People Chain
 
@@ -403,7 +370,7 @@ Notes:
 
 The People chain hosts Polkadot's identity system. If you've ever seen a verified identity on a Polkadot block explorer, that's coming from this chain. You can register your display name, email, website, and social handles, and then have registrars verify your identity. This is important for governance participation and building trust in the ecosystem.
 
----v
+---
 
 ## Collectives Chain
 
@@ -429,7 +396,7 @@ Notes:
 
 The Collectives chain hosts the governance bodies of Polkadot. The most important is the Technical Fellowship, which is a ranked collective of core protocol developers. They review and approve runtime upgrades, and members receive salaries funded by Polkadot's treasury. The Ambassador program manages community representation. These are all on-chain, transparent, and governed by the Polkadot community.
 
----v
+---
 
 ## Bulletin Chain
 
@@ -468,7 +435,7 @@ Notes:
 
 The Bulletin Chain is a specialized chain for data storage. Think of it as Polkadot's built-in IPFS pinning service. You can store data on-chain and it automatically becomes available via IPFS using standard content identifiers. This is perfect for storing dApp frontends, documents, or any data you want to be persistently and decentrally available. The SDK handles chunking large files automatically. We'll use this in the stack template for uploading frontend builds.
 
----v
+---
 
 ## Custom Parachains
 
@@ -502,7 +469,7 @@ Notes:
 
 Beyond the system parachains that Polkadot provides, anyone can build their own parachain using the Polkadot SDK. This is the most powerful option: you get to define your own state transition function, your own storage model, your own transaction types, everything. It's like having your own blockchain that inherits Polkadot's security. You'll learn how to build runtimes with FRAME later in this course.
 
----v
+---
 
 ## Platform Summary
 
@@ -550,7 +517,7 @@ Notes:
 
 Now let's move up to the developer tools layer. This is where you spend your time as a builder. The Polkadot Stack gives you multiple paths to build applications, from writing custom blockchain runtimes to deploying Solidity smart contracts to building frontends with TypeScript.
 
----v
+---
 
 ## Polkadot SDK
 
@@ -604,7 +571,7 @@ Notes:
 
 The Polkadot SDK is a single monorepo that contains three formerly separate projects. Substrate is the blockchain framework: it provides all the node-side infrastructure like networking, consensus, and the database. FRAME is the runtime development framework: it gives you modular building blocks called pallets to compose your chain's business logic. Cumulus transforms a Substrate chain into a Polkadot parachain. Together, they give you everything you need to build a custom blockchain.
 
----v
+---
 
 ## FRAME: Building Blocks
 
@@ -653,7 +620,7 @@ Notes:
 
 FRAME is what you'll spend most of this course learning. Each pallet is a self-contained module with clear responsibilities. You define your storage layout, your callable functions, your events, and your errors. The construct_runtime! macro then wires everything together into a complete runtime. The code on the right is from the stack template's Proof of Existence pallet. It defines a storage map from hashes to claims, and a function to create a claim.
 
----v
+---
 
 ## Smart Contracts: pallet-revive
 
@@ -682,7 +649,7 @@ Notes:
 
 One of the most exciting developments in Polkadot is pallet-revive. It lets you write Solidity smart contracts and deploy them to Polkadot. The same Solidity source code can be compiled to two different targets: traditional EVM bytecode using the standard solc compiler, or PolkaVM bytecode using resolc, which compiles Solidity to RISC-V instructions. PolkaVM is Polkadot's own virtual machine, designed for security and performance. In the stack template, we deploy the exact same Proof of Existence contract to both targets.
 
----v
+---
 
 ## The eth-rpc Sidecar
 
@@ -709,7 +676,7 @@ Notes:
 
 The eth-rpc sidecar is the magic that makes Ethereum tooling work with Polkadot. It's a separate process that speaks Ethereum JSON-RPC on port 8545, just like Geth or Hardhat Network. Under the hood, it translates those calls into Substrate RPC calls using the subxt library. This means you can use MetaMask to sign transactions, Hardhat to deploy contracts, Foundry to test, and any Ethereum library to interact with your contracts, all while running on a Polkadot chain.
 
----v
+---
 
 ## Two Developer Access Paths
 
@@ -744,7 +711,7 @@ Notes:
 
 This is a key architectural insight. There are two parallel paths to interact with the same Polkadot chain. The native Substrate path uses PAPI for TypeScript or subxt for Rust, connecting directly to the node via WebSocket. The Ethereum-compatible path uses viem or alloy, connecting through the eth-rpc sidecar. Both paths access the same chain state. In the stack template, the frontend uses PAPI for pallet interactions and viem for contract interactions. The CLI uses subxt and alloy respectively.
 
----v
+---
 
 ## PAPI: Polkadot API
 
@@ -791,7 +758,7 @@ Notes:
 
 PAPI is THE TypeScript library for Polkadot development. Its killer feature is being light-client first. Instead of connecting to a centralized RPC endpoint, it can embed smoldot, a Substrate light client that runs directly in the browser. This means your dApp can verify chain state trustlessly. It also generates fully typed TypeScript APIs from on-chain metadata, so you get autocomplete and type-checking for every storage query, transaction, and event. This is a huge improvement over polkadot.js which provided types at runtime.
 
----v
+---
 
 ## subxt: Rust Client
 
@@ -835,7 +802,7 @@ Notes:
 
 subxt is the Rust counterpart to PAPI. If you're building a backend service, a CLI tool, or any Rust application that needs to talk to a Substrate chain, this is what you use. Like PAPI, it can generate typed APIs from chain metadata at compile time. The stack template's CLI tool uses subxt for all pallet interactions, and alloy for all contract interactions through the eth-rpc adapter.
 
----v
+---
 
 ## Ethereum Tooling
 
@@ -888,7 +855,7 @@ Notes:
 
 If you already know Ethereum development, you can bring all of that knowledge to Polkadot. viem, ethers.js, Hardhat, Foundry, MetaMask, all work through the eth-rpc sidecar. The code looks identical to what you'd write for Ethereum. In the stack template, Hardhat with the @parity/hardhat-polkadot plugin handles compiling contracts to both EVM and PVM targets, and deploying them through eth-rpc. The frontend uses viem for all contract interactions.
 
----v
+---
 
 ## The polkadot-stack-template
 
@@ -913,7 +880,7 @@ Notes:
 
 Here's the complete layout of the stack template. Five major components, each demonstrating a different part of the Polkadot developer experience. The blockchain directory contains a full parachain runtime with a custom pallet. The contracts directory has the same Solidity contract compiled to two targets. The web directory is a React frontend that talks to all three implementations. The CLI is a Rust tool that does the same. And the scripts directory orchestrates local development with zombienet.
 
----v
+---
 
 ## Stack Template: The Pallet
 
@@ -943,7 +910,7 @@ Notes:
 
 Here's the actual pallet code from the template. It's a clean, minimal FRAME pallet. A StorageMap maps 32-byte blake2 hashes to Claims, which record the owner and block number. The create_claim function checks that the hash isn't already claimed, creates a new claim, inserts it into storage, and emits an event. This is the pattern you'll learn throughout the FRAME module of this course.
 
----v
+---
 
 ## Stack Template: The Contract
 
@@ -970,7 +937,7 @@ Notes:
 
 And here's the Solidity version of the same logic. Same concept, same structure, just in Solidity instead of Rust. The remarkable thing is that this exact same source file gets compiled to two different bytecode formats. solc produces traditional EVM bytecode, and resolc produces PolkaVM RISC-V bytecode. Both are deployed to the same chain through pallet-revive, and both are accessible through the eth-rpc sidecar. The frontend and CLI can interact with both using the same ABI.
 
----v
+---
 
 ## Stack Template: The Frontend
 
@@ -1016,7 +983,7 @@ Notes:
 
 The React frontend demonstrates both access paths side by side. For pallet interactions, it uses PAPI with typed descriptors. For contract interactions, it uses viem. Both are talking to the same chain. The frontend also has smart host detection: if it's running inside a Triangle User Agent like Polkadot Desktop, it uses the host's wallet for accounts. If it's running standalone in a browser, it falls back to browser extension wallets like Polkadot.js or Talisman.
 
----v
+---
 
 ## Stack Template: The CLI
 
@@ -1059,7 +1026,7 @@ Notes:
 
 The Rust CLI mirrors everything the frontend does, but from the command line. Pallet commands use subxt for native Substrate interaction. Contract commands use alloy through the eth-rpc adapter. The prove command is the all-in-one: it hashes a file, creates a claim on either the pallet or contract, and optionally uploads the file to the Bulletin Chain for persistent storage. This is a great reference for building Rust backend services.
 
----v
+---
 
 ## DotNS: .dot Name Service
 
@@ -1095,7 +1062,7 @@ Notes:
 
 DotNS is Polkadot's name service, similar to ENS on Ethereum. You register a .dot name and point it to an IPFS content hash. When a user navigates to myapp.dot in a Triangle User Agent, the host resolves the name on-chain, gets the IPFS CID, fetches the content, and renders it in a sandboxed view. The registration uses a commit-reveal scheme to prevent front-running, and pricing is aware of Proof-of-Personhood status, names are cheaper or free for verified humans.
 
----v
+---
 
 ## Development Infrastructure
 
@@ -1132,7 +1099,7 @@ Notes:
 
 A few more tools worth knowing about. Zombienet lets you spin up a local multi-chain test network with a single config file, great for development. The omni-node is a generic parachain binary that can load any runtime, so you don't need to compile a custom node. For deployment, Paseo is the canonical testnet. You can deploy frontends to IPFS and register dot domains to make them accessible through Triangle hosts. Blockscout and Polkadot.js Apps are the main block explorers, and psvm helps manage SDK versions across your Cargo.toml files.
 
----v
+---
 
 ## Developer Stack Summary
 
@@ -1192,7 +1159,7 @@ Notes:
 
 Now let's look at the top layer: how users actually interact with your applications. The Polkadot Triangle is an architecture for building secure, user-friendly applications that embed Polkadot dApps.
 
----v
+---
 
 ## The Triangle Architecture
 
@@ -1230,7 +1197,7 @@ Notes:
 
 The Triangle is a three-party architecture. The Host is a trusted application shell, think of it like a web browser for Polkadot. It owns all the security-critical infrastructure: private keys, light client connections, and network access. The Product is your dApp, running inside a sandboxed container with zero direct network access. It communicates with the blockchain exclusively through the host's bridge protocol. This separation means your dApp never touches private keys and can't make unauthorized network requests.
 
----v
+---
 
 ## Triangle User Agents
 
@@ -1277,7 +1244,7 @@ Notes:
 
 There are three main Triangle hosts being built. The desktop app uses Tauri, a lightweight alternative to Electron that wraps a Rust backend with a native webview. The mobile apps use UniFFI to bridge the Rust host-sdk to Swift and Kotlin. And dot.li is a web-based host that runs entirely in the browser using smoldot and Helia for IPFS. All three share the same core logic from the host-sdk, just with different platform shells. dot.li is the easiest to try since it requires no installation.
 
----v
+---
 
 ## Host SDK (UserAgentKit)
 
@@ -1311,7 +1278,7 @@ Notes:
 
 The host-sdk, also called UserAgentKit, is the Rust library for building Triangle hosts. It provides a comprehensive set of capabilities. The wallet manages keys securely with platform-native keychain integration. Light clients connect to multiple chains simultaneously. The DOTNS resolver translates dot names into IPFS content. And the extension system provides powerful P2P capabilities like data channels, media calls, and collaborative editing. These extensions are available to products through the window.host.ext namespace.
 
----v
+---
 
 ## Product SDK
 
@@ -1360,7 +1327,7 @@ Notes:
 
 The Product SDK is what your dApp imports to communicate with the host. It's a thin TypeScript library that wraps the window.host bridge protocol. You can get the user's account address, navigate between dot products, use scoped storage, and subscribe to real-time messages through the statement store. The API is simple by design. Your dApp doesn't need to know about light clients, key management, or network protocols, the host handles all of that.
 
----v
+---
 
 ## Product Isolation
 
@@ -1386,7 +1353,7 @@ Notes:
 
 The security model is extremely strict. Products run in sandboxed iframes or webviews with essentially no permissions. A lockdown script neutralizes WebSocket, WebRTC, Workers, and other network APIs. The CSP blocks all outbound connections. Wallet extension globals are shadowed with undefined to prevent sniffing. Every signing request requires explicit user confirmation, auto-approval is prohibited. The only way a product can interact with the outside world is through the host bridge. This is a fundamental security improvement over the current browser-extension model where dApps have full network access.
 
----v
+---
 
 ## The .dot Resolution Flow
 
@@ -1421,7 +1388,7 @@ Notes:
 
 Let's zoom out and see the complete picture, from developer to user.
 
----v
+---
 
 ## The Complete Flow
 
@@ -1464,7 +1431,7 @@ Notes:
 
 Here's the end-to-end flow. A developer writes their pallet in Rust, their contracts in Solidity, and their frontend in React. The pallet deploys as part of a parachain runtime via coretime. The contracts deploy to Asset Hub through eth-rpc. The frontend uploads to IPFS via the Bulletin Chain and gets a .dot domain via DotNS. A user opens a Triangle host, types the .dot name, and the host resolves it, fetches the frontend, and renders it in a sandbox. The frontend talks to the blockchain through the host's bridge, using PAPI for pallets and viem for contracts. No centralized servers anywhere in the chain.
 
----v
+---
 
 ## What You Will Build
 
@@ -1486,7 +1453,7 @@ Notes:
 
 So what does this mean for you? Over the course of this program, you'll get hands-on experience with every layer of the stack. You'll learn FRAME deeply in the FRAME module, build smart contracts, create frontends, and deploy the full application. The stack template is designed so you can keep the pieces you need and discard the rest. Some teams will focus on the pallet, others on contracts, others on the full stack. The goal is that by the end, you can build and deploy a complete Polkadot application from scratch.
 
----v
+---
 
 ## Key Resources
 
