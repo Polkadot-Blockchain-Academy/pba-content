@@ -36,12 +36,13 @@
 </head>
 
 <body class="site">
-  <footer style="position: fixed; top: 1.5%; left: 2%; z-index: 99;">
-    <a href="{{{base}}}/index.html">
-      <img style="height: 3vw;" src="{{{base}}}/assets/img/0-Shared/logo/PBA_Logo_white.png"
+  <header class="site-header">
+    <!-- This logo is a link only on the watching server, not the production build -->
+    <a href="{{{absoluteUrl}}}">
+      <img style="height: 2.5vw;" class="watermark-logo" src="{{{base}}}/assets/img/0-Shared/logo/pba-logo-white.svg"
         alt="PBA Logo">
     </a>
-  </footer>
+  </header>
   <main class="reveal">
     <article class="slides">
       {{{slides}}}
@@ -57,7 +58,7 @@
   <script src="{{{base}}}/plugin/math/math.js"></script>
 
   <script src="{{{base}}}/assets/plugin/mermaid.js"></script>
-  <script src="{{{base}}}/assets/plugin/mermaid-theme.js"></script>
+  <script src="{{{base}}}/assets/plugin/mermaid-theme-legacy.js"></script>
 
   <script src="{{{base}}}/assets/plugin/chart/chart.js"></script>
   <script src="{{{base}}}/assets/plugin/chart/chart.min.js"></script>
@@ -108,8 +109,8 @@
             grid: { color: "lightgray" }, // color of grid lines
           },
         },
-        line: { borderColor: ["#ccc", "#FFFFFF", "#888888"], "borderDash": [[5, 10], [0, 0]] },
-        bar: { backgroundColor: ["#ccc", "#FFFFFF", "#888888"] },
+        line: { borderColor: ["#ccc", "#E6007A", "#6D3AEE"], "borderDash": [[5, 10], [0, 0]] },
+        bar: { backgroundColor: ["#ccc", "#E6007A", "#6D3AEE"] },
       },
       plugins: [
         RevealMarkdown,
