@@ -37,10 +37,6 @@ These problems all stem from the same place:
 
 > **The growing power of central authorities.**
 
-Notes:
-
-Before we dive into tools and technology, let's talk about WHY we're building any of this. The problems in our world, financial corruption, political control, erosion of sovereignty, all share a common root: the concentration of power in central authorities. This isn't abstract philosophy, it's the motivation behind everything Polkadot is building.
-
 ---
 
 ## A Simple Set of Conjectures
@@ -58,10 +54,6 @@ Before we dive into tools and technology, let's talk about WHY we're building an
 
 <!-- .element: class="fragment" -->
 
-Notes:
-
-These are the conjectures that drive the Web3 movement. Central authorities will eventually abuse their power, history proves this over and over. Technology has amplified their reach. But technology can also be the solution. If the public digital infrastructure that the world relies on were decentralized and resilient, we'd have a powerful counterbalance. That's what Web3 is: resilient public digital infrastructure.
-
 ---
 
 ## The Great Mistake
@@ -71,10 +63,6 @@ Blockchain is not a product in and of itself.
 The world does not want or need "more blockchains".
 
 It is simply a tool that can be used to create **resilient products**.
-
-Notes:
-
-This is a critical insight that many in the blockchain space miss. Nobody wakes up wanting "a blockchain." People want products that work, that they can trust, that can't be shut down or censored. Blockchain is the tool that makes those products possible. This reframing changes everything about how we think about building.
 
 ---
 
@@ -109,10 +97,6 @@ Both built using blockchain technology.
 </pba-cols>
 
 
-Notes:
-
-There are really two different things people build with blockchain technology. Distributed ledger technology is about storing data, it's the backbone of DeFi and has proven market demand. A decentralized computer is about executing computation, it's the backbone of the decentralized internet. Most blockchains are actually DLTs. Polkadot is building toward something bigger: a decentralized computer, like a Web3 version of AWS, but with resilience, verification, and no single point of control.
-
 ---
 
 ## Who Does the World Computer Appeal To?
@@ -130,10 +114,6 @@ There are really two different things people build with blockchain technology. D
 
 </div>
 
-Notes:
-
-The decentralized computer appeals to different audiences for different reasons. Some want distribution for uptime and resilience, think critical infrastructure that can never go down. Others want verifiability, so users don't need to trust anyone. Others want resilience against censorship and regulatory overreach. And some want the native financial primitives. Polkadot is building infrastructure that serves all of these needs.
-
 ---
 
 ## Polkadot: Infrastructure for the Decentralized Web
@@ -149,10 +129,6 @@ Polkadot is building a **decentralized Web3 Cloud**:
 > Polkadot will do to Web3 what AWS did to Web2.
 
 
-Notes:
-
-So what is Polkadot actually building? Think of it as a decentralized cloud provider. AWS gives you compute, storage, networking, identity services, and payment processing. Polkadot provides all of these, but decentralized, verifiable, and resilient. Execution sharding gives you multi-core compute. The blockchain state and bulletin chain give you storage. XCM and bridges give you networking. The People chain and DotNS give you identity. And DOT plus the DeFi ecosystem give you finance. The difference? No single entity controls the infrastructure, and every operation is verifiable.
-
 ---
 
 ## How Polkadot Delivers This
@@ -163,10 +139,6 @@ Polkadot fulfills this vision across three layers:
 1. **Polkadot Triangle**: User Interfaces
 1. **Polkadot Stack**: Developer Tools
 1. **Polkadot Platform**: Web3 Cloud Infrastructure
-
-Notes:
-
-Polkadot delivers this vision through three layers. At the bottom is the Platform: the blockchain infrastructure that provides compute, storage, and security, the decentralized cloud itself. In the middle is the Stack: the developer tools, SDKs, and frameworks that make it possible to build on this cloud. At the top is the Triangle: the user-facing applications, the decentralized browser and app hosts that bring this to real users. Together, these three layers cover the full path from infrastructure to end user.
 
 ---
 
@@ -183,10 +155,6 @@ Polkadot delivers this vision through three layers. At the bottom is the Platfor
 # Polkadot Platform
 
 ## Web3 Cloud Infrastructure
-
-Notes:
-
-Let's start with the foundation. The Polkadot Platform is the blockchain infrastructure layer. Think of it as a decentralized cloud. It provides compute, storage, and networking that your applications run on. Unlike traditional cloud providers, this infrastructure is trustless, permissionless, and governed by its stakeholders.
 
 ---
 
@@ -210,10 +178,6 @@ graph TB
     RC --- BC["Bulletin"]
     RC --- P1["Your Chain"]
 </diagram>
-
-Notes:
-
-The Relay Chain is the central chain of Polkadot. Its primary job is to provide shared security to all connected parachains. It does this by coordinating a set of validators who verify parachain blocks without re-executing every transaction. Think of it as an auditing layer. Importantly, the Relay Chain itself is NOT where users submit transactions. That's what the system parachains are for. There's actually an ongoing migration called AHM, the Asset Hub Migration, which is moving even more functionality off the Relay Chain and onto Asset Hub, making the Relay Chain purely focused on validation and security.
 
 ---
 
@@ -244,10 +208,6 @@ The **primary user-facing chain** in the Polkadot ecosystem.
 
 and Governance, Staking, Identity, Utilities, etc...
 
-Notes:
-
-Asset Hub is becoming THE chain in Polkadot. It started as a simple chain for managing assets, but it's evolving into the primary chain where users interact. It now hosts fungible tokens, NFTs, a DEX for asset conversion, and critically, smart contracts via pallet-revive. Governance and staking are migrating here from the Relay Chain. Post-AHM, if you want to do something on Polkadot, Asset Hub is probably where you'll do it. For your projects, this is the chain you'll be deploying to.
-
 ---
 
 ## Other System Chains & Parachains
@@ -268,19 +228,11 @@ Parachains chains share security from the Relay Chain and communicate via **XCM*
 </div>
 
 
-Notes:
-
-Beyond Asset Hub, Polkadot has several specialized system chains. Bridge Hub connects Polkadot to Ethereum and Kusama using trustless on-chain light clients. The Coretime chain is a marketplace for blockspace, think of it like buying CPU time on a cloud provider. People chain handles on-chain identity. Collectives hosts governance bodies like the Technical Fellowship. The Bulletin Chain provides IPFS-compatible data storage. And anyone can build a custom parachain using the Polkadot SDK, with fully customizable logic that inherits Polkadot's shared security.
-
 ---
 
 # Polkadot Stack
 
 ## Developer Tools & SDKs
-
-Notes:
-
-Now let's move up to the developer tools layer. This is where you spend your time as a builder. The Polkadot Stack gives you multiple paths to build applications, from writing custom blockchain runtimes to deploying Solidity smart contracts to building frontends with TypeScript.
 
 ---
 
@@ -332,10 +284,6 @@ The parachain toolkit.
 </div>
 </div>
 
-Notes:
-
-The Polkadot SDK is a single monorepo that contains three formerly separate projects. Substrate is the blockchain framework: it provides all the node-side infrastructure like networking, consensus, and the database. FRAME is the runtime development framework: it gives you modular building blocks called pallets to compose your chain's business logic. Cumulus transforms a Substrate chain into a Polkadot parachain. Together, they give you everything you need to build a custom blockchain.
-
 ---
 
 ## FRAME: Building Blocks
@@ -381,10 +329,6 @@ pub mod pallet {
 </div>
 </div>
 
-Notes:
-
-FRAME is what you'll spend most of this course learning. Each pallet is a self-contained module with clear responsibilities. You define your storage layout, your callable functions, your events, and your errors. The construct_runtime! macro then wires everything together into a complete runtime. The code on the right is from the stack template's Proof of Existence pallet. It defines a storage map from hashes to claims, and a function to create a claim.
-
 ---
 
 ## Smart Contracts: pallet-revive
@@ -412,10 +356,6 @@ graph LR
 
 </div>
 
-Notes:
-
-One of the most exciting developments in Polkadot is pallet-revive. It lets you write smart contracts in Solidity or Rust and deploy them to Polkadot. Solidity can be compiled to two different targets: traditional EVM bytecode using solc, or PolkaVM bytecode using resolc. Rust contracts compile directly to PolkaVM's RISC-V target, giving Rust developers a native smart contract path without needing Solidity at all. PolkaVM is Polkadot's own virtual machine, designed for security and performance. In the stack template, we deploy the same Proof of Existence contract to both EVM and PVM targets.
-
 ---
 
 ## The eth-rpc Sidecar
@@ -438,10 +378,6 @@ graph LR
 - Pre-configured **dev accounts** for local development
 
 </div>
-
-Notes:
-
-The eth-rpc sidecar is the magic that makes Ethereum tooling work with Polkadot. It's a separate process that speaks Ethereum JSON-RPC on port 8545, just like Geth or Hardhat Network. Under the hood, it translates those calls into Substrate RPC calls using the subxt library. This means you can use MetaMask to sign transactions, Hardhat to deploy contracts, Foundry to test, and any Ethereum library to interact with your contracts, all while running on a Polkadot chain.
 
 ---
 
@@ -486,10 +422,6 @@ const claim = await client
 </div>
 </div>
 
-Notes:
-
-PAPI is THE TypeScript library for Polkadot development. Its killer feature is being light-client first. Instead of connecting to a centralized RPC endpoint, it can embed smoldot, a Substrate light client that runs directly in the browser. This means your dApp can verify chain state trustlessly. It also generates fully typed TypeScript APIs from on-chain metadata, so you get autocomplete and type-checking for every storage query, transaction, and event. This is a huge improvement over polkadot.js which provided types at runtime.
-
 ---
 
 ## subxt: Rust Client
@@ -530,10 +462,6 @@ let claim = api.storage()
 </div>
 </div>
 
-Notes:
-
-subxt is the Rust counterpart to PAPI. If you're building a backend service, a CLI tool, or any Rust application that needs to talk to a Substrate chain, this is what you use. Like PAPI, it can generate typed APIs from chain metadata at compile time. The stack template's CLI tool uses subxt for all pallet interactions, and alloy for all contract interactions through the eth-rpc adapter.
-
 ---
 
 ## Ethereum Tooling
@@ -556,10 +484,6 @@ Use your existing Ethereum skills and tools.
 - **MetaMask** - wallet
 
 </div>
-
-Notes:
-
-If you already know Ethereum development, you can bring all of that knowledge to Polkadot. viem, ethers.js, Hardhat, Foundry, MetaMask, all work through the eth-rpc sidecar. The code looks identical to what you'd write for Ethereum. In the stack template, Hardhat with the @parity/hardhat-polkadot plugin handles compiling contracts to both EVM and PVM targets, and deploying them through eth-rpc. The frontend uses viem for all contract interactions.
 
 ---
 
@@ -593,10 +517,6 @@ graph TB
 </div>
 </div>
 
-Notes:
-
-DotNS is Polkadot's name service, similar to ENS on Ethereum. You register a .dot name and point it to an IPFS content hash. When a user navigates to myapp.dot in a Triangle User Agent, the host resolves the name on-chain, gets the IPFS CID, fetches the content, and renders it in a sandboxed view. The registration uses a commit-reveal scheme to prevent front-running, and pricing is aware of Proof-of-Personhood status, names are cheaper or free for verified humans.
-
 ---
 
 ## Development Infrastructure
@@ -629,10 +549,6 @@ DotNS is Polkadot's name service, similar to ENS on Ethereum. You register a .do
 
 </div>
 </div>
-
-Notes:
-
-A few more tools worth knowing about. Zombienet lets you spin up a local multi-chain test network with a single config file, great for development. The omni-node is a generic parachain binary that can load any runtime, so you don't need to compile a custom node. For deployment, Paseo is the canonical testnet. You can deploy frontends to IPFS and register dot domains to make them accessible through Triangle hosts. Blockscout and Polkadot.js Apps are the main block explorers, and psvm helps manage SDK versions across your Cargo.toml files.
 
 ---
 
@@ -680,19 +596,11 @@ graph TB
     HH --> HTTP
 </diagram>
 
-Notes:
-
-Here's the complete developer stack in one picture. Three languages feed into three build frameworks, which connect through four client libraries, accessing two RPC endpoints that both talk to the same chain. The beauty is that you can mix and match: write a pallet in Rust and interact with it from TypeScript, or write a Solidity contract and call it from your Rust CLI. Everything is interoperable.
-
 ---
 
 # Polkadot Triangle
 
 ## User Interfaces
-
-Notes:
-
-Now let's look at the top layer: how users actually interact with your applications. The Polkadot Triangle is an architecture for building secure, user-friendly applications that embed Polkadot dApps.
 
 ---
 
@@ -727,10 +635,6 @@ graph TB
 Three parties: **Host** owns security, **Product** runs in sandbox, **Blockchain** provides state.
 
 </div>
-
-Notes:
-
-The Triangle is a three-party architecture. The Host is a trusted application shell, think of it like a web browser for Polkadot. It owns all the security-critical infrastructure: private keys, light client connections, and network access. The Product is your dApp, running inside a sandboxed container with zero direct network access. It communicates with the blockchain exclusively through the host's bridge protocol. This separation means your dApp never touches private keys and can't make unauthorized network requests.
 
 ---
 
@@ -775,10 +679,6 @@ Browser-based
 </div>
 </div>
 
-Notes:
-
-There are three main Triangle hosts being built. The desktop app uses Tauri, a lightweight alternative to Electron that wraps a Rust backend with a native webview. The mobile apps use UniFFI to bridge the Rust host-sdk to Swift and Kotlin. And dot.li is a web-based host that runs entirely in the browser using smoldot and Helia for IPFS. All three share the same core logic from the host-sdk, just with different platform shells. dot.li is the easiest to try since it requires no installation.
-
 ---
 
 ## Host SDK (UserAgentKit)
@@ -808,10 +708,6 @@ What the host provides to your dApp:
 
 </div>
 </div>
-
-Notes:
-
-The host-sdk, also called UserAgentKit, is the Rust library for building Triangle hosts. It provides a comprehensive set of capabilities. The wallet manages keys securely with platform-native keychain integration. Light clients connect to multiple chains simultaneously. The DOTNS resolver translates dot names into IPFS content. And the extension system provides powerful P2P capabilities like data channels, media calls, and collaborative editing. These extensions are available to products through the window.host.ext namespace.
 
 ---
 
@@ -858,10 +754,6 @@ await statements.write(topic, payload);
 </div>
 </div>
 
-Notes:
-
-The Product SDK is what your dApp imports to communicate with the host. It's a thin TypeScript library that wraps the window.host bridge protocol. You can get the user's account address, navigate between dot products, use scoped storage, and subscribe to real-time messages through the statement store. The API is simple by design. Your dApp doesn't need to know about light clients, key management, or network protocols, the host handles all of that.
-
 ---
 
 ## Product Isolation
@@ -883,10 +775,6 @@ Your dApp runs in a **strict sandbox**.
 - Request signatures (user must confirm each one)
 
 </div>
-
-Notes:
-
-The security model is extremely strict. Products run in sandboxed iframes or webviews with essentially no permissions. A lockdown script neutralizes WebSocket, WebRTC, Workers, and other network APIs. The CSP blocks all outbound connections. Wallet extension globals are shadowed with undefined to prevent sniffing. Every signing request requires explicit user confirmation, auto-approval is prohibited. The only way a product can interact with the outside world is through the host bridge. This is a fundamental security improvement over the current browser-extension model where dApps have full network access.
 
 ---
 
@@ -911,17 +799,9 @@ sequenceDiagram
     H-->>U: dApp renders
 </diagram>
 
-Notes:
-
-Let me walk through the complete flow. A user types myapp.dot into a Triangle host. The host computes the ENS-style namehash of the domain. It then calls the DotNS ContentResolver contract on Asset Hub via the light client. The contract returns an IPFS CID. The host fetches the content from IPFS using P2P Bitswap first, falling back to HTTP gateways. The fetched HTML/JS/CSS bundle is loaded into a sandboxed iframe, and the dApp renders. From the user's perspective, they just typed a name and got an app, no centralized servers involved.
-
 ---
 
 # Putting It All Together
-
-Notes:
-
-Let's zoom out and see the complete picture, from developer to user.
 
 ---
 
@@ -961,11 +841,6 @@ graph TB
     U4 -->|"PAPI / viem"| E1
     U4 -->|"PAPI / viem"| E2
 </diagram>
-
-Notes:
-
-Here's the end-to-end flow. A developer writes their pallet in Rust, their contracts in Solidity, and their frontend in React. The pallet deploys as part of a parachain runtime via coretime. The contracts deploy to Asset Hub through eth-rpc. The frontend uploads to IPFS via the Bulletin Chain and gets a .dot domain via DotNS. A user opens a Triangle host, types the .dot name, and the host resolves it, fetches the frontend, and renders it in a sandbox. The frontend talks to the blockchain through the host's bridge, using PAPI for pallets and viem for contracts. No centralized servers anywhere in the chain.
-
 
 ---
 

@@ -32,10 +32,6 @@ Every component is **minimal, modular, and removable**.
 
 Use the template as an **optional** starting point, not a constraint.
 
-Notes:
-
-The polkadot-stack-template is a full-stack reference application. It implements one simple idea, Proof of Existence, three different ways: as a FRAME pallet, an EVM smart contract, and a PVM smart contract. It also includes a React frontend and a Rust CLI that interact with all three. The idea is to show you every layer of the Polkadot developer experience in one place. You'll use this as the foundation for your own project.
-
 ---
 
 ## The End-to-End Flow
@@ -75,10 +71,6 @@ graph TB
     U4 -->|"PAPI / viem"| E2
 </diagram>
 
-Notes:
-
-Here's the end-to-end flow the template demonstrates. Backend logic deploys to a parachain or Asset Hub. The frontend uploads to IPFS via the Bulletin Chain and gets a .dot domain. A user opens a Triangle host, types the .dot name, and the host resolves it, fetches the frontend from IPFS, and renders it in a sandbox. No centralized servers anywhere in the chain. Your project will follow this same pattern.
-
 ---
 
 ## Running the Template
@@ -109,10 +101,6 @@ Two modes for local development:
 </pba-cols>
 
 > Start with standalone for fast iteration. Switch to zombienet when you need the full network.
-
-Notes:
-
-There are two ways to run the template locally. Standalone mode uses polkadot-omni-node, a generic parachain binary that can load any Wasm runtime blob. It boots a single chain in seconds, perfect for pallet development and contract testing. Zombienet mode spins up a full network: relay chain validators, your parachain as a collator, and system chains. You need zombienet for anything that involves the Statement Store, cross-chain messaging, or testing how your chain behaves in the real Polkadot topology. The template includes config files for both.
 
 ---
 
@@ -146,10 +134,6 @@ polkadot-omni-node --chain chain-spec.json --dev
 
 </div>
 
-Notes:
-
-The omni-node is a key piece of the modern Polkadot developer experience. In the past, you had to compile a full custom node binary for every chain. Now, you only compile your runtime to WASM, and the omni-node provides everything else. This dramatically speeds up build times and simplifies deployment. The chain-spec-builder tool generates a chain specification from your runtime, and you pass that to the omni-node. The template is already set up to work this way.
-
 ---
 
 ## Deploying Your Project
@@ -171,10 +155,6 @@ The omni-node is a key piece of the modern Polkadot developer experience. In the
 - **Final project**: deploy to **Paseo** — the production network for your project
 
 </div>
-
-Notes:
-
-Here's the deployment story for each component. Pallets are compiled to WASM and deployed as part of a parachain runtime, you acquire coretime to run your chain. Smart contracts deploy through Hardhat, using the eth-rpc sidecar, same workflow as Ethereum. The frontend builds to a static bundle that gets uploaded to the Bulletin Chain, which makes it available on IPFS. Then you register a .dot name pointing to the IPFS content hash, and your app is live on the decentralized web. During development you'll work locally. Your final deliverable deploys to Paseo with a real .dot domain — that's where reviewers will see your work running.
 
 ---
 
@@ -206,10 +186,6 @@ Every student ships a **solo project** with:
 
 > Full details: [`projects/PBP-Lisbon-2026/project-guidelines.md`](../../projects/PBP-Lisbon-2026/project-guidelines.md)
 
-Notes:
-
-Your project has hard requirements. You pick one backend path and one frontend path, and every project must be deployed to the Bulletin Chain with a DotNS name. The stack template gives you a working example of each path. You'll fork it, strip the parts you don't need, and build your own idea on top. Read the full project guidelines document for all the details on evaluation, deliverables, and timeline.
-
 ---
 
 ## Path Confidence
@@ -227,10 +203,6 @@ Not all paths are equally battle-tested. Pick based on your appetite for risk.
 
 A good bug report or PR against the stack is a legitimate deliverable.
 
-Notes:
-
-This is an honest assessment of the stack maturity. The pallet path is rock solid. EVM contracts are almost there. PVM paths are newer and rougher. Riskier paths have a higher ceiling though. If you ship a working Rust-on-PVM project, that's a strong signal. And if you can't ship but you file precise bug reports or PRs, that's valued too. You're helping us discover the shape of the stack.
-
 ---
 
 ## Think of This as Onboarding
@@ -247,10 +219,6 @@ There are **no grades**. This program is your **2-week onboarding at Parity**.
 </div>
 
 > The question we are asking: _"Would I want this person on my team?"_
-
-Notes:
-
-This is the most important framing for the entire program. We're not grading you on an exam. We're watching how you work. How you onboard into a new codebase, how you handle getting stuck, how you collaborate, how you communicate. The Parity engineers here aren't just lecturers, they're your mentors and potential future colleagues. Treat this like your first two weeks at a new job, because that's exactly how we'll evaluate it.
 
 ---
 
@@ -277,10 +245,6 @@ The behaviors that stand out to us:
 
 </div>
 
-Notes:
-
-These are the things that get people hired. Not just shipping a polished demo, but showing how you work. Did you file a bug report when something broke? Did you help a classmate who was stuck? Did you dig into the source code when the docs weren't enough? Did you build something that actually leverages decentralization, not just a web app with a blockchain bolted on? These are the signals that tell us you'd be a great Parity engineer.
-
 ---
 
 ## Deliverables
@@ -303,10 +267,6 @@ What you hand in at the end of the program:
 
 </div>
 
-Notes:
-
-These are the four things you hand in. A public GitHub repo with working code and an honest README. A live deployment on Paseo, reachable through your .dot name on dot.li, with the frontend hosted on Bulletin Chain. A 5-minute pitch on the final day where you demo the project and talk honestly about what broke. And a retrospective where you tell us what you'd change about the stack based on what you experienced. Reviewers read the retrospective carefully. It's not busywork. It's one of the most valuable things you produce.
-
 ---
 
 ## What Should You Build?
@@ -314,10 +274,6 @@ These are the four things you hand in. A public GitHub repo with working code an
 The best projects aren't "blockchain projects." They're **real products** that happen to be trustless and decentralized.
 
 Ask yourself: _What existing app or system would be fundamentally better if no single entity controlled it?_
-
-Notes:
-
-This is the key question. Don't start with "what can I build on a blockchain." Start with "what product would I want to exist that only Web3 can deliver." The blockchain is invisible to the user. What they see is a product that works, that they can trust, that nobody can shut down.
 
 ---
 
@@ -340,10 +296,6 @@ Rebuild the apps people already use, but trustless.
 
 </div>
 
-Notes:
-
-People already use Google Docs, WhatsApp, Twitter, WeTransfer every day. The demand is proven. The problem is that one company controls all of it, your data, your access, your identity. A decentralized version doesn't need to be better at everything, it just needs to provide the properties that centralized versions fundamentally cannot: censorship resistance, data ownership, and no single point of failure.
-
 ---
 
 ## Idea: New Financial Systems
@@ -365,10 +317,6 @@ Build financial primitives that don't exist yet, or fix the ones that are broken
 
 </div>
 
-Notes:
-
-DeFi proved that on-chain finance works. But most of what exists is trading infrastructure for crypto-native users. The opportunity is in financial systems that serve everyone: invoicing for freelancers, transparent treasuries for organizations, micropayment models that let creators get paid directly. These are products with real demand that traditional finance serves poorly.
-
 ---
 
 ## Idea: Decentralized Protocols
@@ -387,10 +335,6 @@ Build new infrastructure that doesn't exist yet — composable building blocks t
   - Anything that makes the next person's job easier
 
 </div>
-
-Notes:
-
-Some of the highest-impact projects aren't end-user apps at all. They're protocols and tools that make everything else better. A reputation layer, a coordination protocol, a data indexing service — these are building blocks that other developers can compose with. If your project becomes something other people want to build on top of, that's an incredibly strong signal. And developer tooling counts too — if you hit a gap in the stack and build a tool to fill it, that's real contribution.
 
 ---
 
@@ -414,10 +358,6 @@ Build systems that bring new users into Web3 — make the first experience seaml
 
 </div>
 
-Notes:
-
-The hardest problem in Web3 isn't building the technology. It's getting people to use it. The first experience matters enormously. If a user has to understand gas fees, seed phrases, and wallet extensions before they can do anything, you've already lost them. Games are powerful because they provide intrinsic motivation — people play because it's fun, and the Web3 part is invisible. Incentive systems give people a reason to try. Free transactions remove the biggest friction point. And simple identity flows mean people can start using your app in seconds, not minutes.
-
 ---
 
 ## Advice for Success
@@ -431,10 +371,6 @@ The hardest problem in Web3 isn't building the technology. It's getting people t
 - **Ship honest work.** A smaller project that works and is well-documented beats a big project that's half-broken and unexplained.
 
 </div>
-
-Notes:
-
-This is practical advice from people who have hired engineers this way. Explore the codebase like it's your first week at a company. Don't be afraid to dig into the Polkadot SDK source when something doesn't make sense. Ask the engineers here questions, that's what they're here for. And think about what makes your project uniquely Web3. Decentralized storage, trustless verification, censorship resistance, these are the properties that matter. If you can also improve the tools you're using along the way, that's the gold standard.
 
 ---
 
@@ -454,10 +390,6 @@ This is practical advice from people who have hired engineers this way. Explore 
   - Also check out the public repos at [github.com/paritytech](https://github.com/paritytech)
 
 </div>
-
-Notes:
-
-Here are the key resources. Start with the stack template and the project guidelines. The idea bank has project suggestions if you need inspiration, but you're free to invent your own. Use office hours with faculty, especially if you're on a riskier path.
 
 ---
 
