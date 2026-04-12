@@ -43,10 +43,10 @@ Simple interface: Send money to this IBAN, I keep it safe, when you request to w
 Nobody trusted me
 I decided to open-source my entire code-base
 Nada
-Have it be audited, uesed the best tools to make it secure
+Have it be audited, used the best tools to make it secure
 I even rewrote the whole thing in Rust
 I even ran it in a TEE, attested that it doing the right thing, nada</p>
-<p>But then, I legalized my bank, declared it to local regulatros of my country, and put into place where if I misbehave, the local police and courts could come after me, or at least I pretended to do so</p>
+<p>But then, I legalized my bank, declared it to local regulators of my country, and put into place where if I misbehave, the local police and courts could come after me, or at least I pretended to do so</p>
 <p>And suddenly nobody even cared what my code is.</p>
 <p>Truthfully, this is how all of the banks that you currently use work.</p>
 <p>Nobody even knows what they do under the hood, just the possibility that they might get caught is enough.</p>
@@ -93,7 +93,7 @@ I even ran it in a TEE, attested that it doing the right thing, nada</p>
 ## Revolution
 
 * Bitcoin proved that, while my bank failed, it is in principle possible
-* Trillions of dollars are entrusted today with this type of trust
+* Trillions of dollars are entrusted today with this type of technology
 * I can, in fact, with a few clicks, launch an ERC20 token and "run my own bank"
 
 <aside class="notes"><p>Commoditization of creation of digital authorities</p>
@@ -105,7 +105,7 @@ $\Rightarrow$ Contentious Social Interactions $\Leftarrow$
 And more..
 
 <aside class="notes"><ul>
-<li>Land Registery</li>
+<li>Land Registry</li>
 <li>Prediction markets</li>
 <li>Petitions / Donations</li>
 <li>Fundraising</li>
@@ -119,10 +119,10 @@ And more..
 
 * This revolution of creating systems with less/no human-based trust/authorities, and more science-based trust/authorities..
 * When applied to the world-wide web Is what I call **Web3**
+</script></section><section data-markdown><script type="text/template">
+## Decentralized Applications (DApps)
 
-<br>
-
-> Applications built with Web3 in mind are often called Decentralized Applications (DApps)
+* Applications built with Web3 philosophy in mind are often called Decentralized Applications
 </script></section><section data-markdown><script type="text/template">
 ## Trustless
 
@@ -131,7 +131,7 @@ And more..
 </script></section></section><section ><section data-markdown><script type="text/template">
 ## Blockchain-based Authorities
 
-<aside class="notes"><p>So we established that we lack trust in the modern interconnecte worlds, and therefore we need authorities to manage our interactions
+<aside class="notes"><p>So we established that we lack trust in the modern interconnected world, and therefore we need authorities to manage our interactions
 How can we model these blockchains and authorities</p>
 </aside></script></section><section data-markdown><script type="text/template">
 ## Decomposing an Authority
@@ -166,7 +166,7 @@ graph LR
 
 * Code (rules)
 * Memory (state)
-* Execution user inputs (mutations)
+* Execution of user inputs (mutations)
 
 <br>
 
@@ -174,7 +174,7 @@ graph LR
 
 <aside class="notes"><p>Here we can connect this to my failed bank -- this computer is what my bank needed!</p>
 </aside></script></section><section data-markdown><script type="text/template">
-## Bitcoin as An Authority:
+## Bitcoin As an Authority:
 
 * Rules: Valid transfer of BTC (based on UTXO model)
 * State: How much BTC each person has
@@ -187,6 +187,16 @@ graph LR
 * Bank of Portugal cannot confiscate the money I own in Singapore
 * Each authority has a sphere of influence <!-- .element: class="fragment" -->
 * For blockchain-based authorities, this is the their state <!-- .element: class="fragment" -->
+</script></section><section data-markdown><script type="text/template">
+## Sphere of Influence
+
+
+<diagram class="mermaid">
+%%{init: {'theme': 'dark', 'themeVariables': { 'darkMode': true }}}%%
+graph LR
+    Authority -->|"Read"| State("Sphere of Influence (State)")
+    Authority -->|"Write"| State("Sphere of Influence (State)")
+</diagram>
 </script></section><section data-markdown><script type="text/template">
 ## Sphere of Influence
 
@@ -204,9 +214,21 @@ graph LR
 
 * Oracle Problem
 * Chains of Trust
-	* Bridges <!-- .element: class="fragment" -->
-	* Tokenized RWAs <!-- .element: class="fragment" -->
 	* Weakest Link Problem! <!-- .element: class="fragment" -->
+	* Bridges are the same <!-- .element: class="fragment" -->
+</script></section><section data-markdown><script type="text/template">
+## The Real-World-Asset (RWA) Scam
+
+<diagram class="mermaid">
+%%{init: {'theme': 'dark', 'themeVariables': { 'darkMode': true }}}%%
+graph LR
+    subgraph "sphere of influence 🔐 "
+		BlockchainAuthority["Blockchain Authority"]
+        State(["State"])
+    end
+    Oracle["Oracle"]
+    Oracle -- "trust me bro ⛓️‍💥" --> State
+</diagram>
 </script></section><section data-markdown><script type="text/template">
 ## Is It Really a Scam?
 
@@ -240,7 +262,9 @@ graph LR
 </aside></script></section><section data-markdown><script type="text/template">
 ## RWA: Not a Scam, But..
 
-2 out of 3 properties are fully met
+* 2 out of 3 properties are fully met
+* Same as consortium blockchains <!-- .element: class="fragment" -->
+
 
 <aside class="notes"><ul>
 <li>My address owning 1 BTC</li>
@@ -252,15 +276,21 @@ But Auditability, and accessibility are fully met.</p>
 </aside></script></section></section><section  data-markdown><script type="text/template">
 ## Blockchains 101
 
+* Blockchains merely help with retaining correct ordering of past events
+	* Verifiability, the main magic of these systems? <!-- .element: class="fragment" -->
+	* No! ZK-Proofs, TEE <!-- .element: class="fragment" -->
+* Blockchains are overrated <!-- .element: class="fragment" -->
+	* Blockchain-based systems! != not just a blockchain <!-- .element: class="fragment" -->
+
 <aside class="notes"><p>Okay, enough with theoretical stuff, let&#39;s learn a bit more concretely about blockchains</p>
 <p>Authoring:
 Blockchains are a network of nodes, each running some software, called the &quot;blockchain node software&quot;
-None of these nodes trust each other, yet they all encode within themselves the ruls of the blockchain
+None of these nodes trust each other, yet they all encode within themselves the rules of the blockchain
 They each also hold their local copy of the blockchain&#39;s state
-Users send their transactions (instrusctions) to different nodes, and nodes may gossip them to one another
+Users send their transactions (instructions) to different nodes, and nodes may gossip them to one another
 Every now and then, one of these nodes, based on the rules of the blockchain is eligible to author a new block
 Block author will create a new block, updates its local state, and send the block + an attestation of what the new state should be to other nodes
-All other nodes verify that the rules were respected, with their local copy of the state and the ndoe software
+All other nodes verify that the rules were respected, with their local copy of the state and the node software
 Repeat</p>
 <p>Genesis and Syncing:
 Each node retains all of the previous blocks, such that it can always re-execute them, and re-verify all of the intermediary states</p>
@@ -290,23 +320,30 @@ As trustless compute and storage providers.
 ## The Bigger Picture
 
 * (2013) Bitcoin was a proof of concept that it is possible to establish trustless compute and storage under consensus
-* (2016) Ethereum was a proof of cocept that this can be generalized
+* (2016) Ethereum was a proof of concept that this can be generalized
 </script></section><section data-markdown><script type="text/template">
 ## The Bigger Picture
 
 * Next decade (2016 - today):
 	* Scaling the existing system (not expanding the horizon)
 	* DeFi (PMF - money to be made)
-	* Scam
+	* Noise
 
 </script></section><section data-markdown><script type="text/template">
 ## The Bigger Picture
 
-* Expanding the horizon
-* Invention << Innovation
+<img style="width: 600px;" src="../../assets/img/0-Shared/intro-web3-horizon.svg" />
+</script></section><section data-markdown><script type="text/template">
+## The Bigger Picture
+
+*Invention vs. Innovation*
+
+<img style="width: 600px;" src="../../assets/img/0-Shared/intro-web3-horizon-full.svg" />
+
+
 
 <aside class="notes"><p>Making cars faster vs. Learning how to fly</p>
-<p>I am glad to see that Polkadot, while it innovated on scaling a lot, it also invented a lot of new paradaigms:</p>
+<p>I am glad to see that Polkadot, while it innovated on scaling a lot, it also invented a lot of new paradigms:</p>
 <ul>
 <li>Layer 2s</li>
 <li>PVM and forkless upgrades</li>
@@ -315,12 +352,13 @@ As trustless compute and storage providers.
 </aside></script></section><section data-markdown><script type="text/template">
 ## The Bigger Picture
 
-* Trustless computation and storage under consensus is not everything!
+* Trustless (expensive!) computation and storage under consensus is not everything!
 * What went missing:
 	* computation and messaging outside of consensus
 	* Storage
 	* Privacy
 	* Identity and personhood
+	* ...
 </script></section><section data-markdown><script type="text/template">
 ## The Bigger Picture
 
@@ -331,7 +369,7 @@ As trustless compute and storage providers.
 </aside></script></section><section data-markdown><script type="text/template">
 ## The Bigger Picture
 
-The challenge of for the next decade:
+The challenge for the next decade:
 
 <img style="width: 400px;" src="https://blog.kianenigma.com/img/user/resources/Pasted%20image%2020260214124822.png" />
 
