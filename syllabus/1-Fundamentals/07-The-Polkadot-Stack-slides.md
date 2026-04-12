@@ -676,7 +676,7 @@ navigateTo("other-app.dot");
 await storage.set("key", "value");
 
 // Pub/sub via statement store
-statements.subscribe(topic, (msg) => console.log("New message:", msg));
+statements.subscribe(topic, msg => console.log("New message:", msg));
 await statements.write(topic, payload);
 ```
 
