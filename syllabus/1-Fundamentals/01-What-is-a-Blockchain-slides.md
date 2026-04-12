@@ -22,11 +22,11 @@ Simple interface: Send money to this IBAN, I keep it safe, when you request to w
 Nobody trusted me
 I decided to open-source my entire code-base
 Nada
-Have it be audited, uesed the best tools to make it secure
+Have it be audited, used the best tools to make it secure
 I even rewrote the whole thing in Rust
 I even ran it in a TEE, attested that it doing the right thing, nada
 
-But then, I legalized my bank, declared it to local regulatros of my country, and put into place where if I misbehave, the local police and courts could come after me, or at least I pretended to do so
+But then, I legalized my bank, declared it to local regulators of my country, and put into place where if I misbehave, the local police and courts could come after me, or at least I pretended to do so
 
 And suddenly nobody even cared what my code is.
 
@@ -91,7 +91,7 @@ My failed bank was a poor man's attempt at creating this science-based trust.
 ## Revolution
 
 * Bitcoin proved that, while my bank failed, it is in principle possible
-* Trillions of dollars are entrusted today with this type of trust
+* Trillions of dollars are entrusted today with this type of technology
 * I can, in fact, with a few clicks, launch an ERC20 token and "run my own bank"
 
 note:
@@ -108,7 +108,7 @@ And more..
 
 note:
 
-* Land Registery
+* Land Registry
 * Prediction markets
 * Petitions / Donations
 * Fundraising
@@ -125,9 +125,11 @@ And more, though for now it seems that the best use-case for blockchains is for 
 * This revolution of creating systems with less/no human-based trust/authorities, and more science-based trust/authorities..
 * When applied to the world-wide web Is what I call **Web3**
 
-<br>
+---v
 
-> Applications built with Web3 in mind are often called Decentralized Applications (DApps)
+## Decentralized Applications (DApps)
+
+* Applications built with Web3 philosophy in mind are often called Decentralized Applications
 
 ---v
 
@@ -142,7 +144,7 @@ And more, though for now it seems that the best use-case for blockchains is for 
 
 note:
 
-So we established that we lack trust in the modern interconnecte worlds, and therefore we need authorities to manage our interactions
+So we established that we lack trust in the modern interconnected world, and therefore we need authorities to manage our interactions
 How can we model these blockchains and authorities
 
 ---v
@@ -185,7 +187,7 @@ graph LR
 
 * Code (rules)
 * Memory (state)
-* Execution user inputs (mutations)
+* Execution of user inputs (mutations)
 
 <br>
 
@@ -197,7 +199,7 @@ Here we can connect this to my failed bank -- this computer is what my bank need
 
 ---v
 
-## Bitcoin as An Authority:
+## Bitcoin As an Authority:
 
 * Rules: Valid transfer of BTC (based on UTXO model)
 * State: How much BTC each person has
@@ -212,6 +214,18 @@ Here we can connect this to my failed bank -- this computer is what my bank need
 * Bank of Portugal cannot confiscate the money I own in Singapore
 * Each authority has a sphere of influence <!-- .element: class="fragment" -->
 * For blockchain-based authorities, this is the their state <!-- .element: class="fragment" -->
+
+---v
+
+## Sphere of Influence
+
+
+<diagram class="mermaid">
+%%{init: {'theme': 'dark', 'themeVariables': { 'darkMode': true }}}%%
+graph LR
+    Authority -->|"Read"| State("Sphere of Influence (State)")
+    Authority -->|"Write"| State("Sphere of Influence (State)")
+</diagram>
 
 ---v
 
@@ -235,9 +249,23 @@ Here we can connect this to my failed bank -- this computer is what my bank need
 
 * Oracle Problem
 * Chains of Trust
-	* Bridges <!-- .element: class="fragment" -->
-	* Tokenized RWAs <!-- .element: class="fragment" -->
 	* Weakest Link Problem! <!-- .element: class="fragment" -->
+	* Bridges are the same <!-- .element: class="fragment" -->
+
+---v
+
+## The Real-World-Asset (RWA) Scam
+
+<diagram class="mermaid">
+%%{init: {'theme': 'dark', 'themeVariables': { 'darkMode': true }}}%%
+graph LR
+    subgraph "sphere of influence 🔐 "
+		BlockchainAuthority["Blockchain Authority"]
+        State(["State"])
+    end
+    Oracle["Oracle"]
+    Oracle -- "trust me bro ⛓️‍💥" --> State
+</diagram>
 
 ---v
 
@@ -271,7 +299,9 @@ note:
 
 ## RWA: Not a Scam, But..
 
-2 out of 3 properties are fully met
+* 2 out of 3 properties are fully met
+* Same as consortium blockchains <!-- .element: class="fragment" -->
+
 
 note:
 
@@ -288,18 +318,24 @@ But Auditability, and accessibility are fully met.
 
 ## Blockchains 101
 
+* Blockchains merely help with retaining correct ordering of past events
+	* Verifiability, the main magic of these systems? <!-- .element: class="fragment" -->
+	* No! ZK-Proofs, TEE <!-- .element: class="fragment" -->
+* Blockchains are overrated <!-- .element: class="fragment" -->
+	* Blockchain-based systems! != not just a blockchain <!-- .element: class="fragment" -->
+
 notes:
 
 Okay, enough with theoretical stuff, let's learn a bit more concretely about blockchains
 
 Authoring:
 Blockchains are a network of nodes, each running some software, called the "blockchain node software"
-None of these nodes trust each other, yet they all encode within themselves the ruls of the blockchain
+None of these nodes trust each other, yet they all encode within themselves the rules of the blockchain
 They each also hold their local copy of the blockchain's state
-Users send their transactions (instrusctions) to different nodes, and nodes may gossip them to one another
+Users send their transactions (instructions) to different nodes, and nodes may gossip them to one another
 Every now and then, one of these nodes, based on the rules of the blockchain is eligible to author a new block
 Block author will create a new block, updates its local state, and send the block + an attestation of what the new state should be to other nodes
-All other nodes verify that the rules were respected, with their local copy of the state and the ndoe software
+All other nodes verify that the rules were respected, with their local copy of the state and the node software
 Repeat
 
 Genesis and Syncing:
@@ -336,7 +372,7 @@ notes:
 ## The Bigger Picture
 
 * (2013) Bitcoin was a proof of concept that it is possible to establish trustless compute and storage under consensus
-* (2016) Ethereum was a proof of cocept that this can be generalized
+* (2016) Ethereum was a proof of concept that this can be generalized
 
 ---v
 
@@ -345,21 +381,30 @@ notes:
 * Next decade (2016 - today):
 	* Scaling the existing system (not expanding the horizon)
 	* DeFi (PMF - money to be made)
-	* Scam
+	* Noise
 
 
 ---v
 
 ## The Bigger Picture
 
-* Expanding the horizon
-* Invention << Innovation
+<img style="width: 600px;" src="../../assets/img/0-Shared/intro-web3-horizon.svg" />
+
+---v
+
+## The Bigger Picture
+
+*Invention vs. Innovation*
+
+<img style="width: 600px;" src="../../assets/img/0-Shared/intro-web3-horizon-full.svg" />
+
+
 
 notes:
 
 Making cars faster vs. Learning how to fly
 
-I am glad to see that Polkadot, while it innovated on scaling a lot, it also invented a lot of new paradaigms:
+I am glad to see that Polkadot, while it innovated on scaling a lot, it also invented a lot of new paradigms:
 
 * Layer 2s
 * PVM and forkless upgrades
@@ -369,12 +414,13 @@ I am glad to see that Polkadot, while it innovated on scaling a lot, it also inv
 
 ## The Bigger Picture
 
-* Trustless computation and storage under consensus is not everything!
+* Trustless (expensive!) computation and storage under consensus is not everything!
 * What went missing:
 	* computation and messaging outside of consensus
 	* Storage
 	* Privacy
 	* Identity and personhood
+	* ...
 
 ---v
 
@@ -391,7 +437,7 @@ More examples in https://blog.kianenigma.com/what-blockchain-actually/Content/Wh
 
 ## The Bigger Picture
 
-The challenge of for the next decade:
+The challenge for the next decade:
 
 <img style="width: 400px;" src="https://blog.kianenigma.com/img/user/resources/Pasted%20image%2020260214124822.png" />
 
@@ -403,7 +449,6 @@ Next decade of blockchain development is a challenge to either:
 
 * Solve the above problems, expand blockchain systems to the broader Web3 mission
 * Admit defeat, and let it all be a new financial system, which is ever more being integrated into the existing one, rather than replacing it.
-
 
 ---v
 
