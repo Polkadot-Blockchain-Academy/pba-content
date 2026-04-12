@@ -42,7 +42,7 @@ The Runtime exposes a Runtime API: `Metadata_metadata()`, which will return a SC
 Using the Metadata we can see the following:
 
 - System is pallet index 0.
-  - With storage Prefix "System".
+  - With storage prefix "System".
 - There is a storage item called "Account".
   - With storage prefix "Account"
 - It uses hasher `Blake2128Concat`.
@@ -154,7 +154,7 @@ We have no proof this data is actually in the state of the blockchain.
 
 ## Request a Proof from the Full Node
 
-So we should instead use `state_getReadProof`, which returns both the value and the data needed for a merkle proof of that value.
+So we should instead use `state_getReadProof`, which returns both the value and the data needed for a Merkle proof of that value.
 
 Using the storage key we want, `at` a specific block hash, we get:
 
@@ -457,7 +457,7 @@ pub type TxExtension = (
 4. `CheckGenesis`: [H] Makes sure the transaction is valid only for a specific blockchain.
 5. `CheckMortality`: [I] Guarantees a transaction is only valid for a limited time, preventing replays.
 6. `CheckNonce`: [I] Enables transaction ordering and prevents transaction replay.
-7. `CheckWeight`: [F] Checks transaction's weight fits in the block.
+7. `CheckWeight`: [F] Checks the transaction's weight fits in the block.
 8. `ChargeTransactionPayment`: [I] Allows tips and deducts the final transaction fee.
 9. `PrevalidateAttests`: [F] Specifically used for Ethereum ICO claims of DOT.
 10. `CheckMetadataHash`: [H] Ensures the transaction was created using the appropriate metadata.

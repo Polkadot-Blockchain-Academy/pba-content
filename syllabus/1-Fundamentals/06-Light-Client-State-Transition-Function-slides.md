@@ -44,7 +44,7 @@ A key concept that we will touch on over and over is the separation of the clien
 <pba-col center>
 <h3 style="color: var(--substrate-runtime); top: 0"> Runtime (Protocol) </h3>
 
-- Application logic aka. How we execute block
+- Application logic, a.k.a. how we execute a block
 - Stored as a part of your chain state as a WASM Blob
 - Upgradeable
 - Also known as: STF
@@ -124,7 +124,7 @@ The client and runtime interface should not change frequently, even though both 
 One way we achieve this is by passing data between the two with an **opaque encoding**:
 
 ```rust
-/// Simple blob that hold a value in an encoded form without committing to its type.
+/// Simple blob that holds a value in an encoded form without committing to its type.
 pub struct OpaqueValue(Vec<u8>);
 ```
 
@@ -203,7 +203,7 @@ Most commonly this is `Signed(SomeAddress)`.
 
 ## Function Execution
 
-Rust simply executing with the parameters passed in from the extrinsic.
+Rust simply executes with the parameters passed in from the extrinsic.
 
 > It is worth noting that the only reason an extrinsic is able to trigger the execution of some code is because there is a dispatch pipeline.
 
@@ -220,7 +220,7 @@ Unlike smart contract systems, you execute in a nearly limitless execution envir
 
 ## State Update
 
-The most common after effect of function execution is storage updates.
+The most common aftereffect of function execution is storage updates.
 
 Your functions can call simple direct APIs like:
 
