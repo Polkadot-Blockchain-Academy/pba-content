@@ -503,11 +503,21 @@ See: `struct SignedPayload`.
 </script></section><section  data-markdown><script type="text/template">
 ## Future: v5 General Extrinsic Format
 
-The `UncheckedExtrinsic` also supports a newer v5 "General" format where the signature is **not** in the preamble. Instead, authorization is handled entirely by transaction extensions (e.g. `VerifySignature`).
+The Polkadot SDK now supports a v5 "General" extrinsic format where the signature is **not** in the preamble. Instead, authorization is handled entirely by transaction extensions.
 
-This enables advanced use cases like **meta-transactions**, where someone submits a transaction on behalf of another account.
+<div class="text-small">
 
-> Standard Polkadot transactions currently use the v4 Signed format. The transition to v5 General is part of the ongoing [Extrinsic Horizon](https://github.com/paritytech/polkadot-sdk/issues/2415) effort.
+**What v5 brings:**
+
+- **`AuthorizeCall`**: A new extension that validates authorization logic defined on the call itself.
+- **`VerifySignature`**: Signature verification moves into the extension pipeline.
+- **`WeightReclaim`**: Refunds unused weight back to users.
+- **Meta-transactions**: Someone can submit a transaction on behalf of another account.
+- **General transactions**: Authorization without traditional account signatures.
+
+</div>
+
+> Polkadot mainnet currently uses the v4 Signed format. The transition to v5 General is part of the ongoing [Extrinsic Horizon](https://github.com/paritytech/polkadot-sdk/issues/2415) effort, already available in the SDK.
 </script></section><section  data-markdown><script type="text/template">
 <!-- .slide: data-background-color="#4A2439" -->
 
