@@ -26,7 +26,6 @@ cargo build --release -p minimal-template-runtime
 
 <img src="../../../assets/img/5-Substrate/dev-4-3-omni.svg" />
 
-
 ---v
 
 ## Nodes With Hardcoded Runtime
@@ -51,18 +50,18 @@ polkadot-omni-node --chain spec.json --tmp
 
 ## Chain Specification Files
 
-* JSON File containing initial specification of the chain:
-  * What is in the genesis state?
-  * What is the native token of the chain?
-  * Genesis block hash
-  * Bootnodes
-  * And more!
+- JSON File containing initial specification of the chain:
+  - What is in the genesis state?
+  - What is the native token of the chain?
+  - Genesis block hash
+  - Bootnodes
+  - And more!
 
 ---
 
 ## Genesis WASM File
 
-* Initial WASM file must be in the chain-spec as well!
+- Initial WASM file must be in the chain-spec as well!
 
 ```
 chain-spec-builder create --runtime ./minimal_template_runtime.wasm
@@ -72,7 +71,7 @@ chain-spec-builder create --runtime ./minimal_template_runtime.wasm
 
 ## Genesis State
 
-* The WASM file and chain-spec-builder have a protocol to communicate _WHAT_ the genesis state should be.
+- The WASM file and chain-spec-builder have a protocol to communicate _WHAT_ the genesis state should be.
 
 ```
 chain-spec-builder create --runtime ./minimal_template_runtime.wasm default
@@ -89,12 +88,12 @@ chain-spec-builder create --runtime ./minimal_template_runtime.wasm default
 
 ## JSON RPC
 
-* The interface available to you once you run any substrate-based chain.
-  * `wscat`, `curl` etc.
-  * client libraries, like `polkadot-js`, `papi`, `subxt`
-  * UIs like `polkadot-js-apps`, `papi-console`
-  * Any much more, that is ultimately built on top of JSON RPC
-* (needless to say you may also connect to a public RPC server, not just your local one)
+- The interface available to you once you run any substrate-based chain.
+  - `wscat`, `curl` etc.
+  - client libraries, like `polkadot-js`, `papi`, `subxt`
+  - UIs like `polkadot-js-apps`, `papi-console`
+  - Any much more, that is ultimately built on top of JSON RPC
+- (needless to say you may also connect to a public RPC server, not just your local one)
 
 ---
 
@@ -130,18 +129,15 @@ https://docs.rs/sc-rpc-api/latest/sc_rpc_api/
 
 ---
 
-
 ---
 
 ## QUICK PAPI Demo
-
 
 ---
 
 ## Your Workshop
 
 https://hackmd.io/@kizi/B1UU4HI2Wx
-
 
 ---
 

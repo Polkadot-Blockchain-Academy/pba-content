@@ -17,14 +17,14 @@ A reference project demonstrating the full Polkadot stack through **Proof of Exi
 
 <div class="text-small">
 
-| Component | Path | Tech Stack |
-|-----------|------|------------|
-| **FRAME Pallet** | `blockchain/` | Rust, FRAME, Cumulus, polkadot-omni-node |
-| **EVM Contract** | `contracts/evm/` | Solidity, Hardhat, solc |
-| **PVM Contract** | `contracts/pvm/` | Solidity, Hardhat, resolc |
-| **React Frontend** | `web/` | React, Vite, PAPI, viem |
-| **Rust CLI** | `cli/` | Rust, subxt, alloy |
-| **Dev Scripts** | `scripts/` | Zombienet, docker-compose |
+| Component          | Path             | Tech Stack                               |
+| ------------------ | ---------------- | ---------------------------------------- |
+| **FRAME Pallet**   | `blockchain/`    | Rust, FRAME, Cumulus, polkadot-omni-node |
+| **EVM Contract**   | `contracts/evm/` | Solidity, Hardhat, solc                  |
+| **PVM Contract**   | `contracts/pvm/` | Solidity, Hardhat, resolc                |
+| **React Frontend** | `web/`           | React, Vite, PAPI, viem                  |
+| **Rust CLI**       | `cli/`           | Rust, subxt, alloy                       |
+| **Dev Scripts**    | `scripts/`       | Zombienet, docker-compose                |
 
 </div>
 
@@ -69,6 +69,7 @@ graph TB
     U3 --> U4
     U4 -->|"PAPI / viem"| E1
     U4 -->|"PAPI / viem"| E2
+
 </diagram>
 
 ---
@@ -140,12 +141,12 @@ polkadot-omni-node --chain chain-spec.json --dev
 
 <div class="text-small">
 
-| Component | How It Deploys | Where It Lives |
-|-----------|---------------|----------------|
-| **Pallet** | Compile Wasm runtime → register parachain via Coretime | Your parachain on the Polkadot network |
-| **EVM Contract** | `npx hardhat deploy` through eth-rpc sidecar | Asset Hub (or your parachain) |
-| **PVM Contract** | `npx hardhat deploy` with `@parity/hardhat-polkadot` plugin | Asset Hub (or your parachain) |
-| **Frontend** | Build static bundle → upload to Bulletin Chain → register .dot name via DotNS | IPFS, accessible via any Triangle host |
+| Component        | How It Deploys                                                                | Where It Lives                         |
+| ---------------- | ----------------------------------------------------------------------------- | -------------------------------------- |
+| **Pallet**       | Compile Wasm runtime → register parachain via Coretime                        | Your parachain on the Polkadot network |
+| **EVM Contract** | `npx hardhat deploy` through eth-rpc sidecar                                  | Asset Hub (or your parachain)          |
+| **PVM Contract** | `npx hardhat deploy` with `@parity/hardhat-polkadot` plugin                   | Asset Hub (or your parachain)          |
+| **Frontend**     | Build static bundle → upload to Bulletin Chain → register .dot name via DotNS | IPFS, accessible via any Triangle host |
 
 </div>
 
@@ -171,12 +172,14 @@ Every student ships a **solo project** with:
 <div class="text-left">
 
 **One backend** (pick one):
+
 - Substrate Pallet
 - Solidity smart contract on EVM
 - Solidity smart contract on PVM
 - Rust smart contract on PVM
 
 **One frontend** (pick one):
+
 - Web app (React, Svelte, Vue, etc.)
 - CLI++ (TUI or MCP server)
 
@@ -192,12 +195,12 @@ Every student ships a **solo project** with:
 
 Not all paths are equally battle-tested. Pick based on your appetite for risk.
 
-| Backend | Confidence | Notes |
-|---------|-----------|-------|
-| **Pallet** | ~100% | Well-trodden, full curriculum support |
-| **Solidity on EVM** | ~90% | Mature tooling, standard ecosystem |
-| **Solidity on PVM** | ~70% | Expect toolchain quirks |
-| **Rust on PVM** | ~50% | Bleeding edge. Real chance you hit walls nobody has hit yet |
+| Backend             | Confidence | Notes                                                       |
+| ------------------- | ---------- | ----------------------------------------------------------- |
+| **Pallet**          | ~100%      | Well-trodden, full curriculum support                       |
+| **Solidity on EVM** | ~90%       | Mature tooling, standard ecosystem                          |
+| **Solidity on PVM** | ~70%       | Expect toolchain quirks                                     |
+| **Rust on PVM**     | ~50%       | Bleeding edge. Real chance you hit walls nobody has hit yet |
 
 **Getting stuck is not failure** as long as you document it well.
 

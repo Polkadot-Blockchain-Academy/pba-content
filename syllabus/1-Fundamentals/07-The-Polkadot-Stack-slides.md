@@ -95,7 +95,6 @@ Both built using blockchain technology.
 </pba-col>
 </pba-cols>
 
-
 ---
 
 ## Who Does the World Computer Appeal To?
@@ -127,13 +126,11 @@ Polkadot is building a **decentralized Web3 Cloud**:
 
 > Polkadot will do to Web3 what AWS did to Web2.
 
-
 ---
 
 ## How Polkadot Delivers This
 
 Polkadot fulfills this vision across three layers:
-
 
 1. **Polkadot Triangle**: User Interfaces
 1. **Polkadot Stack**: Developer Tools
@@ -188,6 +185,7 @@ The **primary user-facing chain** in the Polkadot ecosystem.
 <div class="text-left">
 
 **Assets:**
+
 - DOT native token management
 - Fungible assets (tokens)
 - NFTs (non-fungible tokens)
@@ -198,6 +196,7 @@ The **primary user-facing chain** in the Polkadot ecosystem.
 <div class="text-left">
 
 **Smart Contracts:**
+
 - **pallet-revive**: EVM-compatible smart contracts
 - Deploy Solidity to both **EVM** and **PolkaVM**
 - Full Ethereum tooling support (MetaMask, Hardhat, Foundry)
@@ -215,17 +214,16 @@ Parachains chains share security from the Relay Chain and communicate via **XCM*
 
 <div class="text-small">
 
-| Chain | Purpose |
-|-------|---------|
-| **Bridge Hub** | Connects Polkadot to external networks like Bitcoin, Ethereum and Kusama |
-| **Coretime** | Marketplace for blockspace to buy cores for decentralized compute |
-| **People** | On-chain identity and Proof-of-Personhood for sybil resistance |
-| **Collectives** | Governance bodies, Technical Fellowship |
-| **Bulletin** | Persistent and IPFS-compatible data storage |
+| Chain                 | Purpose                                                                   |
+| --------------------- | ------------------------------------------------------------------------- |
+| **Bridge Hub**        | Connects Polkadot to external networks like Bitcoin, Ethereum and Kusama  |
+| **Coretime**          | Marketplace for blockspace to buy cores for decentralized compute         |
+| **People**            | On-chain identity and Proof-of-Personhood for sybil resistance            |
+| **Collectives**       | Governance bodies, Technical Fellowship                                   |
+| **Bulletin**          | Persistent and IPFS-compatible data storage                               |
 | **Custom Parachains** | Build with Polkadot SDK (FRAME), deploy via Coretime, get shared security |
 
 </div>
-
 
 ---
 
@@ -388,6 +386,7 @@ The modern **TypeScript** client for Polkadot.
 <div class="text-left">
 
 **Key Features:**
+
 - **Light-client first** - built on smoldot
 - **Typed API** - generated from on-chain metadata
 - **Native BigInt** - no heavy BigNumber libraries
@@ -401,21 +400,19 @@ Replaces the older polkadot.js library.
 
 ```typescript
 import { createClient } from "polkadot-api";
-import { getSmProvider }
-  from "polkadot-api/sm-provider";
+import { getSmProvider } from "polkadot-api/sm-provider";
 
 // Connect via light client
 const client = createClient(
-  getSmProvider(smoldot.addChain({
-    chainSpec
-  }))
+  getSmProvider(
+    smoldot.addChain({
+      chainSpec,
+    })
+  )
 );
 
 // Typed storage query
-const claim = await client
-  .getTypedApi(descriptors)
-  .query.TemplatePallet
-  .Claims.getValue(hash);
+const claim = await client.getTypedApi(descriptors).query.TemplatePallet.Claims.getValue(hash);
 ```
 
 </div>
@@ -431,6 +428,7 @@ The **Rust** equivalent of PAPI.
 <div class="text-left">
 
 **Key Features:**
+
 - **Typed API** from metadata (proc macro)
 - **Dynamic API** for untyped access
 - Full chain interaction: storage, extrinsics, events, blocks
@@ -470,14 +468,17 @@ Use your existing Ethereum skills and tools.
 <div class="text-left">
 
 **Frontend (TypeScript):**
+
 - **viem** - modern, typed Ethereum client
 - **ethers.js** - the classic
 - **wagmi** - React hooks for Ethereum
 
 **Backend (Rust):**
+
 - **alloy** - next-gen Rust Ethereum library
 
 **Development:**
+
 - **Hardhat** - with `@parity/hardhat-polkadot`
 - **Foundry** - forge, cast, anvil
 - **MetaMask** - wallet
@@ -494,6 +495,7 @@ Human-readable names for the Polkadot ecosystem.
 <div class="text-left">
 
 **Like ENS, but on Polkadot:**
+
 - Register `myapp.dot`
 - Points to an IPFS CID (your dApp frontend)
 - Also resolves to Polkadot addresses
@@ -524,11 +526,13 @@ graph TB
 <div class="text-left">
 
 **Local Development:**
+
 - **Zombienet** - spin up local multi-chain networks
 - **polkadot-omni-node** - generic parachain node binary
 - **chain-spec-builder** - generate chain specifications
 
 **Deployment:**
+
 - Deploy to **Paseo testnet** (Polkadot's testnet)
 - Deploy frontends to **IPFS** (web3.storage / Bulletin Chain)
 - Register **.dot domains** via DotNS
@@ -537,12 +541,14 @@ graph TB
 <div class="text-left">
 
 **Debugging & Monitoring:**
+
 - **Blockscout** - block explorer with EVM support
 - **Polkadot.js Apps** - Substrate explorer and governance UI
 - **eth-rpc debug APIs** - transaction tracing
 - **PAPI devtools** - chain interaction debugging
 
 **Package Management:**
+
 - **psvm** - Polkadot SDK Version Manager
 - **Umbrella crate** - single dependency for polkadot-sdk
 
@@ -593,6 +599,7 @@ graph TB
     ALLOY --> HTTP
     VIEML --> HTTP
     HH --> HTTP
+
 </diagram>
 
 ---
@@ -627,6 +634,7 @@ graph TB
 
     Product -->|"window.host<br/>(sandboxed bridge)"| Host
     Host -->|"Light client /<br/>RPC"| Chain
+
 </diagram>
 
 <div class="text-left">
@@ -688,6 +696,7 @@ What the host provides to your dApp:
 <div class="text-left">
 
 **Core Capabilities:**
+
 - **Wallet** - BIP-39, sr25519, Ed25519, secp256k1
 - **Light Clients** - smoldot (Substrate), Helios (Ethereum), Kyoto (Bitcoin)
 - **DOTNS Resolution** - `.dot` name to IPFS content
@@ -698,6 +707,7 @@ What the host provides to your dApp:
 <div class="text-left">
 
 **Extensions (`window.host.ext.*`):**
+
 - **data** - peer-to-peer data channels
 - **media** - audio/video calls
 - **files** - file saving
@@ -718,10 +728,7 @@ What your dApp uses to talk to the host:
 <div class="text-left">
 
 ```typescript
-import {
-  getAddress,
-  navigateTo,
-} from "@polkadot-apps/product-sdk";
+import { getAddress, navigateTo } from "@polkadot-apps/product-sdk";
 
 // Get the current user's account
 const address = await getAddress();
@@ -734,17 +741,14 @@ navigateTo("other-app.dot");
 <div class="text-left">
 
 ```typescript
-import {
-  statements,
-  storage,
-} from "@polkadot-apps/product-sdk";
+import { statements, storage } from "@polkadot-apps/product-sdk";
 
 // Scoped key-value storage
 await storage.set("key", "value");
 const val = await storage.get("key");
 
 // Pub/sub via statement store
-statements.subscribe(topic, (msg) => {
+statements.subscribe(topic, msg => {
   console.log("New message:", msg);
 });
 await statements.write(topic, payload);
@@ -762,6 +766,7 @@ Your dApp runs in a **strict sandbox**.
 <div class="text-left">
 
 **What products CANNOT do:**
+
 - No network access (`connect-src 'none'`)
 - No WebSocket, WebRTC, Workers, BroadcastChannel
 - No localStorage, cookies, or caches
@@ -769,6 +774,7 @@ Your dApp runs in a **strict sandbox**.
 - No auto-approval of signing requests
 
 **What products CAN do:**
+
 - Run JavaScript and WASM
 - Communicate through `window.host` bridge
 - Request signatures (user must confirm each one)
@@ -796,6 +802,7 @@ sequenceDiagram
     I-->>H: dApp bundle (HTML/JS/CSS)
     H->>H: Load in sandboxed iframe
     H-->>U: dApp renders
+
 </diagram>
 
 ---
@@ -839,6 +846,7 @@ graph TB
     U3 --> U4
     U4 -->|"PAPI / viem"| E1
     U4 -->|"PAPI / viem"| E2
+
 </diagram>
 
 ---
