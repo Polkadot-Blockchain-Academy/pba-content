@@ -4,15 +4,23 @@ A curated starting set for your project phase. Not exhaustive. If you find
 something better than what's listed here, open a PR - this file is meant to
 evolve with the cohort.
 
-Sections mirror the paths in [`project-guidelines.md`](./project-guidelines.md) §3:
-pick a backend, pick a frontend, deploy on Bulletin Chain + DotNS.
+---
+
+## Start here
+
+- **Stack Template** - [github.com/shawntabrizi/polkadot-stack-template](https://github.com/shawntabrizi/polkadot-stack-template)
+  - Fork this to start your project
+- **Project Guidelines** - [`project-guidelines.md`](./project-guidelines.md)
+  - Requirements, evaluation, deliverables
+- **Git Repositories** - [github.com/orgs/paritytech/teams/pba-lisbon-2026/repositories](https://github.com/orgs/paritytech/teams/pba-lisbon-2026/repositories)
+  - Access to private repos for the program
+  - Also check out the public repos at [github.com/paritytech](https://github.com/paritytech)
 
 ---
 
-## Starter templates
+## Other starter templates
 
-- [`polkadot-stack-template`](https://github.com/shawntabrizi/polkadot-stack-template) - opinionated backend + web frontend starter from Shawn.
-- [`polkadot-sdk-minimal-template`](https://github.com/paritytech/polkadot-sdk-minimal-template) - the smallest viable Substrate runtime.
+- [`polkadot-sdk-parachain-template`](https://github.com/paritytech/polkadot-sdk-parachain-template) - a viable parachain runtime.
 - [`pba-omni-node`](https://github.com/kianenigma/pba-omni-node) - generic node that runs your custom runtime without you writing node-side code.
 
 ## Backend: Substrate Pallet

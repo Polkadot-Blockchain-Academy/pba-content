@@ -42,7 +42,7 @@ The Runtime exposes a Runtime API: `Metadata_metadata()`, which will return a SC
 Using the Metadata we can see the following:
 
 - System is pallet index 0.
-  - With storage Prefix "System".
+  - With storage prefix "System".
 - There is a storage item called "Account".
   - With storage prefix "Account"
 - It uses hasher `Blake2128Concat`.
@@ -154,7 +154,7 @@ We have no proof this data is actually in the state of the blockchain.
 
 ## Request a Proof from the Full Node
 
-So we should instead use `state_getReadProof`, which returns both the value and the data needed for a merkle proof of that value.
+So we should instead use `state_getReadProof`, which returns both the value and the data needed for a Merkle proof of that value.
 
 Using the storage key we want, `at` a specific block hash, we get:
 
@@ -457,7 +457,7 @@ pub type TxExtension = (
 4. `CheckGenesis`: [H] Makes sure the transaction is valid only for a specific blockchain.
 5. `CheckMortality`: [I] Guarantees a transaction is only valid for a limited time, preventing replays.
 6. `CheckNonce`: [I] Enables transaction ordering and prevents transaction replay.
-7. `CheckWeight`: [F] Checks transaction's weight fits in the block.
+7. `CheckWeight`: [F] Checks the transaction's weight fits in the block.
 8. `ChargeTransactionPayment`: [I] Allows tips and deducts the final transaction fee.
 9. `PrevalidateAttests`: [F] Specifically used for Ethereum ICO claims of DOT.
 10. `CheckMetadataHash`: [H] Ensures the transaction was created using the appropriate metadata.
@@ -518,11 +518,21 @@ See: `struct SignedPayload`.
 
 ## Future: v5 General Extrinsic Format
 
-The `UncheckedExtrinsic` also supports a newer v5 "General" format where the signature is **not** in the preamble. Instead, authorization is handled entirely by transaction extensions (e.g. `VerifySignature`).
+The Polkadot SDK now supports a v5 "General" extrinsic format where the signature is **not** in the preamble. Instead, authorization is handled entirely by transaction extensions.
 
-This enables advanced use cases like **meta-transactions**, where someone submits a transaction on behalf of another account.
+<div class="text-small">
 
-> Standard Polkadot transactions currently use the v4 Signed format. The transition to v5 General is part of the ongoing [Extrinsic Horizon](https://github.com/paritytech/polkadot-sdk/issues/2415) effort.
+**What v5 brings:**
+
+- **`AuthorizeCall`**: A new extension that validates authorization logic defined on the call itself.
+- **`VerifySignature`**: Signature verification moves into the extension pipeline.
+- **`WeightReclaim`**: Refunds unused weight back to users.
+- **Meta-transactions**: Someone can submit a transaction on behalf of another account.
+- **General transactions**: Authorization without traditional account signatures.
+
+</div>
+
+> Polkadot mainnet currently uses the v4 Signed format. The transition to v5 General is part of the ongoing [Extrinsic Horizon](https://github.com/paritytech/polkadot-sdk/issues/2415) effort, already available in the SDK.
 
 ---
 

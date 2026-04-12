@@ -15,30 +15,33 @@ This is not a warning so you can lower your ambition. It is a warning so you can
 - **Hitting sharp edges is expected.** Things are still a work in progress.
 - **Filing a precise, reproducible bug report against the stack is valued.** A good bug report can be worth as much as a working feature.
 - **Submitting a PR that fixes a stack issue you hit is valued highest of all.** It is the clearest possible signal you can give us.
-- **Honest "here is what I tried, here is where I got stuck, here is what I learned" beats a polished demo that hides what broke.**
+- **A clear "here is what I tried, here is where I got stuck, here is what I learned" beats a polished demo that hides what broke.** Your struggles are valuable signal for us.
 
 You are helping us discover the shape of the stack at the same time as you are building on it.
 
 ### The vision you are building toward
 
-The Polkadot stack is reaching for a **fully decentralized application stack**: on-chain logic, decentralized storage (Bulletin Chain), verifiable name resolution (DotNS), frictionless deployment and more that we wont use yet because its stil learly in the making. The long-term goal is that an indie developer can ship a real product with no centralized dependencies and no gatekeepers. Your project is a concrete test of how close we are.
+The Polkadot stack is reaching for a **fully decentralized application stack**: on-chain logic, decentralized storage (Bulletin Chain), verifiable name resolution (DotNS), frictionless deployment and more that we won't use yet because it's still early in the making. The long-term goal is that an indie developer can ship a real product with no centralized dependencies and no gatekeepers. Your project is a concrete test of how close we are.
 
 ---
 
-## 2. Hiring Reality Check
+## 2. Think of This as Onboarding
 
-There are **no grades** in PBP. Instead, **your project will be reviewed directly by Parity for hiring consideration**.
+There are **no grades** in PBP. Think of this program as your **2-week onboarding at Parity**.
 
-This matters more than a grade would. A grade is a line in a transcript. A project is a thing a hiring manager can read, run, and argue about. Some of you will be talking to Parity about roles because of what you ship here.
+You have Parity engineers on staff the entire time as mentors. You are given real tools, real code, and the freedom to build anything. At the end, your project is reviewed directly by Parity for hiring consideration.
+
+The question we are asking: _"Would I want this person on my team?"_
 
 What reviewers will look for:
 
-- **Taste.** Did you choose a problem worth solving? Is your scope sane?
-- **Shipping discipline.** Does the repo run? Is the README honest about what works and what doesn't?
-- **Judgment under uncertainty.** When you got stuck, how did you reason about it? Did you pick a good next move?
-- **Honesty.** Hiding what broke is worse than reporting it clearly.
-- **Cleanliness.** Readable code. Meaningful commits. Not a dump.
-- **Voice.** We can tell when a README was written by a human who understood the project. We can also tell when it wasn't.
+- **Self-starters.** You don't wait to be told what to do. You explore, you try things, you ask when stuck.
+- **Builders with taste.** Did you choose a problem worth solving? Does the project take advantage of what Web3 actually provides?
+- **Stack improvers.** You find a bug? You open an issue. You can fix it? You open a PR. This is the strongest signal you can give us.
+- **Collaborators.** You help others, share what you learn, and make the people around you better.
+- **Shipping discipline.** Does the repo run? Is the README clear about what works and what doesn't?
+- **Code quality.** Readable code. Meaningful commits. No dead code or leftover scaffolding.
+- **Active communicators.** You say what works, what doesn't, and what you'd do differently.
 
 ---
 
@@ -62,9 +65,13 @@ Every student ships, **solo**, a project with exactly these components:
 
 ### 3.3 Mandatory integration
 
-- **Web deploy on Bulletin Chain + DotNS.** Every project ships a web presence hosted on Bulletin Chain and reachable via a DotNS name. For web-app frontends, this _is_ your app. For CLI++ frontends (TUI or MCP server), you still ship a web presence - at minimum a product / landing page describing what the project does, how to install it, and how to use it. No project is exempt. The point is that every student touches the decentralized deploy path end-to-end.
+- **Deploy to Paseo with Bulletin Chain + DotNS.** Every project ships a web presence hosted on Bulletin Chain and reachable via a DotNS name on the **Paseo** testnet. For web-app frontends, this _is_ your app. For CLI++ frontends (TUI or MCP server), you still ship a web presence - at minimum a product / landing page describing what the project does, how to install it, and how to use it. No project is exempt. The point is that every student touches the decentralized deploy path end-to-end.
 
-### 3.4 Scope rule
+### 3.4 Note on parachain projects
+
+If you are building a **pallet** (custom parachain runtime), you do **not** need to launch a public parachain or acquire coretime. Your parachain should work locally with **zombienet** — that is sufficient for the demo. Your frontend still needs to be deployed on Paseo via Bulletin Chain + DotNS (section 3.3), and should connect to your local zombienet for the demo.
+
+### 3.5 Scope rule
 
 The backend + frontend combo is a **strict requirement**. Pure-infra projects (an indexer, a bridge, a standalone library) do not satisfy the rubric on their own. If you think you have a good reason to deviate, talk to faculty _before_ you start building.
 
@@ -163,24 +170,30 @@ In particular to your README. AI-generated prose is faster to produce than code,
 
 A few things to internalise:
 
-- **Humans read every word you ship.** AI generates them in seconds; we read them in minutes. A 4000-word README that nobody asked for is not "thorough" - it is wasting reviewer time. Length is not a virtue. Density and honesty are.
+- **Humans read every word you ship.** AI generates them in seconds; we read them in minutes. A 4000-word README that nobody asked for is not "thorough" - it is wasting reviewer time. Length is not a virtue. Density and clarity are.
 - **A wall of confident-sounding text is slop, even if every sentence is technically correct.** Reviewers can feel the difference between a README written by someone who built the thing and one assembled out of prompts. So can your peers.
 - **Rule of thumb for your README: 90% you, 10% AI.** Use AI for grammar, spelling, formatting cleanup, maybe rephrasing a clunky paragraph. Do **not** use it to draft the document. The structure, the framing, the choices about what to include and what to cut - those need to be yours. Same for the retrospective.
 - **If you expect us to read it, you should have read it yourself. Twice.** End to end. Out loud, even. If you can't be bothered, neither can we, and we will notice.
 
 ---
 
-## 7. Deliverables
+## 7. Deliverables Checklist
 
 At the end of the program you hand in:
 
-1. **A GitHub repo** with:
-   - Working code (backend + frontend).
-   - A README covering: what the project does, which path you picked, how to run it end-to-end, what works, what doesn't, known limitations, design decisions and compromises you made (and would revisit), and the URL of your decentralized deployment.
-   - Meaningful commit history.
-2. **A working demo.** Live is preferred. A recorded fallback is always nice in case live is unsafe (e.g. testnet flakiness).
-3. **A 5-minute pitch / demo presentation** on pitch day. See section 9 for what this should look like.
-4. **A retrospective write-up** using [`retrospective-template.md`](./retrospective-template.md). This is the short post-mortem where you tell us what worked, what broke, and - most importantly - **what you'd tell the Parity team about the stack based on what you hit**. Reviewers read this carefully. It is not busywork.
+- [ ] **GitHub repo** with working code (backend + frontend)
+- [ ] **Deployed on Paseo** — live and reachable at your .dot name via Bulletin Chain
+- [ ] **README** covering:
+  - [ ] What the project does
+  - [ ] Which path you picked (backend + frontend)
+  - [ ] How to run it end-to-end
+  - [ ] What works and what doesn't
+  - [ ] Known limitations and design compromises
+  - [ ] URL of your decentralized deployment (.dot name)
+- [ ] **Meaningful commit history** (no `fix fix fix wip more`)
+- [ ] **Working demo** — live preferred, recorded fallback if live is risky (see section 9)
+- [ ] **5-minute pitch** with slides on pitch day (see section 9)
+- [ ] **Retrospective** using [`retrospective-template.md`](./retrospective-template.md) — what worked, what broke, and what you'd tell Parity about the stack. Reviewers read this carefully.
 
 ---
 
@@ -201,12 +214,12 @@ A final pass before you push your last commit. None of this is busywork - every 
 ### 8.2 Repo
 
 - **Meaningful git history.** Reviewers will read your commits. `fix`, `wip`, `more` ten times in a row is a red flag (see section 6.4).
-- **README at the repo root**, covering everything listed in section 7 deliverable 1. Include the Bulletin Chain / DotNS URL of your deployment so reviewers can click straight through.
+- **README at the repo root**, covering everything in the section 7 checklist. Include the Bulletin Chain / DotNS URL so reviewers can click straight through.
 - **Retrospective filled in** using [`retrospective-template.md`](./retrospective-template.md). Don't leave this for the morning of pitch day.
 
 ### 8.3 Deployment
 
-- **Decentralized deploy is live and reachable** at your DotNS name (see section 3.3). If it isn't, reviewers can't see your work. Test it from a fresh browser session - not the one you've been developing in.
+- **Decentralized deploy is live and reachable** on Paseo at your DotNS name (see section 3.3). If it isn't, reviewers can't see your work. Test it from a fresh browser session - not the one you've been developing in.
 
 ### 8.4 Demo
 
@@ -232,12 +245,12 @@ On the final day of the program, every student gives a short presentation. This 
 1. **The product.** What is it? In one sentence, then show us.
 2. **Why it's interesting / relevant.** Why did you pick this problem? Who is it for? Why does it belong on the Polkadot stack specifically?
 3. **The demo.** Walk through the thing working end-to-end - backend, frontend, decentralized deploy. This is the heart of the pitch. Spend time here.
-4. **Learnings, problems, and what broke.** The honest part. Sharp edges you hit on the stack, bug reports you filed, things that surprised you, things you'd do differently. Reviewers value this section more than you'd guess.
+4. **Learnings, problems, and what broke.** This is the part Parity cares most about. Sharp edges you hit on the stack, bug reports you filed, things that surprised you, things you'd do differently. Reviewers value this section more than you'd guess.
 5. **Next steps, future ideas, and feedback to the stack.** Where would you take this next? What's still rough? What should Parity know about the stack based on what you went through?
 
 ### 9.3 Tone
 
-Short, sharp, honest. The worst pitches hide what broke and pad the demo with filler. The best ones leave a reviewer thinking _"I want to clone that repo and run it."_ Aim for that.
+Short, sharp, direct. The worst pitches hide what broke and pad the demo with filler. The best ones leave a reviewer thinking _"I want to clone that repo and run it."_ Aim for that.
 
 ---
 
@@ -256,8 +269,8 @@ Rough shape:
 
 ## 11. Process & Support
 
-- **Office hours with faculty** are available throughout project time. Use them.
-- **If you are on a risky path and stuck, come talk to us early.** "I am 48 hours into this and I don't know if it's possible" is a normal conversation to have. Waiting until day 10 to raise it is not.
+- **Parity engineers and faculty are here as mentors** throughout project time. Use them.
+- **Ask early, not late.** If you're stuck on something small, ask for help after ~30 minutes. Time is limited and mentors know tricks that commonly unblock people in seconds. "I've been stuck for 2 days" is a missed opportunity — don't let that happen.
 - **Project ideas**: see [`../ideas.md`](../ideas.md) for a living idea bank. You are free to invent your own, or pick from the bank and make it yours.
 - **Bug reports against the stack**: faculty will point you at the right repos (Substrate, PVM, Bulletin Chain, Polkadot Desktop) during week 1. When in doubt, ask before filing.
 
@@ -265,6 +278,6 @@ Rough shape:
 
 ## 12. A Final Note
 
-You are among the first cohorts building on the decentralized Polkadot app stack as a unified thing. A lot of what you find - good and bad - will directly shape how Parity builds this stack for the next few years. Take that seriously. Build something you would actually want to exist. Be honest about what happened. Have fun.
+You are among the first cohorts building on the decentralized Polkadot app stack as a unified thing. A lot of what you find - good and bad - will directly shape how Parity builds this stack for the next few years. Take that seriously. Build something you would actually want to exist. Document what you found — good and bad. Have fun.
 
 Good luck.

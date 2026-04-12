@@ -212,12 +212,6 @@ All proudly™️ built with Substrate.
 2. all the Polkadot Parachains to date.
 3. (less known) can be used to build any blockchain unrelated to Polkadot.
 
----v
-
-### Polkadot SDK
-
-Cumulus augments Substrate to make it Polkadot-compatible.
-
 ---
 
 ## Interoperability
@@ -249,11 +243,11 @@ but it can 100% ensure that the parachain will do exactly as stated in its WASM 
 
 Polkadot-SDK's services to developers:
 
-- Transport protocols for parachains/cores to send payloads to one
+- **Transport protocols** for parachains/cores to send payloads to one
   another.
   - XCMP, HRMP, VMP, DMP 😶‍🌫️
   - As a developer you won't deal with these! 😮‍💨
-- Language to compose messages and programs and send them over.
+- **Language** to compose messages and programs and send them over.
   - XCM
     - Shared ideas between sovereign consensus systems.
     - Asynchronous.
@@ -281,29 +275,19 @@ important concept to keep in mind.
 About Polkadot
 
 - Heterogenous Sharded Execution, Shared Security.
-- Parachain
-- Core
-- Exposing Cores: Auctions -> On-Demand -> World Computer
+- Shard => Core
+- Core Use Case 1.0: Parachain
+- Core Use Case Future: World Computer
+
+---v
+
+### Lecture Recap
 
 About Polkadot SDK
 
 - Substrate
 - FRAME
 - XCM
-
----
-
-## Schedule
-
-(tentative)
-
-- 🤓 _Substrate_: Tuesday -> Thursday
-  - More theory, 2 ungraded activities
-- 🧑‍💻 _FRAME_: Thursday -> Thursday
-  - Main graded assignment
-  - Mix lecture and live-coding
-- 🚀 _XCM_: Friday + Saturday
-  - Hands-on
 
 ---
 
