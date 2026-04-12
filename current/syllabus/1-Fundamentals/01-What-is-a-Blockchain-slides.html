@@ -29,10 +29,11 @@
       <section  data-markdown><script type="text/template">
 
 <!-- .slide: data-background-image="../../assets/img/0-Shared/bg/PBA_Background.png" data-background-size="cover" -->
+
 ## What is a Blockchain, Actually?
 
-* `@kianenigma`
-* kianenigma.com
+- `@kianenigma`
+- kianenigma.com
 </script></section><section ><section data-markdown><script type="text/template">
 ## Prelude: Why My Bank Failed
 
@@ -54,8 +55,8 @@ I even ran it in a TEE, attested that it doing the right thing, nada</p>
 </aside></script></section><section data-markdown><script type="text/template">
 ## Lack of Trust $\Rightarrow$ Authority
 
-* Particularly exacerbated in the interconnected world we live in today
-* Bank: One form of authority to manage our money
+- Particularly exacerbated in the interconnected world we live in today
+- Bank: One form of authority to manage our money
 </script></section><section data-markdown><script type="text/template">
 ## Your Bank
 
@@ -77,14 +78,14 @@ I even ran it in a TEE, attested that it doing the right thing, nada</p>
 </aside></script></section><section data-markdown><script type="text/template">
 ## Why Bother?
 
-* Human-based authorities: <!-- .element: class="fragment" -->
-	* Corruptible
-	* Limited
-	* Not auditable
-* Science-based authorities: <!-- .element: class="fragment" -->
-	* Verifiable
-	* Accessible
-	* Auditable
+- Human-based authorities: <!-- .element: class="fragment" -->
+  - Corruptible
+  - Limited
+  - Not auditable
+- Science-based authorities: <!-- .element: class="fragment" -->
+  - Verifiable
+  - Accessible
+  - Auditable
 </script></section><section data-markdown><script type="text/template">
 ## Why Bother?
 
@@ -92,9 +93,9 @@ I even ran it in a TEE, attested that it doing the right thing, nada</p>
 </script></section><section data-markdown><script type="text/template">
 ## Revolution
 
-* Bitcoin proved that, while my bank failed, it is in principle possible
-* Trillions of dollars are entrusted today with this type of technology
-* I can, in fact, with a few clicks, launch an ERC20 token and "run my own bank"
+- Bitcoin proved that, while my bank failed, it is in principle possible
+- Trillions of dollars are entrusted today with this type of technology
+- I can, in fact, with a few clicks, launch an ERC20 token and "run my own bank"
 
 <aside class="notes"><p>Commoditization of creation of digital authorities</p>
 </aside></script></section><section data-markdown><script type="text/template">
@@ -117,17 +118,17 @@ And more..
 </aside></script></section><section data-markdown><script type="text/template">
 ## Web3
 
-* This revolution of creating systems with less/no human-based trust/authorities, and more science-based trust/authorities..
-* When applied to the world-wide web Is what I call **Web3**
+- This revolution of creating systems with less/no human-based trust/authorities, and more science-based trust/authorities..
+- When applied to the world-wide web Is what I call **Web3**
 </script></section><section data-markdown><script type="text/template">
 ## Decentralized Applications (DApps)
 
-* Applications built with Web3 philosophy in mind are often called Decentralized Applications
+- Applications built with Web3 philosophy in mind are often called Decentralized Applications
 </script></section><section data-markdown><script type="text/template">
 ## Trustless
 
-* A system devoid of human-based trust/authorities..
-* and enriched with science-based trust/authorities
+- A system devoid of human-based trust/authorities..
+- and enriched with science-based trust/authorities
 </script></section></section><section ><section data-markdown><script type="text/template">
 ## Blockchain-based Authorities
 
@@ -136,13 +137,13 @@ How can we model these blockchains and authorities</p>
 </aside></script></section><section data-markdown><script type="text/template">
 ## Decomposing an Authority
 
-* Rules
-* State
-* Mutations based on user inputs and rules
+- Rules
+- State
+- Mutations based on user inputs and rules
 
 <br>
 
-* We can be 100% sure that the rules are respected 🪄
+- We can be 100% sure that the rules are respected 🪄
 </script></section><section data-markdown><script type="text/template">
 ## Model 1: Function
 
@@ -150,7 +151,7 @@ $$
 F:(state, inputs) \rightarrow state'
 $$
 
-* We can be 100% sure $F$ is executed correctly and all states are correct 🪄
+- We can be 100% sure $F$ is executed correctly and all states are correct 🪄
 </script></section><section data-markdown><script type="text/template">
 ## Model 2: State Machine
 
@@ -160,36 +161,35 @@ graph LR
     y((y)) -->|"F(y, input-1)"| yp(("y′")) -->|"F(y′, ...)"| ypp(("y″"))
 </diagram>
 
-* We can be 100% sure $F$ is executed correctly and all states are correct 🪄
+- We can be 100% sure $F$ is executed correctly and all states are correct 🪄
 </script></section><section data-markdown><script type="text/template">
 ## Model 3: (Trustless) Computer
 
-* Code (rules)
-* Memory (state)
-* Execution of user inputs (mutations)
+- Code (rules)
+- Memory (state)
+- Execution of user inputs (mutations)
 
 <br>
 
-* We can be 100% sure the computer's code is executed correctly and all memories are correct 🪄
+- We can be 100% sure the computer's code is executed correctly and all memories are correct 🪄
 
 <aside class="notes"><p>Here we can connect this to my failed bank -- this computer is what my bank needed!</p>
 </aside></script></section><section data-markdown><script type="text/template">
 ## Bitcoin As an Authority:
 
-* Rules: Valid transfer of BTC (based on UTXO model)
-* State: How much BTC each person has
-* Mutations:
-	* Transfer of BTC between people, always signed by the `sk` sender
-	* Bundled as a block of transactions
+- Rules: Valid transfer of BTC (based on UTXO model)
+- State: How much BTC each person has
+- Mutations:
+  - Transfer of BTC between people, always signed by the `sk` sender
+  - Bundled as a block of transactions
 </script></section><section data-markdown><script type="text/template">
 ## Sphere of Influence
 
-* Bank of Portugal cannot confiscate the money I own in Singapore
-* Each authority has a sphere of influence <!-- .element: class="fragment" -->
-* For blockchain-based authorities, this is the their state <!-- .element: class="fragment" -->
+- Bank of Portugal cannot confiscate the money I own in Singapore
+- Each authority has a sphere of influence <!-- .element: class="fragment" -->
+- For blockchain-based authorities, this is the their state <!-- .element: class="fragment" -->
 </script></section><section data-markdown><script type="text/template">
 ## Sphere of Influence
-
 
 <diagram class="mermaid">
 %%{init: {'theme': 'dark', 'themeVariables': { 'darkMode': true }}}%%
@@ -200,22 +200,22 @@ graph LR
 </script></section><section data-markdown><script type="text/template">
 ## Sphere of Influence
 
-* Bitcoin's code/rules can freely:
-	* Read how much BTC I have
-	* Perform a valid transfer of BTC (**law enforcement!**)
+- Bitcoin's code/rules can freely:
+  - Read how much BTC I have
+  - Perform a valid transfer of BTC (**law enforcement!**)
 </script></section><section data-markdown><script type="text/template">
 ## The Real-World-Asset (RWA) Scam
 
-* No blockchain can assert if:
-	* I own a piece of gold
-	* Force me to sell it to someone else
+- No blockchain can assert if:
+  - I own a piece of gold
+  - Force me to sell it to someone else
 </script></section><section data-markdown><script type="text/template">
 ## The Real-World-Asset (RWA) Scam
 
-* Oracle Problem
-* Chains of Trust
-	* Weakest Link Problem! <!-- .element: class="fragment" -->
-	* Bridges are the same <!-- .element: class="fragment" -->
+- Oracle Problem
+- Chains of Trust
+  - Weakest Link Problem! <!-- .element: class="fragment" -->
+  - Bridges are the same <!-- .element: class="fragment" -->
 </script></section><section data-markdown><script type="text/template">
 ## The Real-World-Asset (RWA) Scam
 
@@ -237,9 +237,9 @@ graph LR
 </script></section></section><section ><section data-markdown><script type="text/template">
 ## 3 Properties
 
-* Verifiable Execution of Rules
-* Correct Ordering of all events, and re-auditing of past events
-* Accessible to all
+- Verifiable Execution of Rules
+- Correct Ordering of all events, and re-auditing of past events
+- Accessible to all
 
 <br>
 
@@ -262,9 +262,8 @@ graph LR
 </aside></script></section><section data-markdown><script type="text/template">
 ## RWA: Not a Scam, But..
 
-* 2 out of 3 properties are fully met
-* Same as consortium blockchains <!-- .element: class="fragment" -->
-
+- 2 out of 3 properties are fully met
+- Same as consortium blockchains <!-- .element: class="fragment" -->
 
 <aside class="notes"><ul>
 <li>My address owning 1 BTC</li>
@@ -276,11 +275,11 @@ But Auditability, and accessibility are fully met.</p>
 </aside></script></section></section><section  data-markdown><script type="text/template">
 ## Blockchains 101
 
-* Blockchains merely help with retaining correct ordering of past events
-	* Verifiability, the main magic of these systems? <!-- .element: class="fragment" -->
-	* No! ZK-Proofs, TEE <!-- .element: class="fragment" -->
-* Blockchains are overrated <!-- .element: class="fragment" -->
-	* Blockchain-based systems! != not just a blockchain <!-- .element: class="fragment" -->
+- Blockchains merely help with retaining correct ordering of past events
+  - Verifiability, the main magic of these systems? <!-- .element: class="fragment" -->
+  - No! ZK-Proofs, TEE <!-- .element: class="fragment" -->
+- Blockchains are overrated <!-- .element: class="fragment" -->
+  - Blockchain-based systems! != not just a blockchain <!-- .element: class="fragment" -->
 
 <aside class="notes"><p>Okay, enough with theoretical stuff, let&#39;s learn a bit more concretely about blockchains</p>
 <p>Authoring:
@@ -305,10 +304,10 @@ I have not really talked about how blockchains work, but if you even look at tha
 
 As trustless compute and storage providers.
 
-* Fixed Code (Bitcoin)
-* Smart Contracts (Ethereum L1) <!-- .element: class="fragment" -->
-* Rollups (Polkadot, Layer 2s, etc) <!-- .element: class="fragment" -->
-* JAM (Supercomputer) <!-- .element: class="fragment" -->
+- Fixed Code (Bitcoin)
+- Smart Contracts (Ethereum L1) <!-- .element: class="fragment" -->
+- Rollups (Polkadot, Layer 2s, etc) <!-- .element: class="fragment" -->
+- JAM (Supercomputer) <!-- .element: class="fragment" -->
 
 <aside class="notes"><ol>
 <li>Bitcoin, fixed state-transition-function</li>
@@ -319,16 +318,15 @@ As trustless compute and storage providers.
 </aside></script></section><section ><section data-markdown><script type="text/template">
 ## The Bigger Picture
 
-* (2013) Bitcoin was a proof of concept that it is possible to establish trustless compute and storage under consensus
-* (2016) Ethereum was a proof of concept that this can be generalized
+- (2013) Bitcoin was a proof of concept that it is possible to establish trustless compute and storage under consensus
+- (2016) Ethereum was a proof of concept that this can be generalized
 </script></section><section data-markdown><script type="text/template">
 ## The Bigger Picture
 
-* Next decade (2016 - today):
-	* Scaling the existing system (not expanding the horizon)
-	* DeFi (PMF - money to be made)
-	* Noise
-
+- Next decade (2016 - today):
+  - Scaling the existing system (not expanding the horizon)
+  - DeFi (PMF - money to be made)
+  - Noise
 </script></section><section data-markdown><script type="text/template">
 ## The Bigger Picture
 
@@ -336,11 +334,9 @@ As trustless compute and storage providers.
 </script></section><section data-markdown><script type="text/template">
 ## The Bigger Picture
 
-*Invention vs. Innovation*
+_Invention vs. Innovation_
 
 <img style="width: 600px;" src="../../assets/img/0-Shared/intro-web3-horizon-full.svg" />
-
-
 
 <aside class="notes"><p>Making cars faster vs. Learning how to fly</p>
 <p>I am glad to see that Polkadot, while it innovated on scaling a lot, it also invented a lot of new paradigms:</p>
@@ -352,16 +348,15 @@ As trustless compute and storage providers.
 </aside></script></section><section data-markdown><script type="text/template">
 ## The Bigger Picture
 
-* Trustless (expensive!) computation and storage under consensus is not everything!
-* What went missing:
-	* computation and messaging outside of consensus
-	* Storage
-	* Privacy
-	* Identity and personhood
-	* ...
+- Trustless (expensive!) computation and storage under consensus is not everything!
+- What went missing:
+  - computation and messaging outside of consensus
+  - Storage
+  - Privacy
+  - Identity and personhood
+  - ...
 </script></section><section data-markdown><script type="text/template">
 ## The Bigger Picture
-
 
 <img style="width: 600px;" src="https://blog.kianenigma.com/what-blockchain-actually/Resources/Screenshot-2025-12-16-at-23.15.05.png" />
 
@@ -405,7 +400,6 @@ The challenge for the next decade:
 <img src="../../assets/img/0-Shared/what-blockchain-actually-qr.png" />
 
 (Full text of the presentation)
-
 </script></section>
     </article>
   </main>
