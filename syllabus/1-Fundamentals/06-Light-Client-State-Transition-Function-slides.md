@@ -286,7 +286,7 @@ Once all extrinsics are executed, and the new block has been constructed, it is 
 
 ## Finalization
 
-Block production (BABE/SAFROLE) is separated from finalization (GRANDPA), ensuring the network stays **live**, even when there are networking issues.
+Block production (BABE) is separated from finalization (GRANDPA), ensuring the network stays **live**, even when there are networking issues.
 
 <img style="width: 1000px" src="./img/grandpa.png"/>
 
