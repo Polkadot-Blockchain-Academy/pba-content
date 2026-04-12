@@ -165,7 +165,7 @@ The **heart** of the Polkadot network.
 
 <diagram class="mermaid">
 graph TB
-    RC["Relay Chain<br/>(Shared Security)"]
+    RC["Relay Chain (Shared Security)"]
     RC --- AH["Asset Hub"]
     RC --- BH["Bridge Hub"]
     RC --- CT["Coretime"]
@@ -304,12 +304,12 @@ Write **Solidity** or **Rust** and deploy to Polkadot.
 
 <diagram class="mermaid">
 graph LR
-    SOL["Solidity<br/>Source Code"]
-    SOL -->|"solc"| EVM["EVM Bytecode<br/>(REVM)"]
-    SOL -->|"resolc"| PVM["PVM Bytecode<br/>(PolkaVM / RISC-V)"]
-    RUST["Rust<br/>Source Code"]
+    SOL["Solidity Source Code"]
+    SOL -->|"solc"| EVM["EVM Bytecode (REVM)"]
+    SOL -->|"resolc"| PVM["PVM Bytecode (PolkaVM / RISC-V)"]
+    RUST["Rust Source Code"]
     RUST -->|"rustc + revive"| PVM
-    EVM --> PR["pallet-revive<br/>(Asset Hub)"]
+    EVM --> PR["pallet-revive (Asset Hub)"]
     PVM --> PR
 </diagram>
 
@@ -331,9 +331,9 @@ graph LR
 
 <diagram class="mermaid">
 graph LR
-    MM["MetaMask<br/>Hardhat<br/>Foundry<br/>viem / ethers.js"]
-    MM -->|"Ethereum JSON-RPC<br/>(port 8545)"| ETH["eth-rpc<br/>Sidecar"]
-    ETH -->|"Substrate<br/>WebSocket"| NODE["Substrate<br/>Node"]
+    MM["MetaMask Hardhat Foundry viem / ethers.js"]
+    MM -->|"Ethereum JSON-RPC (port 8545)"| ETH["eth-rpc Sidecar"]
+    ETH -->|"Substrate WebSocket"| NODE["Substrate Node"]
 </diagram>
 
 <div class="text-left">
@@ -458,34 +458,19 @@ Use your existing Ethereum skills and tools.
 
 ## DotNS: .dot Name Service
 
-Human-readable names for the Polkadot ecosystem.
+Human-readable names for the Polkadot ecosystem. Like ENS, but on Polkadot.
 
-<div class="grid grid-cols-2">
-<div class="text-left">
-
-**Like ENS, but on Polkadot:**
-
-- Register `myapp.dot`
-- Points to an IPFS CID (your dApp frontend)
-- Also resolves to Polkadot addresses
-- Solidity contracts on Asset Hub (via pallet-revive)
-- Commit-reveal to prevent front-running
-- Proof-of-Personhood aware pricing
-
-</div>
-<div>
-
-<diagram class="mermaid">
-graph TB
+<diagram class="mermaid limit">
+graph LR
     U["User types myapp.dot"] --> H["Host resolves name"]
-    H -->|"namehash"| C["DotNS Contract<br/>(Asset Hub)"]
-    C -->|"contenthash"| CID["IPFS CID"]
-    CID -->|"fetch"| IPFS["IPFS Network"]
-    IPFS --> APP["dApp loads<br/>in sandbox"]
+    H --> C["DotNS Contract (Asset Hub)"]
+    C --> CID["IPFS CID"]
+    CID --> APP["dApp loads in sandbox"]
 </diagram>
 
-</div>
-</div>
+- Register `myapp.dot` → points to an IPFS CID (your dApp frontend)
+- Solidity contracts on Asset Hub (via pallet-revive)
+- Verified unique humans (personhood) get a free .dot name
 
 ---
 
@@ -531,9 +516,9 @@ graph TB
 <diagram class="mermaid">
 graph TB
     subgraph Languages["Write In"]
-        RUST["Rust<br/>(Pallets, CLI)"]
-        SOL["Solidity<br/>(Contracts)"]
-        TS["TypeScript<br/>(Frontend)"]
+        RUST["Rust (Pallets, CLI)"]
+        SOL["Solidity (Contracts)"]
+        TS["TypeScript (Frontend)"]
     end
 
     subgraph Frameworks["Build With"]
@@ -601,8 +586,8 @@ graph TB
         PC2["Custom Chains"]
     end
 
-    Product -->|"window.host<br/>(sandboxed bridge)"| Host
-    Host -->|"Light client /<br/>RPC"| Chain
+    Product -->|"window.host (sandboxed bridge)"| Host
+    Host -->|"Light client / RPC"| Chain
 
 </diagram>
 
@@ -785,16 +770,16 @@ sequenceDiagram
 <diagram class="mermaid">
 graph TB
     subgraph Dev["Developer Builds"]
-        D1["FRAME Pallet<br/>(Rust)"]
+        D1["FRAME Pallet (Rust)"]
         D2["Solidity Contract"]
-        D3["React Frontend<br/>(PAPI + viem)"]
+        D3["React Frontend (PAPI + viem)"]
     end
 
     subgraph Deploy["Deploy To"]
-        E1["Parachain Runtime<br/>(via Coretime)"]
-        E2["Asset Hub<br/>(via eth-rpc)"]
-        E3["IPFS<br/>(via Bulletin Chain)"]
-        E4["DotNS<br/>(myapp.dot)"]
+        E1["Parachain Runtime (via Coretime)"]
+        E2["Asset Hub (via eth-rpc)"]
+        E3["IPFS (via Bulletin Chain)"]
+        E4["DotNS (myapp.dot)"]
     end
 
     subgraph User["User Accesses"]
