@@ -47,7 +47,7 @@ These problems all stem from the same place:
 <!-- .element: class="fragment" -->
 - Computers play a critical role in providing public digital infrastructure.
 <!-- .element: class="fragment" -->
-- We could create a world more resilient from these powers, if the worlds public digital infrastructure were itself more decentralized and resilient.
+- We could create a world more resilient from these powers, if the world's public digital infrastructure were itself more decentralized and resilient.
 <!-- .element: class="fragment" -->
 
 > **Web3 describes that resilient public digital infrastructure.**
@@ -71,7 +71,6 @@ It is simply a tool that can be used to create **resilient products**.
 Both built using blockchain technology.
 
 <pba-cols class="text-small">
-<pba-cols>
 <pba-col>
 
 #### Distributed Ledger Technology
