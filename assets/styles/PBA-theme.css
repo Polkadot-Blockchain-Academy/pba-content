@@ -385,8 +385,7 @@ pba-flex[right] {
 }
 
 .mermaid svg {
-	margin-left: auto;
-	margin-right: auto;
+	margin: 1em auto;
 	max-width: 70% !important;
 }
 

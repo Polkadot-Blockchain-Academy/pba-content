@@ -165,7 +165,7 @@ The **heart** of the Polkadot network.
 
 <diagram class="mermaid">
 graph TB
-    RC["Relay Chain<br/>(Shared Security)"]
+    RC["Relay Chain (Shared Security)"]
     RC --- AH["Asset Hub"]
     RC --- BH["Bridge Hub"]
     RC --- CT["Coretime"]
@@ -237,7 +237,7 @@ Parachains chains share security from the Relay Chain and communicate via **XCM*
 
 The **monorepo** containing all core components for building on Polkadot.
 
-<div class="grid grid-cols-3">
+<div class="grid grid-cols-3 text-small">
 <div class="text-left">
 
 **Substrate**
@@ -287,9 +287,6 @@ The parachain toolkit.
 
 **F**ramework for **R**untime **A**ggregation of **M**odularized **E**ntities
 
-<div class="grid grid-cols-2">
-<div class="text-left">
-
 A **pallet** is a module of encapsulated blockchain logic:
 
 - **Config** - configurable types and values
@@ -299,33 +296,6 @@ A **pallet** is a module of encapsulated blockchain logic:
 - **Errors** - well-formed error types
 - **Hooks** - lifecycle callbacks
 
-</div>
-<div>
-
-```rust
-#[frame::pallet]
-pub mod pallet {
-    #[pallet::storage]
-    pub type Claims<T> = StorageMap<
-        _, Blake2_128Concat,
-        H256, Claim<T>
-    >;
-
-    #[pallet::call]
-    impl<T: Config> Pallet<T> {
-        pub fn create_claim(
-            origin: OriginFor<T>,
-            hash: H256,
-        ) -> DispatchResult {
-            // ...
-        }
-    }
-}
-```
-
-</div>
-</div>
-
 ---
 
 ## Smart Contracts: pallet-revive
@@ -334,16 +304,16 @@ Write **Solidity** or **Rust** and deploy to Polkadot.
 
 <diagram class="mermaid">
 graph LR
-    SOL["Solidity<br/>Source Code"]
-    SOL -->|"solc"| EVM["EVM Bytecode<br/>(REVM)"]
-    SOL -->|"resolc"| PVM["PVM Bytecode<br/>(PolkaVM / RISC-V)"]
-    RUST["Rust<br/>Source Code"]
+    SOL["Solidity Source Code"]
+    SOL -->|"solc"| EVM["EVM Bytecode (REVM)"]
+    SOL -->|"resolc"| PVM["PVM Bytecode (PolkaVM / RISC-V)"]
+    RUST["Rust Source Code"]
     RUST -->|"rustc + revive"| PVM
-    EVM --> PR["pallet-revive<br/>(Asset Hub)"]
+    EVM --> PR["pallet-revive (Asset Hub)"]
     PVM --> PR
 </diagram>
 
-<div class="text-left">
+<div class="text-left text-small">
 
 - **Solidity** compiles to two targets: **EVM** (via `solc`) and **PVM** (via `resolc`)
 - **Rust** compiles directly to **PVM** (PolkaVM / RISC-V) for native performance
@@ -361,9 +331,9 @@ graph LR
 
 <diagram class="mermaid">
 graph LR
-    MM["MetaMask<br/>Hardhat<br/>Foundry<br/>viem / ethers.js"]
-    MM -->|"Ethereum JSON-RPC<br/>(port 8545)"| ETH["eth-rpc<br/>Sidecar"]
-    ETH -->|"Substrate<br/>WebSocket"| NODE["Substrate<br/>Node"]
+    MM["MetaMask Hardhat Foundry viem / ethers.js"]
+    MM -->|"Ethereum JSON-RPC (port 8545)"| ETH["eth-rpc Sidecar"]
+    ETH -->|"Substrate WebSocket"| NODE["Substrate Node"]
 </diagram>
 
 <div class="text-left">
@@ -388,9 +358,9 @@ The modern **TypeScript** client for Polkadot.
 **Key Features:**
 
 - **Light-client first** - built on smoldot
+- **Multi-chain first** - designed for cross-chain workflows
 - **Typed API** - generated from on-chain metadata
 - **Native BigInt** - no heavy BigNumber libraries
-- **Tree-shakeable** - only bundle what you use
 - **Promise & Observable APIs**
 
 Replaces the older polkadot.js library.
@@ -429,10 +399,9 @@ The **Rust** equivalent of PAPI.
 
 **Key Features:**
 
-- **Typed API** from metadata (proc macro)
+- **Typed API** from metadata
 - **Dynamic API** for untyped access
 - Full chain interaction: storage, extrinsics, events, blocks
-- Supports sr25519, ed25519, secp256k1 signing
 
 Name stands for "**sub**mit e**xt**rinsics".
 
@@ -489,34 +458,19 @@ Use your existing Ethereum skills and tools.
 
 ## DotNS: .dot Name Service
 
-Human-readable names for the Polkadot ecosystem.
+Human-readable names for the Polkadot ecosystem. Like ENS, but on Polkadot.
 
-<div class="grid grid-cols-2">
-<div class="text-left">
-
-**Like ENS, but on Polkadot:**
-
-- Register `myapp.dot`
-- Points to an IPFS CID (your dApp frontend)
-- Also resolves to Polkadot addresses
-- Solidity contracts on Asset Hub (via pallet-revive)
-- Commit-reveal to prevent front-running
-- Proof-of-Personhood aware pricing
-
-</div>
-<div>
-
-<diagram class="mermaid">
-graph TB
+<diagram class="mermaid limit">
+graph LR
     U["User types myapp.dot"] --> H["Host resolves name"]
-    H -->|"namehash"| C["DotNS Contract<br/>(Asset Hub)"]
-    C -->|"contenthash"| CID["IPFS CID"]
-    CID -->|"fetch"| IPFS["IPFS Network"]
-    IPFS --> APP["dApp loads<br/>in sandbox"]
+    H --> C["DotNS Contract (Asset Hub)"]
+    C --> CID["IPFS CID"]
+    CID --> APP["dApp loads in sandbox"]
 </diagram>
 
-</div>
-</div>
+- Register `myapp.dot` → points to an IPFS CID (your dApp frontend)
+- Solidity contracts on Asset Hub (via pallet-revive)
+- Verified unique humans (personhood) get a free .dot name
 
 ---
 
@@ -562,9 +516,9 @@ graph TB
 <diagram class="mermaid">
 graph TB
     subgraph Languages["Write In"]
-        RUST["Rust<br/>(Pallets, CLI)"]
-        SOL["Solidity<br/>(Contracts)"]
-        TS["TypeScript<br/>(Frontend)"]
+        RUST["Rust (Pallets, CLI)"]
+        SOL["Solidity (Contracts)"]
+        TS["TypeScript (Frontend)"]
     end
 
     subgraph Frameworks["Build With"]
@@ -610,38 +564,23 @@ graph TB
 
 ---
 
+## The Polkadot Triangle
+
+<img style="filter: invert(); width: 800px;" src="./img/triangleview.jpg" />
+
+---
+
 ## The Triangle Architecture
 
-<diagram class="mermaid">
-graph TB
-    subgraph Host["Host (Triangle User Agent)"]
-        W["Wallet & Keys"]
-        LC["Light Clients"]
-        IPFS["IPFS / DotNS"]
-        EXT["Extensions"]
-    end
-
-    subgraph Product["Product (Your dApp)"]
-        UI["User Interface"]
-        LOGIC["App Logic"]
-    end
-
-    subgraph Chain["Blockchain"]
-        AH2["Asset Hub"]
-        BC2["Bulletin Chain"]
-        PC2["Custom Chains"]
-    end
-
-    Product -->|"window.host<br/>(sandboxed bridge)"| Host
-    Host -->|"Light client /<br/>RPC"| Chain
-
+<diagram class="mermaid limit">
+graph LR
+    Product["Product (Your dApp)"] -->|"window.host"| Host["Host (Triangle User Agent)"]
+    Host -->|"Light client / RPC"| Chain["Blockchain"]
 </diagram>
 
-<div class="text-left">
-
-Three parties: **Host** owns security, **Product** runs in sandbox, **Blockchain** provides state.
-
-</div>
+- **Host** owns security: wallet, keys, light clients, IPFS, DotNS
+- **Product** runs in a strict sandbox: no network access, no key access
+- **Blockchain** provides state: Asset Hub, Bulletin Chain, custom chains
 
 ---
 
@@ -650,26 +589,26 @@ Three parties: **Host** owns security, **Product** runs in sandbox, **Blockchain
 <div class="grid grid-cols-3">
 <div class="text-left">
 
-**Desktop**
+**Mobile (Key Authority)**
 
-Built with Tauri + Rust
+iOS + Android
 
-- Full host-sdk crates
-- Native keychain (Touch ID)
-- Maximum performance
-- macOS, Linux, Windows
+- Owns your private keys
+- Biometric auth (Face ID, fingerprint)
+- Signs transactions for Desktop and Web
+- Curated onboarding for new users
 
 </div>
 <div class="text-left">
 
-**Mobile**
+**Desktop**
 
-iOS (Swift) + Android (Kotlin)
+Built with Tauri + Rust
 
-- UniFFI bindings to Rust
-- Platform-native UX
-- iOS 17+ / API 26+
-- Biometric auth
+- Full dApp host with sandbox
+- Delegates signing to Mobile
+- Maximum performance
+- macOS, Linux, Windows
 
 </div>
 <div class="text-left">
@@ -678,10 +617,10 @@ iOS (Swift) + Android (Kotlin)
 
 Browser-based
 
+- Full dApp host, no install needed
+- Delegates signing to Mobile
 - JS smoldot light client
-- Helia for IPFS
 - PAPI for chain interaction
-- No install needed
 
 </div>
 </div>
@@ -724,38 +663,22 @@ What the host provides to your dApp:
 
 What your dApp uses to talk to the host:
 
-<div class="grid grid-cols-2">
-<div class="text-left">
-
 ```typescript
-import { getAddress, navigateTo } from "@polkadot-apps/product-sdk";
+import { getAddress, navigateTo, statements, storage } from "@polkadot-apps/product-sdk";
 
 // Get the current user's account
 const address = await getAddress();
 
 // Navigate to another .dot product
 navigateTo("other-app.dot");
-```
-
-</div>
-<div class="text-left">
-
-```typescript
-import { statements, storage } from "@polkadot-apps/product-sdk";
 
 // Scoped key-value storage
 await storage.set("key", "value");
-const val = await storage.get("key");
 
 // Pub/sub via statement store
-statements.subscribe(topic, msg => {
-  console.log("New message:", msg);
-});
+statements.subscribe(topic, msg => console.log("New message:", msg));
 await statements.write(topic, payload);
 ```
-
-</div>
-</div>
 
 ---
 
@@ -816,16 +739,16 @@ sequenceDiagram
 <diagram class="mermaid">
 graph TB
     subgraph Dev["Developer Builds"]
-        D1["FRAME Pallet<br/>(Rust)"]
+        D1["FRAME Pallet (Rust)"]
         D2["Solidity Contract"]
-        D3["React Frontend<br/>(PAPI + viem)"]
+        D3["React Frontend (PAPI + viem)"]
     end
 
     subgraph Deploy["Deploy To"]
-        E1["Parachain Runtime<br/>(via Coretime)"]
-        E2["Asset Hub<br/>(via eth-rpc)"]
-        E3["IPFS<br/>(via Bulletin Chain)"]
-        E4["DotNS<br/>(myapp.dot)"]
+        E1["Parachain Runtime (via Coretime)"]
+        E2["Asset Hub (via eth-rpc)"]
+        E3["IPFS (via Bulletin Chain)"]
+        E4["DotNS (myapp.dot)"]
     end
 
     subgraph User["User Accesses"]
