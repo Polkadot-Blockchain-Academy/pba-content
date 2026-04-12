@@ -589,26 +589,26 @@ graph LR
 <div class="grid grid-cols-3">
 <div class="text-left">
 
-**Desktop**
+**Mobile (Key Authority)**
 
-Built with Tauri + Rust
+iOS + Android
 
-- Full host-sdk crates
-- Native keychain (Touch ID)
-- Maximum performance
-- macOS, Linux, Windows
+- Owns your private keys
+- Biometric auth (Face ID, fingerprint)
+- Signs transactions for Desktop and Web
+- Curated onboarding for new users
 
 </div>
 <div class="text-left">
 
-**Mobile**
+**Desktop**
 
-iOS (Swift) + Android (Kotlin)
+Built with Tauri + Rust
 
-- UniFFI bindings to Rust
-- Platform-native UX
-- iOS 17+ / API 26+
-- Biometric auth
+- Full dApp host with sandbox
+- Delegates signing to Mobile
+- Maximum performance
+- macOS, Linux, Windows
 
 </div>
 <div class="text-left">
@@ -617,10 +617,10 @@ iOS (Swift) + Android (Kotlin)
 
 Browser-based
 
+- Full dApp host, no install needed
+- Delegates signing to Mobile
 - JS smoldot light client
-- Helia for IPFS
 - PAPI for chain interaction
-- No install needed
 
 </div>
 </div>
@@ -663,38 +663,22 @@ What the host provides to your dApp:
 
 What your dApp uses to talk to the host:
 
-<div class="grid grid-cols-2">
-<div class="text-left">
-
 ```typescript
-import { getAddress, navigateTo } from "@polkadot-apps/product-sdk";
+import { getAddress, navigateTo, statements, storage } from "@polkadot-apps/product-sdk";
 
 // Get the current user's account
 const address = await getAddress();
 
 // Navigate to another .dot product
 navigateTo("other-app.dot");
-```
-
-</div>
-<div class="text-left">
-
-```typescript
-import { statements, storage } from "@polkadot-apps/product-sdk";
 
 // Scoped key-value storage
 await storage.set("key", "value");
-const val = await storage.get("key");
 
 // Pub/sub via statement store
-statements.subscribe(topic, msg => {
-  console.log("New message:", msg);
-});
+statements.subscribe(topic, (msg) => console.log("New message:", msg));
 await statements.write(topic, payload);
 ```
-
-</div>
-</div>
 
 ---
 
