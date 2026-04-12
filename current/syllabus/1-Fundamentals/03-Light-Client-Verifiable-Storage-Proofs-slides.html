@@ -378,7 +378,7 @@ Merkle provides the recursive **hashing** of children nodes into the parent.
 
 <aside class="notes"><p>Here (or somewhere else) it must be evoked that trie path (key for values) are whatever the runtime want.
 This is a very important design consideration:
-in ethereum for instance everything is stored under hash(key), which makes the trie balanced amongst all value.
+in Ethereum for instance everything is stored under hash(key), which makes the trie balanced amongst all values.
 in substrate we allow random length key (there is a limit but very high in the trie impl), because the runtime
 can be responsible of trie unbalance.
 A slide showing an unbalance trie could be nice:</p>
