@@ -237,7 +237,7 @@ Parachains chains share security from the Relay Chain and communicate via **XCM*
 
 The **monorepo** containing all core components for building on Polkadot.
 
-<div class="grid grid-cols-3">
+<div class="grid grid-cols-3 text-small">
 <div class="text-left">
 
 **Substrate**
@@ -287,9 +287,6 @@ The parachain toolkit.
 
 **F**ramework for **R**untime **A**ggregation of **M**odularized **E**ntities
 
-<div class="grid grid-cols-2">
-<div class="text-left">
-
 A **pallet** is a module of encapsulated blockchain logic:
 
 - **Config** - configurable types and values
@@ -298,33 +295,6 @@ A **pallet** is a module of encapsulated blockchain logic:
 - **Events** - observable outcomes
 - **Errors** - well-formed error types
 - **Hooks** - lifecycle callbacks
-
-</div>
-<div>
-
-```rust
-#[frame::pallet]
-pub mod pallet {
-    #[pallet::storage]
-    pub type Claims<T> = StorageMap<
-        _, Blake2_128Concat,
-        H256, Claim<T>
-    >;
-
-    #[pallet::call]
-    impl<T: Config> Pallet<T> {
-        pub fn create_claim(
-            origin: OriginFor<T>,
-            hash: H256,
-        ) -> DispatchResult {
-            // ...
-        }
-    }
-}
-```
-
-</div>
-</div>
 
 ---
 
@@ -343,7 +313,7 @@ graph LR
     PVM --> PR
 </diagram>
 
-<div class="text-left">
+<div class="text-left text-small">
 
 - **Solidity** compiles to two targets: **EVM** (via `solc`) and **PVM** (via `resolc`)
 - **Rust** compiles directly to **PVM** (PolkaVM / RISC-V) for native performance
@@ -388,9 +358,9 @@ The modern **TypeScript** client for Polkadot.
 **Key Features:**
 
 - **Light-client first** - built on smoldot
+- **Multi-chain first** - designed for cross-chain workflows
 - **Typed API** - generated from on-chain metadata
 - **Native BigInt** - no heavy BigNumber libraries
-- **Tree-shakeable** - only bundle what you use
 - **Promise & Observable APIs**
 
 Replaces the older polkadot.js library.
@@ -429,10 +399,9 @@ The **Rust** equivalent of PAPI.
 
 **Key Features:**
 
-- **Typed API** from metadata (proc macro)
+- **Typed API** from metadata
 - **Dynamic API** for untyped access
 - Full chain interaction: storage, extrinsics, events, blocks
-- Supports sr25519, ed25519, secp256k1 signing
 
 Name stands for "**sub**mit e**xt**rinsics".
 
