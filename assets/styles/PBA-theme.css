@@ -589,7 +589,7 @@ pba-flex[right] {
 }
 
 .reveal table {
-	margin: auto;
+	margin: 1em auto;
 	border-collapse: collapse;
 	border-spacing: 0;
 }
