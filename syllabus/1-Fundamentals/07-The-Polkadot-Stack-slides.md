@@ -564,38 +564,23 @@ graph TB
 
 ---
 
+## The Polkadot Triangle
+
+<img style="filter: invert(); width: 800px;" src="./img/triangleview.jpg" />
+
+---
+
 ## The Triangle Architecture
 
-<diagram class="mermaid">
-graph TB
-    subgraph Host["Host (Triangle User Agent)"]
-        W["Wallet & Keys"]
-        LC["Light Clients"]
-        IPFS["IPFS / DotNS"]
-        EXT["Extensions"]
-    end
-
-    subgraph Product["Product (Your dApp)"]
-        UI["User Interface"]
-        LOGIC["App Logic"]
-    end
-
-    subgraph Chain["Blockchain"]
-        AH2["Asset Hub"]
-        BC2["Bulletin Chain"]
-        PC2["Custom Chains"]
-    end
-
-    Product -->|"window.host (sandboxed bridge)"| Host
-    Host -->|"Light client / RPC"| Chain
-
+<diagram class="mermaid limit">
+graph LR
+    Product["Product (Your dApp)"] -->|"window.host"| Host["Host (Triangle User Agent)"]
+    Host -->|"Light client / RPC"| Chain["Blockchain"]
 </diagram>
 
-<div class="text-left">
-
-Three parties: **Host** owns security, **Product** runs in sandbox, **Blockchain** provides state.
-
-</div>
+- **Host** owns security: wallet, keys, light clients, IPFS, DotNS
+- **Product** runs in a strict sandbox: no network access, no key access
+- **Blockchain** provides state: Asset Hub, Bulletin Chain, custom chains
 
 ---
 
