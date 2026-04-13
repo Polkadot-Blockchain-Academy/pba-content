@@ -659,21 +659,26 @@ What the host provides to your dApp:
 
 - **Wallet** - BIP-39, sr25519, Ed25519, secp256k1
 - **Light Clients** - smoldot (Substrate), Helios (Ethereum), Kyoto (Bitcoin)
+- **Multi-Chain** - Cross chain workflows
 - **DOTNS Resolution** - `.dot` name to IPFS content
 - **IPFS** - P2P Bitswap + HTTP gateway fallback
 - **Statement Store** - off-chain pub/sub messaging
+- **Preimages** — on-chain preimage lookup and submission
+- **Permissions** — camera, microphone, bluetooth, location grants
 
 </div>
 <div class="text-left">
 
 **Extensions (`window.host.ext.*`):**
 
-- **data** - peer-to-peer data channels
-- **media** - audio/video calls
-- **files** - file saving
-- **mesh** - distributed object storage
-- **crdt** - collaborative editing
-- **vrf** - Bandersnatch ring VRF
+- **crdt** - collaborative document sync
+- **claw** - host-mediated assistant entrypoint
+- **data** - P2P data connections
+- **files** - host-mediated save/download
+- **index** - contract event indexer
+- **mesh** - durable dissemination and object storage
+- **media** - camera/audio capture and media sessions
+- **ringvrf** - Bandersnatch ring-VRF operations
 
 </div>
 </div>
