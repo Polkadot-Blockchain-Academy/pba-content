@@ -101,7 +101,9 @@ Two modes for local development:
 </pba-col>
 </pba-cols>
 
-> Start with standalone for fast iteration. Switch to zombienet when you need the full network.
+> Start with standalone for fast iteration.
+>
+> Switch to zombienet when you need the full network.
 
 ---
 
@@ -143,7 +145,7 @@ polkadot-omni-node --chain chain-spec.json --dev
 
 | Component        | How It Deploys                                                                | Where It Lives                         |
 | ---------------- | ----------------------------------------------------------------------------- | -------------------------------------- |
-| **Pallet**       | Compile Wasm runtime → register parachain via Coretime                        | Your parachain on the Polkadot network |
+| **Pallet**       | Compile Wasm runtime → register parachain via Coretime                        | Your parachain on the Paseo testnet    |
 | **EVM Contract** | `npx hardhat deploy` through eth-rpc sidecar                                  | Asset Hub (or your parachain)          |
 | **PVM Contract** | `npx hardhat deploy` with `@parity/hardhat-polkadot` plugin                   | Asset Hub (or your parachain)          |
 | **Frontend**     | Build static bundle → upload to Bulletin Chain → register .dot name via DotNS | IPFS, accessible via any Triangle host |

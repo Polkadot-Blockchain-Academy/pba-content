@@ -623,7 +623,7 @@ iOS + Android
 
 **Desktop**
 
-Built with Tauri + Rust
+Built with Electron + TypeScript
 
 - Full dApp host with sandbox
 - Delegates signing to Mobile
