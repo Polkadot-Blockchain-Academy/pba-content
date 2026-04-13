@@ -407,9 +407,9 @@ Before you leave today, confirm the **polkadot-stack-template** runs end-to-end 
 2. Install prerequisites by following `docs/INSTALL.md` in the repo
 3. Run the full end-to-end test:
 
-  ```bash
-  ./scripts/test-zombienet.sh
-  ```
+```bash
+./scripts/test-zombienet.sh
+```
 
 4. **All tests should pass.**
 
