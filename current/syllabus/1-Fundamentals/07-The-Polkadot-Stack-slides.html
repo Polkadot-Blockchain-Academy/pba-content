@@ -239,6 +239,7 @@ Parachains chains share security from the Relay Chain and communicate via **XCM*
 #### Bulletin Chain
 
 - Persistent on-chain data storage
+	- 14 day expiry with options for extension / renewal
 - IPFS-compatible: data gets a CID, retrievable from IPFS
 - Perfect for hosting dApp frontends, documents, files
 
@@ -624,7 +625,7 @@ What the host provides to your dApp:
 - **Light Clients** — Smoldot (Substrate), Helios (Ethereum), Kyoto (Bitcoin)
 - **DOTNS** — resolve .dot names to IPFS content
 - **IPFS** — CARv1/UnixFS parsing, P2P Bitswap or HTTP gateway
-- **Host API** — 76+ message types for accounts, signing, storage, payments, RPC
+- **Host API/TrUAPI** — 76+ message types for accounts, signing, storage, payments, RPC
 - **Statement Store** — off-chain pub/sub with proofs
 - **Preimages** — on-chain preimage lookup and submission
 - **Permissions** — camera, microphone, bluetooth, location grants
