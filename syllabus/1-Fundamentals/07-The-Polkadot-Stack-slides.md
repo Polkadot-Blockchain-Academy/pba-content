@@ -253,7 +253,6 @@ Parachains chains share security from the Relay Chain and communicate via **XCM*
 - Ephemeral: messages are not stored permanently
 - Perfect for chat, notifications, real-time coordination
 
-
 ---
 
 ## Polkadot Cloud Infrastructure
