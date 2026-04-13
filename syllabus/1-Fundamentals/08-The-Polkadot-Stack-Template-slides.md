@@ -101,7 +101,9 @@ Two modes for local development:
 </pba-col>
 </pba-cols>
 
-> Start with standalone for fast iteration. Switch to zombienet when you need the full network.
+> Start with standalone for fast iteration.
+>
+> Switch to zombienet when you need the full network.
 
 ---
 
@@ -143,7 +145,7 @@ polkadot-omni-node --chain chain-spec.json --dev
 
 | Component        | How It Deploys                                                                | Where It Lives                         |
 | ---------------- | ----------------------------------------------------------------------------- | -------------------------------------- |
-| **Pallet**       | Compile Wasm runtime → register parachain via Coretime                        | Your parachain on the Polkadot network |
+| **Pallet**       | Compile Wasm runtime → register parachain via Coretime                        | Your parachain on the Paseo testnet    |
 | **EVM Contract** | `npx hardhat deploy` through eth-rpc sidecar                                  | Asset Hub (or your parachain)          |
 | **PVM Contract** | `npx hardhat deploy` with `@parity/hardhat-polkadot` plugin                   | Asset Hub (or your parachain)          |
 | **Frontend**     | Build static bundle → upload to Bulletin Chain → register .dot name via DotNS | IPFS, accessible via any Triangle host |
@@ -153,7 +155,7 @@ polkadot-omni-node --chain chain-spec.json --dev
 <div class="text-left">
 
 - **Local development**: deploy to your standalone node or zombienet
-- **Final project**: deploy to **Paseo** — the production network for your project
+- **Final project**: deploy to **Paseo**, the production network for your project
 
 </div>
 
@@ -324,7 +326,7 @@ Build financial primitives that don't exist yet, or fix the ones that are broken
 
 ## Idea: Decentralized Protocols
 
-Build new infrastructure that doesn't exist yet — composable building blocks the whole ecosystem can use.
+Build new infrastructure that doesn't exist yet and composable building blocks the whole ecosystem can use.
 
 <div class="text-left">
 
@@ -343,7 +345,7 @@ Build new infrastructure that doesn't exist yet — composable building blocks t
 
 ## Idea: Onboarding and Adoption
 
-Build systems that bring new users into Web3 — make the first experience seamless and rewarding.
+Build systems that bring new users into Web3. Make their first experience seamless and rewarding.
 
 <div class="text-left">
 
@@ -367,11 +369,12 @@ Build systems that bring new users into Web3 — make the first experience seaml
 
 <div class="text-left">
 
-- **Explore fearlessly.** Clone repos, read source code, run examples. Don't just read docs.
-- **Ask early, not late.** Faculty are here as mentors. "I'm stuck after 2 hours" is a good conversation. "I'm stuck after 2 days" is a missed opportunity.
+- **Explore fearlessly.** Clone repos, read source code, run examples.
+- **Ask early, not late.** Use your mentors. "I'm stuck after 30 min" is a good conversation. "I'm stuck after 2 days" is a missed opportunity.
 - **Build something only Web3 can do.** If your project works just as well on a centralized server, it's not the most interesting version of itself.
-- **Contribute upstream.** An issue, a bug report, a small PR to polkadot-sdk or any tool you use — this is the strongest signal of all.
-- **Ship honest work.** A smaller project that works and is well-documented beats a big project that's half-broken and unexplained.
+- **Scope your project.** A complete end-to-end project that works beats an ambitious one that's half-broken. Scoping well is a skill! Build something you can finish, deploy, and demo in two weeks.
+- **Show us what you learned.** Your project should reflect the key concepts of Web3: Game Theory, Economics, Decentralized Systems.
+- **Contribute upstream.** An issue, a bug report, a small PR to polkadot-sdk or any tool you use. This is the strongest signal of all.
 
 </div>
 
@@ -393,6 +396,39 @@ Build systems that bring new users into Web3 — make the first experience seaml
   - Also check out the public repos at [github.com/paritytech](https://github.com/paritytech)
 
 </div>
+
+---
+
+## Your Goal for Today
+
+Before you leave today, confirm the **polkadot-stack-template** runs end-to-end on your machine.
+
+1. Fork and clone the [polkadot-stack-template](https://github.com/shawntabrizi/polkadot-stack-template)
+2. Install prerequisites by following `docs/INSTALL.md` in the repo
+3. Run the full end-to-end test:
+
+```bash
+./scripts/test-zombienet.sh
+```
+
+4. **All tests should pass.**
+
+If there are any issues, let us know!
+
+---
+
+## Your Goal for Tomorrow
+
+By EOD tomorrow, talk to at least one mentor about your project idea.
+
+Be ready to explain:
+
+1. What you want to build and why it makes sense for Web3.
+2. Which backend / frontend path you are choosing.
+3. How it meets all project requirements.
+4. Why the scope is realistic for two weeks.
+
+Don't start building until a mentor has signed off on your idea.
 
 ---
 

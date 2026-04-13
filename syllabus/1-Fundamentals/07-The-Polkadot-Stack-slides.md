@@ -296,7 +296,6 @@ The blockchain framework.
 
 The runtime framework.
 
-- 120+ pallets
 - Storage abstractions
 - Dispatchable calls
 - Events & errors
@@ -623,7 +622,7 @@ iOS + Android
 
 **Desktop**
 
-Built with Tauri + Rust
+Built with Electron + TypeScript
 
 - Full dApp host with sandbox
 - Delegates signing to Mobile
