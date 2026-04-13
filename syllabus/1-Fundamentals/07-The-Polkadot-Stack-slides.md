@@ -690,7 +690,7 @@ What the host provides to your dApp:
 What your dApp uses to talk to the host:
 
 ```typescript
-import { getAddress, navigateTo, statements, storage } from "@useragent-kit/product-sdk";
+import { getAddress, navigateTo, statements, storage } from "product-sdk";
 
 // Get the current user's account
 const address = await getAddress();
