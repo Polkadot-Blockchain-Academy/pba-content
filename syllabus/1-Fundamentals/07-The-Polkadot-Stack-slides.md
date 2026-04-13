@@ -774,43 +774,11 @@ sequenceDiagram
 
 ---
 
-## The Complete Flow
+## Three Layers, One Vision
 
-<diagram class="mermaid">
-graph TB
-    subgraph Dev["Developer Builds"]
-        D1["FRAME Pallet (Rust)"]
-        D2["Solidity Contract"]
-        D3["React Frontend (PAPI + viem)"]
-    end
-
-    subgraph Deploy["Deploy To"]
-        E1["Parachain Runtime (via Coretime)"]
-        E2["Asset Hub (via eth-rpc)"]
-        E3["IPFS (via Bulletin Chain)"]
-        E4["DotNS (myapp.dot)"]
-    end
-
-    subgraph User["User Accesses"]
-        U1["dot.li / Desktop / Mobile"]
-        U2["Resolves myapp.dot"]
-        U3["Loads from IPFS"]
-        U4["Interacts via Host"]
-    end
-
-    D1 --> E1
-    D2 --> E2
-    D3 --> E3
-    E3 --> E4
-
-    E4 --> U2
-    U1 --> U2
-    U2 --> U3
-    U3 --> U4
-    U4 -->|"PAPI / viem"| E1
-    U4 -->|"PAPI / viem"| E2
-
-</diagram>
+1. **Platform** — decentralized cloud infrastructure
+1. **Stack** — the developer tools and sdks
+1. **Triangle** — the host for user applications and interfaces
 
 ---
 
