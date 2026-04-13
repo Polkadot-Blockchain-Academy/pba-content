@@ -657,12 +657,12 @@ What the host provides to your dApp:
 
 **Core Capabilities:**
 
-- **Wallet** - BIP-39, sr25519, Ed25519, secp256k1
-- **Light Clients** - smoldot (Substrate), Helios (Ethereum), Kyoto (Bitcoin)
-- **Multi-Chain** - Cross chain workflows
-- **DOTNS Resolution** - `.dot` name to IPFS content
-- **IPFS** - P2P Bitswap + HTTP gateway fallback
-- **Statement Store** - off-chain pub/sub messaging
+- **Wallet** — BIP-39, sr25519/Ed25519/secp256k1, Touch ID/Face ID
+- **Light Clients** — Smoldot (Substrate), Helios (Ethereum), Kyoto (Bitcoin)
+- **DOTNS** — resolve .dot names to IPFS content
+- **IPFS** — CARv1/UnixFS parsing, P2P Bitswap or HTTP gateway
+- **Host API** — 76+ message types for accounts, signing, storage, payments, RPC
+- **Statement Store** — off-chain pub/sub with proofs
 - **Preimages** — on-chain preimage lookup and submission
 - **Permissions** — camera, microphone, bluetooth, location grants
 
@@ -690,7 +690,7 @@ What the host provides to your dApp:
 What your dApp uses to talk to the host:
 
 ```typescript
-import { getAddress, navigateTo, statements, storage } from "@polkadot-apps/product-sdk";
+import { getAddress, navigateTo, statements, storage } from "@useragent-kit/product-sdk";
 
 // Get the current user's account
 const address = await getAddress();
@@ -712,22 +712,36 @@ await statements.write(topic, payload);
 
 Your dApp runs in a **strict sandbox**.
 
+<div class="grid grid-cols-3">
 <div class="text-left">
 
-**What products CANNOT do:**
+**Blocked:**
 
-- No network access (`connect-src 'none'`)
-- No WebSocket, WebRTC, Workers, BroadcastChannel
-- No localStorage, cookies, or caches
-- No access to `window.ethereum`, `window.polkadot`, etc.
-- No auto-approval of signing requests
+- Network (`connect-src 'none'`)
+- WebSocket, WebRTC, Workers
+- localStorage, document.cookie
+- `window.ethereum`, `window.polkadot`
 
-**What products CAN do:**
+</div>
+<div class="text-left">
 
-- Run JavaScript and WASM
-- Communicate through `window.host` bridge
-- Request signatures (user must confirm each one)
+**Allowed:**
 
+- JavaScript and WASM
+- sessionStorage, indexedDB
+- `window.host` bridge
+- blob: and data: URLs
+
+</div>
+<div class="text-left">
+
+**Requires Approval:**
+
+- Every signature request
+- Device permissions
+- Network permission grants
+
+</div>
 </div>
 
 ---
