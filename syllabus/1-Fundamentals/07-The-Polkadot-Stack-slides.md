@@ -114,7 +114,7 @@ Both built using blockchain technology.
 
 ---
 
-## Polkadot: Infrastructure for the Decentralized Web
+## Infrastructure for the Decentralized Web
 
 Polkadot is building a **decentralized Web3 Cloud**:
 
@@ -135,16 +135,6 @@ Polkadot fulfills this vision across three layers:
 1. **Polkadot Triangle**: User Interfaces
 1. **Polkadot Stack**: Developer Tools
 1. **Polkadot Platform**: Web3 Cloud Infrastructure
-
----
-
-## Agenda
-
-1. **Why Polkadot Exists** - The Decentralized Web
-1. **Polkadot Platform** - The Web3 Cloud Infrastructure
-1. **Polkadot Stack** - Developer Tools & Experience
-1. **Polkadot Triangle** - User Interfaces
-1. **Putting It All Together** - The Complete Picture
 
 ---
 
@@ -187,10 +177,10 @@ The **primary user-facing chain** in the Polkadot ecosystem.
 **Assets:**
 
 - DOT native token management
+- DOT native stable coin
 - Fungible assets (tokens)
 - NFTs (non-fungible tokens)
 - DEX / asset conversion
-- DOT native stable coin
 
 </div>
 <div class="text-left">
@@ -204,7 +194,27 @@ The **primary user-facing chain** in the Polkadot ecosystem.
 </div>
 </div>
 
-and Governance, Staking, Identity, Utilities, etc...
+and Governance, Staking, Identity, Name Service, Utilities, etc...
+
+---
+
+## DotNS: .dot Name Service
+
+Human-readable names for the Polkadot ecosystem.
+
+Like ENS, but on Polkadot.
+
+<diagram class="mermaid limit">
+graph LR
+    U["User types myapp.dot"] --> H["Host resolves name"]
+    H --> C["DotNS Contract (Asset Hub)"]
+    C --> CID["IPFS CID"]
+    CID --> APP["dApp loads in sandbox"]
+</diagram>
+
+- Register `myapp.dot` → points to an IPFS CID (your dApp frontend)
+- Solidity contracts on Asset Hub (via pallet-revive)
+- Verified unique humans (personhood) get a free .dot name
 
 ---
 
@@ -224,6 +234,35 @@ Parachains chains share security from the Relay Chain and communicate via **XCM*
 | **Custom Parachains** | Build with Polkadot SDK (FRAME), deploy via Coretime, get shared security |
 
 </div>
+
+---
+
+## Data and Messaging
+
+#### Bulletin Chain
+
+- Persistent on-chain data storage
+- IPFS-compatible: data gets a CID, retrievable from IPFS
+- Perfect for hosting dApp frontends, documents, files
+
+#### Statement Store
+
+- Off-chain peer-to-peer messaging
+- Pub/sub model: subscribe to topics, broadcast messages
+- Propagated across the validator network
+- Ephemeral: messages are not stored permanently
+- Perfect for chat, notifications, real-time coordination
+
+
+---
+
+## Polkadot Cloud Infrastructure
+
+- **Compute** - Relay Chain / Parachains
+- **Storage** - Bulletin Chain
+- **Networking** - XCM, Statement Store
+- **Identity** - People Chain, Collectives Chain, Name Service Contract
+- **Finance** - Asset Hub, DOT, pUSD
 
 ---
 
@@ -325,14 +364,14 @@ graph LR
 
 ---
 
-## The eth-rpc Sidecar
+## The Ethereum JSON-RPC server
 
 **Bridging Ethereum tooling to Substrate.**
 
 <diagram class="mermaid">
 graph LR
-    MM["MetaMask Hardhat Foundry viem / ethers.js"]
-    MM -->|"Ethereum JSON-RPC (port 8545)"| ETH["eth-rpc Sidecar"]
+    MM["MetaMask, Hardhat, Foundry, viem, ethers.js"]
+    MM -->|"Ethereum JSON-RPC"| ETH["eth-rpc Sidecar"]
     ETH -->|"Substrate WebSocket"| NODE["Substrate Node"]
 </diagram>
 
@@ -343,6 +382,32 @@ graph LR
 - Supports: `eth_sendRawTransaction`, `eth_call`, `eth_getLogs`, `debug_traceTransaction`, etc.
 - Maintains a **SQLite index** for receipts and blocks
 - Pre-configured **dev accounts** for local development
+
+</div>
+
+---
+
+## Ethereum Tooling
+
+Use your existing Ethereum skills and tools.
+
+<div class="text-left">
+
+**Frontend (TypeScript):**
+
+- **viem** - modern, typed Ethereum client
+- **ethers.js** - the classic
+- **wagmi** - React hooks for Ethereum
+
+**Backend (Rust):**
+
+- **alloy** - next-gen Rust Ethereum library
+
+**Development:**
+
+- **Hardhat** - with `@parity/hardhat-polkadot`
+- **Foundry** - forge, cast, anvil
+- **MetaMask** - wallet
 
 </div>
 
@@ -430,50 +495,6 @@ let claim = api.storage()
 
 ---
 
-## Ethereum Tooling
-
-Use your existing Ethereum skills and tools.
-
-<div class="text-left">
-
-**Frontend (TypeScript):**
-
-- **viem** - modern, typed Ethereum client
-- **ethers.js** - the classic
-- **wagmi** - React hooks for Ethereum
-
-**Backend (Rust):**
-
-- **alloy** - next-gen Rust Ethereum library
-
-**Development:**
-
-- **Hardhat** - with `@parity/hardhat-polkadot`
-- **Foundry** - forge, cast, anvil
-- **MetaMask** - wallet
-
-</div>
-
----
-
-## DotNS: .dot Name Service
-
-Human-readable names for the Polkadot ecosystem. Like ENS, but on Polkadot.
-
-<diagram class="mermaid limit">
-graph LR
-    U["User types myapp.dot"] --> H["Host resolves name"]
-    H --> C["DotNS Contract (Asset Hub)"]
-    C --> CID["IPFS CID"]
-    CID --> APP["dApp loads in sandbox"]
-</diagram>
-
-- Register `myapp.dot` → points to an IPFS CID (your dApp frontend)
-- Solidity contracts on Asset Hub (via pallet-revive)
-- Verified unique humans (personhood) get a free .dot name
-
----
-
 ## Development Infrastructure
 
 <div class="grid grid-cols-2">
@@ -536,7 +557,7 @@ graph TB
 
     subgraph Access["Access Through"]
         WS["Substrate WS RPC"]
-        HTTP["eth-rpc (port 8545)"]
+        HTTP["eth-rpc"]
     end
 
     RUST --> FRAME
