@@ -296,7 +296,6 @@ The blockchain framework.
 
 The runtime framework.
 
-- 120+ pallets
 - Storage abstractions
 - Dispatchable calls
 - Events & errors
