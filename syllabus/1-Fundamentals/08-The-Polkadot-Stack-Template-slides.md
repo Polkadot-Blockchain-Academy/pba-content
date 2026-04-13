@@ -182,7 +182,7 @@ Every student ships a **solo project** with:
 
 **One frontend** (pick one):
 
-- Web app (React, Svelte, Vue, etc.)
+- Static web app
 - CLI++ (TUI or MCP server)
 
 **Mandatory**: deploy to **Bulletin Chain + DotNS**
