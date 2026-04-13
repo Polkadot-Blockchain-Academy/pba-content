@@ -601,13 +601,13 @@ graph LR
 
 - **Host** owns security: wallet, keys, light clients, IPFS, DotNS
 - **Product** runs in a strict sandbox: no network access, no key access
-- **Blockchain** provides state: Asset Hub, Bulletin Chain, custom chains
+- **Blockchain** provides infrastructure: Asset Hub, Bulletin Chain, etc...
 
 ---
 
 ## Triangle User Agents
 
-<div class="grid grid-cols-3">
+<div class="grid grid-cols-3 text-small">
 <div class="text-left">
 
 **Mobile (Key Authority)**
@@ -652,7 +652,7 @@ Browser-based
 
 What the host provides to your dApp:
 
-<div class="grid grid-cols-2">
+<div class="grid grid-cols-2 text-small">
 <div class="text-left">
 
 **Core Capabilities:**
