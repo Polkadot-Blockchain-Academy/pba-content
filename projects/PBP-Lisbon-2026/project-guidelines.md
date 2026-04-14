@@ -58,7 +58,7 @@ Every student ships, **solo**, a project with exactly these components:
 
 ### 3.2 One frontend component (pick one)
 
-- **Web app** (React, Svelte, Vue, whatever).
+- **Static web app**.
 - **CLI++** - a command-line frontend, but with ambition. A bare `clap`-style CLI on its own is **not enough** for this rubric. To count as CLI++, you must elevate it into one of:
   - a **TUI** (ratatui, textual, ink, etc.), or
   - an **MCP server** (yes, this counts as a frontend - it is how an AI agent "drives" your backend; this category is hot right now and reviewers are paying attention to it).

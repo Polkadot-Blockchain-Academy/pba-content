@@ -113,7 +113,7 @@ For a light client, the digest is very important.
 
 ## Block Digest
 
-- **Consensus Logs**: Data from the block production engine (BABE/SAFROLE).
+- **Consensus Logs**: Data from the block production engine (BABE).
   - This includes information like the slot number and the block author.
 - **Seal**: A signature from the block author, proving they produced this block.
 - **GRANDPA Logs**: This is how Polkadot's finality mechanism (GRANDPA) communicates validator set changes.

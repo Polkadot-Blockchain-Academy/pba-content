@@ -4,10 +4,11 @@ description: A high level overview of what a blockchain is.
 ---
 
 <!-- .slide: data-background-image="../../assets/img/0-Shared/bg/PBA_Background.png" data-background-size="cover" -->
+
 ## What is a Blockchain, Actually?
 
-* `@kianenigma`
-* kianenigma.com
+- `@kianenigma`
+- kianenigma.com
 
 ---
 
@@ -22,11 +23,11 @@ Simple interface: Send money to this IBAN, I keep it safe, when you request to w
 Nobody trusted me
 I decided to open-source my entire code-base
 Nada
-Have it be audited, uesed the best tools to make it secure
+Have it be audited, used the best tools to make it secure
 I even rewrote the whole thing in Rust
 I even ran it in a TEE, attested that it doing the right thing, nada
 
-But then, I legalized my bank, declared it to local regulatros of my country, and put into place where if I misbehave, the local police and courts could come after me, or at least I pretended to do so
+But then, I legalized my bank, declared it to local regulators of my country, and put into place where if I misbehave, the local police and courts could come after me, or at least I pretended to do so
 
 And suddenly nobody even cared what my code is.
 
@@ -40,8 +41,8 @@ Strong social institutions that enforce rules
 
 ## Lack of Trust $\Rightarrow$ Authority
 
-* Particularly exacerbated in the interconnected world we live in today
-* Bank: One form of authority to manage our money
+- Particularly exacerbated in the interconnected world we live in today
+- Bank: One form of authority to manage our money
 
 ---v
 
@@ -71,14 +72,14 @@ My failed bank was a poor man's attempt at creating this science-based trust.
 
 ## Why Bother?
 
-* Human-based authorities: <!-- .element: class="fragment" -->
-	* Corruptible
-	* Limited
-	* Not auditable
-* Science-based authorities: <!-- .element: class="fragment" -->
-	* Verifiable
-	* Accessible
-	* Auditable
+- Human-based authorities: <!-- .element: class="fragment" -->
+  - Corruptible
+  - Limited
+  - Not auditable
+- Science-based authorities: <!-- .element: class="fragment" -->
+  - Verifiable
+  - Accessible
+  - Auditable
 
 ---v
 
@@ -90,9 +91,9 @@ My failed bank was a poor man's attempt at creating this science-based trust.
 
 ## Revolution
 
-* Bitcoin proved that, while my bank failed, it is in principle possible
-* Trillions of dollars are entrusted today with this type of trust
-* I can, in fact, with a few clicks, launch an ERC20 token and "run my own bank"
+- Bitcoin proved that, while my bank failed, it is in principle possible
+- Trillions of dollars are entrusted today with this type of technology
+- I can, in fact, with a few clicks, launch an ERC20 token and "run my own bank"
 
 note:
 
@@ -108,13 +109,13 @@ And more..
 
 note:
 
-* Land Registery
-* Prediction markets
-* Petitions / Donations
-* Fundraising
-* Freelancing and tipping (gitcoin)
-* Gaming and game economies
-* Lending compute and storage
+- Land Registry
+- Prediction markets
+- Petitions / Donations
+- Fundraising
+- Freelancing and tipping (gitcoin)
+- Gaming and game economies
+- Lending compute and storage
 
 And more, though for now it seems that the best use-case for blockchains is for social, and value-bearing interactions
 
@@ -122,19 +123,21 @@ And more, though for now it seems that the best use-case for blockchains is for 
 
 ## Web3
 
-* This revolution of creating systems with less/no human-based trust/authorities, and more science-based trust/authorities..
-* When applied to the world-wide web Is what I call **Web3**
+- This revolution of creating systems with less/no human-based trust/authorities, and more science-based trust/authorities..
+- When applied to the world-wide web Is what I call **Web3**
 
-<br>
+---v
 
-> Applications built with Web3 in mind are often called Decentralized Applications (DApps)
+## Decentralized Applications (DApps)
+
+- Applications built with Web3 philosophy in mind are often called Decentralized Applications
 
 ---v
 
 ## Trustless
 
-* A system devoid of human-based trust/authorities..
-* and enriched with science-based trust/authorities
+- A system devoid of human-based trust/authorities..
+- and enriched with science-based trust/authorities
 
 ---
 
@@ -142,20 +145,20 @@ And more, though for now it seems that the best use-case for blockchains is for 
 
 note:
 
-So we established that we lack trust in the modern interconnecte worlds, and therefore we need authorities to manage our interactions
+So we established that we lack trust in the modern interconnected world, and therefore we need authorities to manage our interactions
 How can we model these blockchains and authorities
 
 ---v
 
 ## Decomposing an Authority
 
-* Rules
-* State
-* Mutations based on user inputs and rules
+- Rules
+- State
+- Mutations based on user inputs and rules
 
 <br>
 
-* We can be 100% sure that the rules are respected 🪄
+- We can be 100% sure that the rules are respected 🪄
 
 ---v
 
@@ -165,7 +168,7 @@ $$
 F:(state, inputs) \rightarrow state'
 $$
 
-* We can be 100% sure $F$ is executed correctly and all states are correct 🪄
+- We can be 100% sure $F$ is executed correctly and all states are correct 🪄
 
 ---v
 
@@ -177,19 +180,19 @@ graph LR
     y((y)) -->|"F(y, input-1)"| yp(("y′")) -->|"F(y′, ...)"| ypp(("y″"))
 </diagram>
 
-* We can be 100% sure $F$ is executed correctly and all states are correct 🪄
+- We can be 100% sure $F$ is executed correctly and all states are correct 🪄
 
 ---v
 
 ## Model 3: (Trustless) Computer
 
-* Code (rules)
-* Memory (state)
-* Execution user inputs (mutations)
+- Code (rules)
+- Memory (state)
+- Execution of user inputs (mutations)
 
 <br>
 
-* We can be 100% sure the computer's code is executed correctly and all memories are correct 🪄
+- We can be 100% sure the computer's code is executed correctly and all memories are correct 🪄
 
 note:
 
@@ -197,47 +200,72 @@ Here we can connect this to my failed bank -- this computer is what my bank need
 
 ---v
 
-## Bitcoin as An Authority:
+## Bitcoin As an Authority:
 
-* Rules: Valid transfer of BTC (based on UTXO model)
-* State: How much BTC each person has
-* Mutations:
-	* Transfer of BTC between people, always signed by the `sk` sender
-	* Bundled as a block of transactions
-
----v
-
-## Sphere of Influence
-
-* Bank of Portugal cannot confiscate the money I own in Singapore
-* Each authority has a sphere of influence <!-- .element: class="fragment" -->
-* For blockchain-based authorities, this is the their state <!-- .element: class="fragment" -->
+- Rules: Valid transfer of BTC (based on UTXO model)
+- State: How much BTC each person has
+- Mutations:
+  - Transfer of BTC between people, always signed by the `sk` sender
+  - Bundled as a block of transactions
 
 ---v
 
 ## Sphere of Influence
 
-* Bitcoin's code/rules can freely:
-	* Read how much BTC I have
-	* Perform a valid transfer of BTC (**law enforcement!**)
+- Bank of Portugal cannot confiscate the money I own in Singapore
+- Each authority has a sphere of influence <!-- .element: class="fragment" -->
+- For blockchain-based authorities, this is the their state <!-- .element: class="fragment" -->
+
+---v
+
+## Sphere of Influence
+
+<diagram class="mermaid">
+%%{init: {'theme': 'dark', 'themeVariables': { 'darkMode': true }}}%%
+graph LR
+    Authority -->|"Read"| State("Sphere of Influence (State)")
+    Authority -->|"Write"| State("Sphere of Influence (State)")
+</diagram>
+
+---v
+
+## Sphere of Influence
+
+- Bitcoin's code/rules can freely:
+  - Read how much BTC I have
+  - Perform a valid transfer of BTC (**law enforcement!**)
 
 ---v
 
 ## The Real-World-Asset (RWA) Scam
 
-* No blockchain can assert if:
-	* I own a piece of gold
-	* Force me to sell it to someone else
+- No blockchain can assert if:
+  - I own a piece of gold
+  - Force me to sell it to someone else
 
 ---v
 
 ## The Real-World-Asset (RWA) Scam
 
-* Oracle Problem
-* Chains of Trust
-	* Bridges <!-- .element: class="fragment" -->
-	* Tokenized RWAs <!-- .element: class="fragment" -->
-	* Weakest Link Problem! <!-- .element: class="fragment" -->
+- Oracle Problem
+- Chains of Trust
+  - Weakest Link Problem! <!-- .element: class="fragment" -->
+  - Bridges are the same <!-- .element: class="fragment" -->
+
+---v
+
+## The Real-World-Asset (RWA) Scam
+
+<diagram class="mermaid">
+%%{init: {'theme': 'dark', 'themeVariables': { 'darkMode': true }}}%%
+graph LR
+    subgraph "sphere of influence 🔐 "
+		BlockchainAuthority["Blockchain Authority"]
+        State(["State"])
+    end
+    Oracle["Oracle"]
+    Oracle -- "trust me bro ⛓️‍💥" --> State
+</diagram>
 
 ---v
 
@@ -250,9 +278,9 @@ Here we can connect this to my failed bank -- this computer is what my bank need
 
 ## 3 Properties
 
-* Verifiable Execution of Rules
-* Correct Ordering of all events, and re-auditing of past events
-* Accessible to all
+- Verifiable Execution of Rules
+- Correct Ordering of all events, and re-auditing of past events
+- Accessible to all
 
 <br>
 
@@ -261,32 +289,38 @@ Here we can connect this to my failed bank -- this computer is what my bank need
 note:
 
 1. As said before, blockchains bring about this property, where they provide guarantees that the whole system as a whole is correctly following its rules correctly.
-	* Current latest state of the blockchain is correct
+   - Current latest state of the blockchain is correct
 2. Besides this, it collects and retains evidence about what the exact order of all past events where that lead to current state
-	* And what the exact order of past events were that led to current state
+   - And what the exact order of past events were that led to current state
 3. Ideally, it is accessible to all, as long as they meet the rules of the system
-	* Ethereum doesn't let you transact with it if you don't pay for gas
+   - Ethereum doesn't let you transact with it if you don't pay for gas
 
 ---v
 
 ## RWA: Not a Scam, But..
 
-2 out of 3 properties are fully met
+- 2 out of 3 properties are fully met
+- Same as consortium blockchains <!-- .element: class="fragment" -->
 
 note:
 
-* My address owning 1 BTC
-* My address owning 1000$ worth of some RWA
+- My address owning 1 BTC
+- My address owning 1000$ worth of some RWA
 
 Verifiability is partial, rest is met
 
 Ethereum can never excert with the same degree of confidence that you won a tokenized house on the Ethereum network, than that of owning ETH on the network.
 But Auditability, and accessibility are fully met.
 
-
 ---
 
 ## Blockchains 101
+
+- Blockchains merely help with retaining correct ordering of past events
+  - Verifiability, the main magic of these systems? <!-- .element: class="fragment" -->
+  - No! ZK-Proofs, TEE <!-- .element: class="fragment" -->
+- Blockchains are overrated <!-- .element: class="fragment" -->
+  - Blockchain-based systems! != not just a blockchain <!-- .element: class="fragment" -->
 
 notes:
 
@@ -294,12 +328,12 @@ Okay, enough with theoretical stuff, let's learn a bit more concretely about blo
 
 Authoring:
 Blockchains are a network of nodes, each running some software, called the "blockchain node software"
-None of these nodes trust each other, yet they all encode within themselves the ruls of the blockchain
+None of these nodes trust each other, yet they all encode within themselves the rules of the blockchain
 They each also hold their local copy of the blockchain's state
-Users send their transactions (instrusctions) to different nodes, and nodes may gossip them to one another
+Users send their transactions (instructions) to different nodes, and nodes may gossip them to one another
 Every now and then, one of these nodes, based on the rules of the blockchain is eligible to author a new block
 Block author will create a new block, updates its local state, and send the block + an attestation of what the new state should be to other nodes
-All other nodes verify that the rules were respected, with their local copy of the state and the ndoe software
+All other nodes verify that the rules were respected, with their local copy of the state and the node software
 Repeat
 
 Genesis and Syncing:
@@ -319,10 +353,10 @@ I have not really talked about how blockchains work, but if you even look at tha
 
 As trustless compute and storage providers.
 
-* Fixed Code (Bitcoin)
-* Smart Contracts (Ethereum L1) <!-- .element: class="fragment" -->
-* Rollups (Polkadot, Layer 2s, etc) <!-- .element: class="fragment" -->
-* JAM (Supercomputer) <!-- .element: class="fragment" -->
+- Fixed Code (Bitcoin)
+- Smart Contracts (Ethereum L1) <!-- .element: class="fragment" -->
+- Rollups (Polkadot, Layer 2s, etc) <!-- .element: class="fragment" -->
+- JAM (Supercomputer) <!-- .element: class="fragment" -->
 
 notes:
 
@@ -335,51 +369,57 @@ notes:
 
 ## The Bigger Picture
 
-* (2013) Bitcoin was a proof of concept that it is possible to establish trustless compute and storage under consensus
-* (2016) Ethereum was a proof of cocept that this can be generalized
+- (2013) Bitcoin was a proof of concept that it is possible to establish trustless compute and storage under consensus
+- (2016) Ethereum was a proof of concept that this can be generalized
 
 ---v
 
 ## The Bigger Picture
 
-* Next decade (2016 - today):
-	* Scaling the existing system (not expanding the horizon)
-	* DeFi (PMF - money to be made)
-	* Scam
-
+- Next decade (2016 - today):
+  - Scaling the existing system (not expanding the horizon)
+  - DeFi (PMF - money to be made)
+  - Noise
 
 ---v
 
 ## The Bigger Picture
 
-* Expanding the horizon
-* Invention << Innovation
+<img style="width: 600px;" src="../../assets/img/0-Shared/intro-web3-horizon.svg" />
+
+---v
+
+## The Bigger Picture
+
+_Invention vs. Innovation_
+
+<img style="width: 600px;" src="../../assets/img/0-Shared/intro-web3-horizon-full.svg" />
 
 notes:
 
 Making cars faster vs. Learning how to fly
 
-I am glad to see that Polkadot, while it innovated on scaling a lot, it also invented a lot of new paradaigms:
+I am glad to see that Polkadot, while it innovated on scaling a lot, it also invented a lot of new paradigms:
 
-* Layer 2s
-* PVM and forkless upgrades
-* Today: storage, privacy, personhood, etc.
-
----v
-
-## The Bigger Picture
-
-* Trustless computation and storage under consensus is not everything!
-* What went missing:
-	* computation and messaging outside of consensus
-	* Storage
-	* Privacy
-	* Identity and personhood
+- Layer 2s
+- PVM and forkless upgrades
+- Today: storage, privacy, personhood, etc.
 
 ---v
 
 ## The Bigger Picture
 
+- Trustless (expensive!) computation and storage under consensus is not everything!
+- What went missing:
+  - computation and messaging outside of consensus
+  - Storage
+  - Privacy
+  - Identity and personhood
+  - ...
+
+---v
+
+## The Bigger Picture
 
 <img style="width: 600px;" src="https://blog.kianenigma.com/what-blockchain-actually/Resources/Screenshot-2025-12-16-at-23.15.05.png" />
 
@@ -391,7 +431,7 @@ More examples in https://blog.kianenigma.com/what-blockchain-actually/Content/Wh
 
 ## The Bigger Picture
 
-The challenge of for the next decade:
+The challenge for the next decade:
 
 <img style="width: 400px;" src="https://blog.kianenigma.com/img/user/resources/Pasted%20image%2020260214124822.png" />
 
@@ -401,9 +441,8 @@ These components received some attention throughout the last decade, but not wit
 
 Next decade of blockchain development is a challenge to either:
 
-* Solve the above problems, expand blockchain systems to the broader Web3 mission
-* Admit defeat, and let it all be a new financial system, which is ever more being integrated into the existing one, rather than replacing it.
-
+- Solve the above problems, expand blockchain systems to the broader Web3 mission
+- Admit defeat, and let it all be a new financial system, which is ever more being integrated into the existing one, rather than replacing it.
 
 ---v
 
@@ -423,14 +462,14 @@ note:
 
 Look into your list of applications, websites, and serviced that you use, and ask yourself:
 
-* In which ones I am interacting with other people over a contentious matter, and the platform is acting as an intermediary to establish that trust?
-* In which ones I am revealing more data about myself than I should to the intermediary?
-* In which ones the platform has an outsized control over the network and user-data, and can form a monopoly over it? Or it would be catastrophic if it decided to abuse it?
+- In which ones I am interacting with other people over a contentious matter, and the platform is acting as an intermediary to establish that trust?
+- In which ones I am revealing more data about myself than I should to the intermediary?
+- In which ones the platform has an outsized control over the network and user-data, and can form a monopoly over it? Or it would be catastrophic if it decided to abuse it?
 
 Recent example that I have been thinking about:
 
-* ClassPass
-* Self-guaranteeing promise
+- ClassPass
+- Self-guaranteeing promise
 
 ---
 
@@ -439,4 +478,3 @@ Recent example that I have been thinking about:
 <img src="../../assets/img/0-Shared/what-blockchain-actually-qr.png" />
 
 (Full text of the presentation)
-
