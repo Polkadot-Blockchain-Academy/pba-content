@@ -31,31 +31,21 @@ const extractTitleFromMarkdown = (filePath: string): string => {
 
 // Sorting based on the initial number (even if it is in a string)
 const sortArray = (arr: string[]) => {
-  const tempArr: any[] = []
-  let n
-  for (let i in arr) {
-    tempArr[i] = arr[i].match(/([^0-9]+)|([0-9]+)/g)
-    for (let j in tempArr[i]) {
-      if (!isNaN((n = parseInt(tempArr[i][j])))) {
-        tempArr[i][j] = n
+  return [...arr].sort((a, b) => {
+    const aParts = a.match(/([^0-9]+)|([0-9]+)/g) || []
+    const bParts = b.match(/([^0-9]+)|([0-9]+)/g) || []
+    for (let i = 0; i < Math.min(aParts.length, bParts.length); i++) {
+      const aNum = parseInt(aParts[i])
+      const bNum = parseInt(bParts[i])
+      if (!isNaN(aNum) && !isNaN(bNum)) {
+        if (aNum !== bNum) return aNum - bNum
+      } else {
+        if (aParts[i] < bParts[i]) return -1
+        if (aParts[i] > bParts[i]) return 1
       }
     }
-  }
-  tempArr.sort(function (x, y) {
-    for (let i in x) {
-      if (y.length < i || x[i] < y[i]) {
-        return -1 // x is longer
-      }
-      if (x[i] > y[i]) {
-        return 1
-      }
-    }
-    return 0
+    return aParts.length - bParts.length
   })
-  for (let i in tempArr) {
-    arr[i] = tempArr[i].join('')
-  }
-  return arr
 }
 
 const files = globSync('./syllabus/**/**/*lides.md', { ignore: ['node_modules/**', '**/README.md'] })

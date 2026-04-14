@@ -59,7 +59,7 @@ graph LR
 
 ### Transaction Validation Logic
 
-- Transaction validity is exclusively outside of the transaction pool, and is **100% determined by the Runtime**.
+- Transaction validity logic lives exclusively outside of the transaction pool, and is **100% determined by the Runtime**.
 - Transaction validation should be **cheap** to perform.
 - Transaction pool is entirely an **offchain operation**.
   - No state change
@@ -140,7 +140,7 @@ type Tag = Vec<u8>
 ### Banning Invalid Transactions
 
 - If a transaction is discovered to be invalid, **its hash** is banned for a fixed duration of time.
-- Default in substrate is `Duration::from_secs(60 * 30)`, can be configured via CLI.
+- Default in Substrate is `Duration::from_secs(60 * 30)`, can be configured via CLI.
 
 Notes:
 

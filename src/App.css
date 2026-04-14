@@ -1,79 +1,60 @@
 #root {
-  max-width: 1280px;
+  max-width: 1120px;
   margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
 }
 
-.logo {
-  width: 14em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
-}
-
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
+/* Header — full-width dark bar */
+.site-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.25rem 2.5rem;
+  background-color: var(--bg-surface-container-inverted);
+  position: relative;
+  width: 100vw;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
 }
 
 .site-logo {
-  width: 100%;
-  margin-left: 2rem;
+  height: 2rem;
 }
 
-.site-header {
-  z-index: 99;
+.logo-link {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 3%;
+  text-decoration: none;
 }
 
-.site-header--small {
-  padding: var(--size);
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--fg-primary-inverted);
+  text-decoration: none;
+  opacity: 0.7;
+  transition: opacity 200ms ease;
+  cursor: pointer;
 }
 
-.menu {
-  display: flex;
-  list-style: none;
+.back-link:hover {
+  opacity: 1;
+}
+
+/* Page header */
+.page-header {
+  padding: 2.5rem 0 1rem;
+}
+
+.page-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.75rem;
+  font-weight: 400;
+  color: var(--fg-primary);
+  line-height: 1.25;
   margin: 0;
-  padding: 0;
-}
-
-.menu--header {
-  flex-grow: 1;
-  justify-content: space-between;
-}
-
-.menu-item {
-  display: flex;
-  align-items: center;
-}
-
-.menu-item h2 {
-  margin-right: 2rem;
 }

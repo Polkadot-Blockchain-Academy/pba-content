@@ -29,6 +29,7 @@
 - 3:30 - 5:00
   - Shawn Tabrizi
   - [The Polkadot Stack](1-Fundamentals/07-The-Polkadot-Stack-slides.md)
+  - [The Polkadot Stack Template](1-Fundamentals/08-The-Polkadot-Stack-Template-slides.md)
 - Evening
   - PBA staff and faculty dinner (Maciej, Kian, Shawn)
 
@@ -126,13 +127,13 @@
 - 8:00 - 10:00
   - Substrate
   - Kian
-  - TODO: specific lecture links
+  - [Transaction Pool](3a-Protocol_On-Chain/Substrate/06-Transaction-Pool-slides.md)
 - 10:00 - 10:30
   - Coffee break
 - 10:30 - 12:30
   - Substrate
   - Kian
-  - TODO: specific lecture links
+  - Closing Session and Q&A
 - 12:30 - 1:30
   - Lunch break
 - 1:30 - 3:00

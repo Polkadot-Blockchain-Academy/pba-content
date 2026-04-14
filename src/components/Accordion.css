@@ -1,44 +1,97 @@
 .accordion {
-    max-width: 120rem;
-    margin: 2rem auto;
+  max-width: 1120px;
+  margin: 2rem auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.accordion-item {
+  background: var(--bg-surface-container);
+  border-radius: var(--radius-container);
+  box-shadow: var(--shadow-1);
+  overflow: hidden;
 }
 
 .accordion-title {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    cursor: pointer;
-    font-weight: 500;
-    background-color: #E6007A;
-    padding: 1rem 2rem 1rem 3rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.9375rem;
+  color: var(--fg-primary);
+  background-color: var(--bg-surface-container);
+  padding: 1rem 1.5rem;
+  transition: background-color 200ms ease;
+  user-select: none;
 }
 
 .accordion-title:hover {
-    background-color: #e63392;
+  background-color: var(--bg-selection-container-hover);
+}
+
+.accordion-title div:last-child {
+  font-size: 1.25rem;
+  font-weight: 400;
+  color: var(--fg-tertiary);
+  width: 1.5rem;
+  text-align: center;
+  flex-shrink: 0;
 }
 
 .accordion-draw {
-    padding: 0.1rem 0.2rem 0.1rem 0.5rem;
-}
-.accordion-content {
-    text-align: left;
-    padding: 0.5rem;
-    margin-left: 1rem;
-    background-color: #ff61b5;
-    padding-left:1rem;
+  padding: 0.25rem 0.75rem 0.75rem 1.5rem;
 }
 
 .accordion-draw a {
-    text-decoration: none;
+  text-decoration: none;
+  display: block;
+}
+
+.accordion-content {
+  text-align: left;
+  padding: 0.625rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 400;
+  color: var(--fg-secondary);
+  border-radius: var(--radius-small);
+  transition: background-color 200ms ease, color 200ms ease;
 }
 
 .accordion-content:hover {
-    background-color: #e63392;
-    cursor: pointer;
+  background-color: var(--bg-selection-container-hover);
+  color: var(--fg-primary);
+  cursor: pointer;
+}
+
+/* Nested accordions */
+.accordion-draw .accordion-item {
+  box-shadow: none;
+  background: var(--bg-surface-nested);
+  border-radius: var(--radius-nested);
+  margin-top: 0.25rem;
+}
+
+.accordion-draw .accordion-title {
+  background: var(--bg-surface-nested);
+  font-size: 0.875rem;
+  padding: 0.75rem 1.25rem;
+}
+
+.accordion-draw .accordion-title:hover {
+  background-color: var(--bg-selection-container-hover);
 }
 
 @media screen and (max-width: 700px) {
-    .accordion {
-        width: 100%;
-    }
+  .accordion {
+    width: 100%;
+    margin: 1rem auto;
+  }
+
+  .accordion-title {
+    padding: 0.875rem 1rem;
+    font-size: 0.875rem;
+  }
 }
