@@ -79,14 +79,20 @@ sp_io::storage::set(KEY, &value.encode());
 </aside></script></section><section data-markdown><script type="text/template">
 ## Runtime APIs
 
+(In reality handled by something called `frame-executive`)
+
 ```rust
-// Manual extrinsic handling
-fn apply_extrinsic(ext: Vec<u8>) -> Result<(), ()> {
-// Decode, validate, execute...
+// Block import lifecyle
+fn execute_block(block: Block) {
+  // Decode, validate, execute...
 }
 
-// Manual block lifecycle
+// block authoring lifecycle
 fn initialize_block(header: &Header) { }
+// multiple times
+fn apply_extrinsic(ext: Vec<u8>) -> Result<(), ()> {
+  // Decode, validate, execute...
+}
 fn finalize_block() -> Header { }
 ```
 
@@ -105,13 +111,7 @@ fn finalize_block() -> Header { }
 - Install the omni-node.
 - Compile the runtime wasm.
 - Run your Node.
-
-<aside class="notes"><ul>
-<li><code>cargo install --force --locked --git https://github.com/Polkadot-Blockchain-Academy/pba-omni-node</code></li>
-<li><code>cargo build --release</code></li>
-<li><code>pba-omni-node --runtime &lt;runtime&gt; --tmp --consensus manual-seal-1000</code></li>
-</ul>
-</aside></script></section><section  data-markdown><script type="text/template">
+</script></section><section  data-markdown><script type="text/template">
 ## Walk through
 
 - Author Block
