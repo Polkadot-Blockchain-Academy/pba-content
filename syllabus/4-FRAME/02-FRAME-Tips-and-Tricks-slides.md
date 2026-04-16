@@ -1,11 +1,11 @@
 ---
-title: Substrate/FRAME Tips and Tricks
+title: FRAME Tips and Tricks
 description: Essential patterns and pitfalls for building with Substrate and FRAME
 ---
 
 <!-- .slide: data-background-image="../../assets/img/0-Shared/bg/PBA_Background.png" data-background-size="cover" -->
 
-# Substrate / FRAME Tips and Tricks
+# FRAME Tips and Tricks
 
 Notes:
 
@@ -372,23 +372,19 @@ impl Get<u32> for MaxItems {
 ## Why Types Instead of Values?
 
 ```rust
-// BoundedVec carries its bound in the TYPE, not as a runtime field
+// The bound lives in the TYPE -- zero extra bytes in storage
 pub struct BoundedVec<T, S: Get<u32>>(
   Vec<T>,
-  PhantomData<S>,
+  PhantomData<S>,  // PhantomData is zero-sized
 );
 ```
 
-Why not just store the bound as a `u32` field?
+Why not store the bound as a `u32` field alongside the data?
 
-- The bound is known at **compile time** and encoded in the **type system**.
-- This enables the compiler to enforce bounds statically.
-- Storage proofs and weight calculations depend on knowing max sizes at compile time.
-- Using `Vec<T>` with runtime length checks is wrong for FRAME storage.
+- `PhantomData<S>` adds **zero bytes** to the SCALE encoding -- the bound exists only at compile time.
+- The compiler can enforce the max length and derive `MaxEncodedLen` automatically.
 
-Notes:
-
-`Get` trait is a way to convey values through types. The type system is mostly for the compiler, with minimal overhead at runtime.
+Compiler-level constraints, zero storage overhead.
 
 ---
 
@@ -406,15 +402,17 @@ pub type Items<T> = StorageMap<_, Blake2_128Concat, T::AccountId, BoundedVec<u8,
 pub type Items<T> = StorageMap<_, Blake2_128Concat, T::AccountId, Vec<u8>>;
 ```
 
-Why it matters:
+Notes:
+
+This is why `BoundedVec`, `BoundedBTreeMap`, and `BoundedBTreeSet` exist -- they are the bounded equivalents of `Vec`, `BTreeMap`, and `BTreeSet` that implement `MaxEncodedLen`. The `#[pallet::without_storage_info]` attribute silently disables this check. If you see that attribute, remove it and fix the types instead.
+
+---
+
+## Why `MaxEncodedLen` Matters
 
 - **PoV (Proof of Validity)**: parachains must prove storage reads to the relay chain. The proof size is bounded by `MaxEncodedLen`.
 - **Weight calculation**: `proof_size` in weights comes from the max bytes each storage read could return.
 - **Without it**, FRAME cannot guarantee that a block stays within its PoV budget.
-
-Notes:
-
-This is why `BoundedVec`, `BoundedBTreeMap`, and `BoundedBTreeSet` exist -- they are the bounded equivalents of `Vec`, `BTreeMap`, and `BTreeSet` that implement `MaxEncodedLen`. The `#[pallet::without_storage_info]` attribute silently disables this check. If you see that attribute, remove it and fix the types instead.
 
 ---
 
