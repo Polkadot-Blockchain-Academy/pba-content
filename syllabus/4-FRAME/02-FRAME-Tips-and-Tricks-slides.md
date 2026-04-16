@@ -75,7 +75,11 @@ We represent ratios with "Fixed-Point" arithmetic types instead.
 use sp_arithmetic::Perbill;
 
 let p = Perbill::from_percent(25);
+// println!("{:?}", p) → Perbill(250000000)
+// internally stored as 250_000_000 / 1_000_000_000
+
 let p = Perbill::from_rational(1, 4);
+// println!("{:?}", p) → Perbill(250000000)
 
 > p * 100u32;
 > 25u32;
@@ -94,6 +98,9 @@ For values outside `[0, 1]`:
 use sp_arithmetic::FixedU64;
 
 let x = FixedU64::from_rational(5, 2);
+// println!("{:?}", x) → FixedU64(2500000000)
+// internally stored as 2_500_000_000 / 1_000_000_000
+
 let y = 10u32;
 let z = x * y;
 > 25
