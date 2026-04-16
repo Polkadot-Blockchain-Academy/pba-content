@@ -66,14 +66,20 @@ Notes:
 
 ## Runtime APIs
 
+(In reality handled by something called `frame-executive`)
+
 ```rust
-// Manual extrinsic handling
-fn apply_extrinsic(ext: Vec<u8>) -> Result<(), ()> {
-// Decode, validate, execute...
+// Block import lifecyle
+fn execute_block(block: Block) {
+  // Decode, validate, execute...
 }
 
-// Manual block lifecycle
+// block authoring lifecycle
 fn initialize_block(header: &Header) { }
+// multiple times
+fn apply_extrinsic(ext: Vec<u8>) -> Result<(), ()> {
+  // Decode, validate, execute...
+}
 fn finalize_block() -> Header { }
 ```
 
@@ -96,12 +102,6 @@ Notes:
 - Install the omni-node.
 - Compile the runtime wasm.
 - Run your Node.
-
-Notes:
-
-- `cargo install --force --locked --git https://github.com/Polkadot-Blockchain-Academy/pba-omni-node`
-- `cargo build --release`
-- `pba-omni-node --runtime <runtime> --tmp --consensus manual-seal-1000`
 
 ---
 

@@ -129,8 +129,6 @@ https://docs.rs/sc-rpc-api/latest/sc_rpc_api/
 
 ---
 
----
-
 ## QUICK PAPI Demo
 
 ---
