@@ -27,31 +27,6 @@ Every code example in these slides is real -- drawn from git diffs and session l
 
 ---
 
-## What AI Gets Right
-
-```rust
-#[pallet::call]
-impl<T: Config> Pallet<T> {
-    #[pallet::call_index(0)]
-    #[pallet::weight(T::WeightInfo::create_claim())]
-    pub fn create_claim(origin: OriginFor<T>, hash: H256) -> DispatchResult {
-        let who = ensure_signed(origin)?;
-        ensure!(!Claims::<T>::contains_key(hash), Error::<T>::AlreadyClaimed);
-        Claims::<T>::insert(hash, Claim { owner: who.clone(), block_number: ... });
-        Self::deposit_event(Event::ClaimCreated { who, hash });
-        Ok(())
-    }
-}
-```
-
-- `ensure_signed` origin checks, `ensure!` storage guards
-- Events, errors, storage access patterns
-- Basic FRAME macro structure
-
-AI produces **structurally valid** pallets. The problems are in the details.
-
----
-
 # Part 1: Pallet Development
 
 ---
@@ -231,27 +206,6 @@ sp-runtime.workspace = true
 Notes:
 
 The umbrella crate (`polkadot-sdk`) exists specifically to handle the `no_std` feature propagation that WASM runtime builds require. Individual crate dependencies break because Cargo's feature unification means any dependency enabling `std` infects the whole build. When AI gets stuck on dependency issues, point it at a known-working reference repo.
-
----
-
-## Pallet File Structure
-
-AI puts everything in `lib.rs`. The polkadot-sdk convention:
-
-```
-pallets/my_pallet/src/
-├── lib.rs           # pallet logic only
-├── mock.rs          # test runtime
-├── tests.rs         # unit tests
-├── benchmarking.rs  # frame_benchmarking v2
-└── weights.rs       # WeightInfo trait + estimates
-```
-
-AI won't produce this structure unless you ask for it explicitly.
-
-Notes:
-
-For teaching and professional projects, the canonical structure matters. Students and contributors expect to find tests in `tests.rs`, not buried at the bottom of `lib.rs`. Ask AI to create this structure from the start -- retrofitting it is more work than doing it right initially.
 
 ---
 
@@ -540,55 +494,6 @@ return () => sub.unsubscribe();
 
 ---
 
-## Pallet Detection
-
-Your frontend should gracefully handle missing pallets:
-
-```typescript
-// PAPI throws if the pallet doesn't exist in the runtime
-async function detectPallets(api: TypedApi) {
-    try {
-        await api.query.TemplatePallet.Claims.getEntries();
-        return { templatePallet: true };
-    } catch {
-        return { templatePallet: false };
-    }
-}
-```
-
-Disable UI elements for missing pallets rather than showing cryptic errors.
-
----
-
-## Contract Interaction (viem)
-
-The same Solidity contract compiles to both EVM (solc) and PVM (resolc):
-
-```typescript
-// Identical frontend code for both EVM and PVM
-const hash = await walletClient.writeContract({
-    address: contractAddress,  // only this differs
-    abi: proofOfExistenceAbi,
-    functionName: "createClaim",
-    args: [fileHash],
-});
-await publicClient.waitForTransactionReceipt({ hash });
-```
-
-The `eth-rpc` adapter provides the same Ethereum JSON-RPC interface regardless of backend.
-
-**Gotcha:** View calls need `account` when the contract uses `msg.sender`:
-
-```typescript
-// BUG: contract sees caller as 0x0000...
-await publicClient.call({ to: contract, data });
-
-// FIX: include the caller address
-await publicClient.call({ to: contract, data, account: myAddress });
-```
-
----
-
 ## Frontend Summary: AI Checklist
 
 | Check | What to look for |
@@ -600,7 +505,6 @@ await publicClient.call({ to: contract, data, account: myAddress });
 | Connection | Managed at App level, not per-page? |
 | StrictMode | Connect-ID pattern for stale async results? |
 | Subscription cleanup | Stored as object, not extracted `.unsubscribe`? |
-| View calls | Include `account` when contract uses `msg.sender`? |
 | Enums | Constructed as `{ type: "Variant", value: ... }`? |
 
 ---
