@@ -552,8 +552,8 @@ trait Config {
 }
 ```
 
-When reviewing pallet configuration:
+---
 
-1. Are bounds (`Get<u32>`) reasonable for the chain's requirements?
-2. Are the right trait bounds specified (not too loose, not too tight)?
-3. Is the runtime implementation (`impl Config for Runtime`) wiring the correct concrete types?
+<!-- .slide: data-background-color="#000000" -->
+
+# Questions
