@@ -303,7 +303,7 @@ pub mod pallet {
 }
 ```
 
----v
+---
 
 ## Dev Mode
 
