@@ -285,7 +285,7 @@ Notes:
 ```sh
 error: duplicate lang item in crate sp_io (which frame_support depends on): panic_impl.
   |
-  = note: the lang item is first defined in crate std (which serde depends on)
+  = no​te: the lang item is first defined in crate std (which serde depends on)
 ```
 
 This means a dependency pulled in `std` when compiling for Wasm. Fix: ensure that dependency has `default-features = false` and is included in the `std` feature list.
