@@ -140,7 +140,6 @@
   - Shawn Tabrizi
   - [Introduction to FRAME](4-FRAME/01-Introduction-to-FRAME-slides.md)
   - [FRAME Tips and Tricks](4-FRAME/02-FRAME-Tips-and-Tricks-slides.md)
-  - [FRAME with AI](4-FRAME/03-FRAME-with-AI-slides.md)
 - 3:00 - 3:30
   - Coffee break
 - 3:30 - 5:00
