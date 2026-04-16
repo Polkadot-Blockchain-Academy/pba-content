@@ -242,7 +242,7 @@ Parachains chains share security from the Relay Chain and communicate via **XCM*
 #### Bulletin Chain
 
 - Persistent on-chain data storage
-	- 14 day expiry with options for extension / renewal
+  - 14 day expiry with options for extension / renewal
 - IPFS-compatible: data gets a CID, retrievable from IPFS
 - Perfect for hosting dApp frontends, documents, files
 
