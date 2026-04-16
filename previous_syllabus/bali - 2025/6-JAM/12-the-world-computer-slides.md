@@ -1037,7 +1037,10 @@ A potentially tough pill to swallow.
 
 ## Neutrality
 
-We must also remember that real blockchains are “neutral”, as Andreas Antonopoulos explained more than 11 years ago.
+Blockchains are “neutral”.
+
+<pba-cols class="text-small">
+<pba-col>
 
 Replacing his thoughts on “currencies” and “bitcoin” to a more general “blockchain” view:
 
@@ -1045,6 +1048,35 @@ Replacing his thoughts on “currencies” and “bitcoin” to a more general �
 - Neutrality is the most important principle of [blockchains].
 - A neutral [blockchain] can be used for any political system, whether it is the political system you like or not.
 - A neutral [blockchain] isn’t anymore of a libertarian [blockchain] than it is communist [blockchain]. It is just a [blockchain].
+
+</pba-col>
+<pba-col>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/EiW4lKrMXQ4?si=0JN9ZFlUvr66Y70v" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+</pba-col>
+</pba-cols>
+
+---
+
+## Alegality
+
+Blockchains are "allegal".
+
+<pba-cols>
+<pba-col>
+
+“Allegality” is property of a system which cannot care if its actions are considered legal or illegal.
+
+This is one of the reasons that these systems are considered “unstoppable” or “resilient”.
+
+</pba-col>
+<pba-col>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/Zh9BxYTSrGU?si=GQlnqvbXvDSNvW1K" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+</pba-col>
+</pba-cols>
 
 ---
 
