@@ -33,24 +33,37 @@ A collection of things you should know when writing FRAME pallets. These aren't 
 
 ---
 
-## The `f32` / `f64` Problem
+## Floating Point Numbers are Non-Deterministic
 
-- Floating point numbers have slightly different implementations across architectures and vendors.
+```rust
+fn main() {
+    // Addition is not associative
+    let a: f64 = (0.1 + 0.2) + 0.3;
+    let b: f64 = 0.1 + (0.2 + 0.3);
+    println!("{a} != {b}: {}", a != b);
+    // a = 0.6000000000000001, b = 0.6
 
-- If my balance is `10.000000000000001` DOT on one validator and `10.000000000000000` DOT on another, game over for consensus.
-
-```python
-> .2 + .2 + .2 == .6
-> false
+    // Multiplication is not distributive
+    let x: f64 = 10.0 * (0.1 + 0.2);
+    let y: f64 = 10.0 * 0.1 + 10.0 * 0.2;
+    println!("{x} != {y}: {}", x != y);  // true
+    // x = 3.0000000000000004, y = 3
+}
 ```
 
-```
-> a = 10
-> b = 0.1
-> c = 0.2
-> a*(b+c) == a*b + a*c
-> false
-```
+If my balance is `10.000000000000001` DOT on one validator and `10.000000000000000` DOT on another, game over for consensus.
+
+---
+
+## Primitives for Floating Point Numbers
+
+- Fixed Point - general fixed point numbers
+- "Per-thing" - fixed point numbers between `[0, 1]`
+  - Because range is smaller, accuracy is higher
+
+See all the useful arithmetic primitives:
+
+https://docs.rs/sp-arithmetic/latest/sp_arithmetic/
 
 ---
 
