@@ -110,11 +110,12 @@ See [`sp-arithmetic`](https://paritytech.github.io/polkadot-sdk/master/sp_arithm
 
 ---
 
-## Other Determinism Traps
+## Other Sources of Non-Determinism
 
-- **`HashMap`**: iteration order is randomized. Use `BTreeMap`.
-- **System time / randomness**: not available in `no_std` runtime.
-- **Floating point**: banned entirely.
+- **`HashMap` / `HashSet`**: iteration order is randomized per process. Use `BTreeMap` / `BTreeSet`.
+- **`thread_rng()` / `rand`**: OS-sourced randomness differs per machine. Use on-chain randomness sources.
+- **System time**: `Instant`, `SystemTime` are not available in `no_std` and would differ per validator.
+- **Environment variables / file I/O**: not available in `no_std`, and would differ per machine.
 
 ---
 
@@ -145,6 +146,8 @@ Addition, multiplication, and division can all silently produce wrong results:
   let certain_output = a.saturating_mul(b);
   ```
 
+In general, prefer using checked math. Only use saturating math if you are certain this is the behavior you want.
+
 Notes:
 
 Why would you ever want to saturate? Only when the number overflowing means the system is so fundamentally broken that clamping is the least-bad option.
@@ -172,15 +175,34 @@ Rules of thumb:
 
 ---
 
+## `u32` as `usize` is Safe in the Runtime
+
+The runtime always compiles to **Wasm32** -- so `usize` is always 32 bits.
+
+This means casting `u32 as usize` is safe and common for working with vectors and slices:
+
+```rust
+let index: u32 = some_storage_value;
+let item = my_vec.get(index as usize);
+```
+
+But **never** cast `u64 as usize` -- it truncates silently in Wasm.
+
+Notes:
+
+This comes up constantly because FRAME storage types use `u32` for indices and lengths, but Rust's `Vec` and slice APIs require `usize`. In native (64-bit) test builds, `usize` is 64 bits, so the cast is also safe there (widening). The only dangerous direction would be `usize as u32` in native builds, but the runtime targets Wasm32 so this is also fine in practice.
+
+---
+
 # Panics
 
 ---
 
 ## The Core Rule
 
-> Never panic in on-chain code.
+> Never panic in on-chain code!
 
-A panic in a dispatchable means the extrinsic fails in a way that **cannot be handled gracefully**. In some contexts, a panic can halt block production.
+Allowing callers to trigger a panic from a call can allow users to attack your chain by bypassing fees or other costs associated with executing logic on the blockchain.
 
 ---
 
@@ -206,10 +228,10 @@ let value = maybe_value.unwrap();
 // 2. Acceptable for truly impossible cases, with proof
 let value = maybe_value.expect("checked to be Some on line above; qed");
 
-// 3. Return an error -- preferred in dispatchables
+// 3. Good: Return an error -- preferred in dispatchables
 let value = maybe_value.ok_or(Error::<T>::ValueNotFound)?;
 
-// 4. Best: defensive variant -- panics in tests, logs error in production
+// 4. Good: defensive variant -- panics in tests, logs error in production
 let value = maybe_value
   .defensive_ok_or(Error::<T>::ValueNotFound)?;
 ```
@@ -222,20 +244,16 @@ QED = "quod erat demonstrandum" ("which was to be demonstrated"). It signals tha
 
 ## Defensive Traits
 
-[`Defensive`](https://paritytech.github.io/substrate/master/frame_support/traits/trait.Defensive.html) traits from `frame_support`:
+`frame_support` provides [defensive](https://paritytech.github.io/substrate/master/frame_support/traits/trait.Defensive.html) utilities that **panic in tests, log an error in production**:
 
 ```rust
-use frame_support::traits::DefensiveOption;
+// Assert a condition you believe is always true
+defensive_assert!(amount <= total, "amount should never exceed total");
 
-// Panics in tests (#[cfg(debug_assertions)]), logs error in production
+// Unwrap an Option/Result defensively
 let x = maybe_value.defensive_unwrap_or(default);
 let x = maybe_value.defensive_ok_or(Error::<T>::Impossible)?;
 ```
-
-This gives you the best of both worlds:
-
-1. **Tests catch the "impossible" case** via panic.
-2. **Production gracefully degrades** via error return + log.
 
 ---
 
