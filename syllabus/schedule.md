@@ -107,6 +107,7 @@
   - Substrate
   - Kian
   - [Merklized Storage](3-Substrate/04-Merklized-Storage-slides.md)
+  - [Transaction Pool](3a-Protocol_On-Chain/Substrate/06-Transaction-Pool-slides.md)
 - 12:30 - 1:30
   - Lunch break
 - 1:30 - 3:00
@@ -125,27 +126,28 @@
 ## Friday, April 17
 
 - 8:00 - 10:00
-  - Substrate
-  - Kian
-  - [Transaction Pool](3a-Protocol_On-Chain/Substrate/06-Transaction-Pool-slides.md)
+  - Shawn Tabrizi
+  - Parity Product Guest Presentations
+  - [Introduction to FRAME](4-FRAME/01-Introduction-to-FRAME-slides.md)
+  - [FRAME Tips and Tricks](4-FRAME/02-FRAME-Tips-and-Tricks-slides.md)
 - 10:00 - 10:30
   - Coffee break
 - 10:30 - 12:30
-  - Substrate
-  - Kian
-  - Closing Session and Q&A
+  - Shawn Tabrizi
+  - [FRAME Calls](4-FRAME/04-Calls-slides.md)
+  - [FRAME Origin](4-FRAME/08-Origins-slides.md)
 - 12:30 - 1:30
   - Lunch break
 - 1:30 - 3:00
   - Shawn Tabrizi
-  - [Introduction to FRAME](4-FRAME/01-Introduction-to-FRAME-slides.md)
-  - [FRAME Tips and Tricks](4-FRAME/02-FRAME-Tips-and-Tricks-slides.md)
-  - [FRAME Calls](4-FRAME/04-Calls-slides.md)
+  - [Events and Errors](4-FRAME/06-Events-and-Errors-slides.md)
+  - [Outer Enum](4-FRAME/13-Outer-Enum-slides.md)
+  - [Balance Management in FRAME](4-FRAME/10-Fungible-slides.md)
 - 3:00 - 3:30
   - Coffee break
 - 3:30 - 5:00
+  - FRAME: Coding Session
   - Shawn Tabrizi
-  - [FRAME Storage](4-FRAME/05-Storage-slides.md)
 
 ---
 
@@ -153,14 +155,7 @@
 
 - 8:00 - 10:00
   - Shawn Tabrizi
-  - [Events and Errors](4-FRAME/06-Events-and-Errors-slides.md)
-  - [Pallet Hooks](4-FRAME/07-Pallet-Hooks-slides.md)
-- 10:00 - 10:30
-  - Coffee break
-- 10:30 - 12:30
-  - Shawn Tabrizi
-  - [FRAME Origin](4-FRAME/08-Origins-slides.md)
-  - [Construct Runtime](4-FRAME/09-Construct-Runtime-slides.md)
+  - [FRAME Storage](4-FRAME/05-Storage-slides.md)
 
 ---
 
@@ -174,14 +169,14 @@
 
 - 8:00 - 10:00
   - Shawn Tabrizi
-  - [Balance Management in FRAME](4-FRAME/10-Fungible-slides.md)
-  - [FRAME Pallets & Traits](4-FRAME/11-Pallets-and-Traits-slides.md)
+  - [Pallet Hooks](4-FRAME/07-Pallet-Hooks-slides.md)
+  - [Pallet Coupling](4-FRAME/12-Pallet-Coupling-slides.md)
 - 10:00 - 10:30
   - Coffee break
 - 10:30 - 12:30
   - Shawn Tabrizi
-  - [Pallet Coupling](4-FRAME/12-Pallet-Coupling-slides.md)
-  - [Outer Enum](4-FRAME/13-Outer-Enum-slides.md)
+  - [Construct Runtime](4-FRAME/09-Construct-Runtime-slides.md)
+  - [FRAME Testing](4-FRAME/09a-Testing-slides.md)
 - 12:30 - 1:30
   - Lunch break
 - 1:30 - 3:00
@@ -208,7 +203,8 @@
 - 12:30 - 1:30
   - Lunch break
 - 1:30 - 3:00
-  - [FRAME Extras](4-FRAME/17-FRAME-Extras-slides.md)
+  - Shawn Tabrizi
+  - [The World Computer](Extra/12-the-world-computer-slides.md)
 - 3:00 - 3:30
   - Coffee break
 - 3:30 - 5:00
