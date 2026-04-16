@@ -319,6 +319,59 @@ These follow the same propagation pattern as `std` -- every dependency that supp
 
 ---
 
+## Logging in the Runtime
+
+Use the `log` crate with a target to add debug output:
+
+```rust
+log::info!(target: "my_pallet", "processing claim for {:?}", who);
+log::debug!(target: "my_pallet", "storage read: {:?}", value);
+```
+
+To see the output, set `RUST_LOG` when running your node:
+
+```sh
+RUST_LOG=my_pallet=debug ./target/release/node-template --dev
+```
+
+Notes:
+
+Log statements are only evaluated if the corresponding level and target match. The `log` crate itself doesn't print anything -- the node's logging layer (built on `sp_tracing`) handles the output. In tests, call `sp_tracing::try_init_simple()` to enable log output.
+
+---
+
+## Logging Considerations
+
+- Log messages are sent from the Wasm runtime to the node via host functions.
+- Every string literal in a log increases the **Wasm blob size**.
+- Use `log::debug!` or `log::trace!` for verbose output -- these are compiled in but only evaluated when the log level is set.
+- Avoid logging large structs in production code.
+
+```rust
+// Good: only evaluated when RUST_LOG=my_pallet=trace
+log::trace!(target: "my_pallet", "full state: {:?}", big_struct);
+
+// Bad: format string always exists in the Wasm blob
+log::info!(target: "my_pallet", "this very long message with lots of context...");
+```
+
+---
+
+## `if_std!`
+
+Run code only when `std` is enabled -- useful for quick debugging in tests or native builds:
+
+```rust
+sp_std::if_std! {
+  println!("hello world!");
+  dbg!(some_value);
+}
+```
+
+This compiles to nothing in Wasm -- it only runs when `std` is enabled.
+
+---
+
 # Config
 
 ---
