@@ -122,8 +122,10 @@ Relay Chain Runtimes
 System Parachains
 
 - Asset Hub
-- Bridges Hub
+- Bridge Hub
 - Collectives
+- Coretime
+- People
 - etc...
 
 </pba-flex>
@@ -225,14 +227,14 @@ The current Polkadot Fellows.
 | III  | Fellow          | ~2 years        | 1.0                  |
 | IV   | Architect       | &gt; 3 years    | 1.5                  |
 | V    | Architect Adept | &gt; 4 years    | 2.0                  |
-| VI   | Grant Architect | &gt; 5 years    | 2.5                  |
+| VI   | Grand Architect | &gt; 5 years    | 2.5                  |
 | VII  | Free Master     | &gt; 6 years!   | 2.5                  |
 | VIII | Master Constant | &gt; 11 years!  | 2.5                  |
 | IX   | Grand Master    | &gt; 19 years!  | 2.5                  |
 
 </br>
 
-Salary RFC: https://github.com/polkadot-fellows/RFCs/pull/50/
+Salary RFC: https://github.com/polkadot-fellows/RFCs/blob/main/text/0050-fellowship-salaries.md
 
 OECD: Organisation for Economic Co-operation and Development
 
