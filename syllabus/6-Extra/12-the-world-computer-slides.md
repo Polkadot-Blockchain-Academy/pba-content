@@ -700,15 +700,15 @@ Unfortunately this was wrong.
 
 <div class="text-small">
 
-| Category | Web2 stays | Web3 adds |
-|---|---|---|
-| **AI** | Model training, UX | Verifiable training data, provable inference |
-| **Search** | Crawling, indexing | Transparent ranking, verifiable indexes |
-| **Social** | Front-ends, hosting | Portable identity & social graph, creator economies |
-| **Streaming** | CDN delivery | Resilient hosting, transparent algorithms |
-| **Shopping** | Logistics, warehousing | Verifiable supply chains, decentralized reputation |
-| **News** | Journalism, hosting | Immutable records, censorship-resistant publishing |
-| **Gambling** | Live UX, streaming | Provably fair games, self-custody, instant payouts |
+| Category      | Web2 stays             | Web3 adds                                           |
+| ------------- | ---------------------- | --------------------------------------------------- |
+| **AI**        | Model training, UX     | Verifiable training data, provable inference        |
+| **Search**    | Crawling, indexing     | Transparent ranking, verifiable indexes             |
+| **Social**    | Front-ends, hosting    | Portable identity & social graph, creator economies |
+| **Streaming** | CDN delivery           | Resilient hosting, transparent algorithms           |
+| **Shopping**  | Logistics, warehousing | Verifiable supply chains, decentralized reputation  |
+| **News**      | Journalism, hosting    | Immutable records, censorship-resistant publishing  |
+| **Gambling**  | Live UX, streaming     | Provably fair games, self-custody, instant payouts  |
 
 </div>
 

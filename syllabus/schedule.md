@@ -200,11 +200,12 @@
 - 10:30 - 12:30
   - Shawn Tabrizi
   - [Migrations and Try Runtime](4-FRAME/16-Migrations-and-Try-Runtime-slides.md)
+  - [Contributing to the Polkadot SDK](6-Extra/10-contributing-to-polkadot-slides.md)
 - 12:30 - 1:30
   - Lunch break
 - 1:30 - 3:00
   - Shawn Tabrizi
-  - [The World Computer](Extra/12-the-world-computer-slides.md)
+  - [The World Computer](6-Extra/12-the-world-computer-slides.md)
 - 3:00 - 3:30
   - Coffee break
 - 3:30 - 5:00
