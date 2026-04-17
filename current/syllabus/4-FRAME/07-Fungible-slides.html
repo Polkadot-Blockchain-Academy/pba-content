@@ -60,15 +60,15 @@ Working with balances is fundamental to blockchain development:
 <br>
 
 What would happen if we do not enforce ED? <!-- .element: class="fragment" -->
-</script></section><section ><section data-markdown><script type="text/template">
+</script></section><section  data-markdown><script type="text/template">
 ## What is Fungible?
 
 > An asset where each unit is interchangeable and has the same value as any other unit of the same kind.
-</script></section><section data-markdown><script type="text/template">
+</script></section><section  data-markdown><script type="text/template">
 ## What is Fungible?
 
 The fungible traits in FRAME provide a safe, standardized way to handle balances in the pallet.
-</script></section></section><section ><section data-markdown><script type="text/template">
+</script></section><section  data-markdown><script type="text/template">
 ## Note on Legacy Code
 
 <pba-flex center>
@@ -80,7 +80,7 @@ use frame_support::traits::{Currency, ReservableCurrency, LockableCurrency};
 ```
 
 </pba-flex>
-</script></section><section data-markdown><script type="text/template">
+</script></section><section  data-markdown><script type="text/template">
 ## Note on Legacy Code
 
 <pba-flex center>
@@ -92,7 +92,7 @@ These traits are deprecated. For new code:
 - We'll focus exclusively on the modern approach
 
 </pba-flex>
-</script></section></section><section  data-markdown><script type="text/template">
+</script></section><section  data-markdown><script type="text/template">
 ## Core Concepts: Balance Arithmetic
 
 <pba-flex center>
@@ -210,7 +210,7 @@ And PJS.</p>
 </pba-cols>
 
 <aside class="notes"><p><a href="https://github.com/paritytech/polkadot-sdk/blob/3dfbdf4a454f35238500779e503e1ec32ba7fc63/substrate/frame/support/src/traits/tokens/fungible/hold.rs#L44">https://github.com/paritytech/polkadot-sdk/blob/3dfbdf4a454f35238500779e503e1ec32ba7fc63/substrate/frame/support/src/traits/tokens/fungible/hold.rs#L44</a></p>
-</aside></script></section><section ><section data-markdown><script type="text/template">
+</aside></script></section><section  data-markdown><script type="text/template">
 ## Using Holds in your Pallet
 
 ```rust [3-5|9-12|16-22|29-30|37-38]
@@ -260,7 +260,7 @@ pub trait Config: frame_system::Config {
 ```
 
 <aside class="notes"><p><a href="https://paritytech.github.io/polkadot-sdk/master/frame_support/pallet_macros/attr.composite_enum.html">https://paritytech.github.io/polkadot-sdk/master/frame_support/pallet_macros/attr.composite_enum.html</a></p>
-</aside></script></section><section data-markdown><script type="text/template">
+</aside></script></section><section  data-markdown><script type="text/template">
 ## Configuring your Runtime for Holds
 
 ```rust [1-7|10-11|20-21|]
@@ -300,7 +300,7 @@ mod runtime {
   pub type MyPallet = pallet_mypallet;
 }
 ```
-</script></section></section><section ><section data-markdown><script type="text/template">
+</script></section><section  data-markdown><script type="text/template">
 ## Freeze
 
 - Fungible::InspectFreeze
@@ -316,7 +316,7 @@ pub enum FreezeReason {
   PoolMinBalance,
 }
 ```
-</script></section><section data-markdown><script type="text/template">
+</script></section><section  data-markdown><script type="text/template">
 ## Holds vs Freezes
 
 |                | Holds                          | Freezes                            |
@@ -327,17 +327,17 @@ pub enum FreezeReason {
 | Slashable      | Yes                            | No                                 |
 | Use cases      | Deposits, bonds, staking       | Voting locks, vesting, min balance |
 | Runtime derive | `RuntimeHoldReason`            | `RuntimeFreezeReason`              |
-</script></section></section><section ><section data-markdown><script type="text/template">
+</script></section><section  data-markdown><script type="text/template">
 ## Considerations
 
 > Some sort of cost taken from account temporarily in order to offset the cost to the chain of holding some data **footprint** in state.
-</script></section><section data-markdown><script type="text/template">
+</script></section><section  data-markdown><script type="text/template">
 ## What is a Footprint
 
 The resource footprint of a bunch of blobs
 
 <aside class="notes"><p><a href="https://paritytech.github.io/polkadot-sdk/master/frame_support/traits/struct.Footprint.html">https://paritytech.github.io/polkadot-sdk/master/frame_support/traits/struct.Footprint.html</a></p>
-</aside></script></section><section data-markdown><script type="text/template">
+</aside></script></section><section  data-markdown><script type="text/template">
 ## Convert<Footprint, Balance>
 
 We need a way to convert Footprint into a storage fee.
@@ -349,13 +349,13 @@ Frame support provides two implementations:
 Or, implement your own.
 
 <aside class="notes"><p>Implementations in substrate/frame/support/src/traits/storage.rs</p>
-</aside></script></section></section><section  data-markdown><script type="text/template">
+</aside></script></section><section  data-markdown><script type="text/template">
 ## Consideration Apis
 
 - New: Create a ticket (create hold/freeze).
 - Update: Update ticket (when footprint changes).
 - Drop: Remove ticket (drop any hold/freeze).
-</script></section><section ><section data-markdown><script type="text/template">
+</script></section><section  data-markdown><script type="text/template">
 ## Using Consideration in your Pallet
 
 ```rust [9-10|13-18|20-23|28-33|41-43|]
@@ -408,7 +408,7 @@ pub mod pallet {
   }
 }
 ```
-</script></section><section data-markdown><script type="text/template">
+</script></section><section  data-markdown><script type="text/template">
 ## Configuring Runtime to use Consideration
 
 ```rust [10-16|]
@@ -458,7 +458,7 @@ mod runtime {
   pub type MyPallet = pallet_mypallet;
 }
 ```
-</script></section></section>
+</script></section>
     </article>
   </main>
 
