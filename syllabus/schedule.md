@@ -134,15 +134,15 @@
   - Coffee break
 - 10:30 - 12:30
   - Shawn Tabrizi
-  - [FRAME Calls](4-FRAME/04-Calls-slides.md)
-  - [FRAME Origin](4-FRAME/08-Origins-slides.md)
+  - [FRAME Calls](4-FRAME/03-Calls-slides.md)
+  - [FRAME Origin](4-FRAME/04-Origins-slides.md)
 - 12:30 - 1:30
   - Lunch break
 - 1:30 - 3:00
   - Shawn Tabrizi
-  - [Events and Errors](4-FRAME/06-Events-and-Errors-slides.md)
-  - [Outer Enum](4-FRAME/13-Outer-Enum-slides.md)
-  - [Balance Management in FRAME](4-FRAME/10-Fungible-slides.md)
+  - [Events and Errors](4-FRAME/05-Events-and-Errors-slides.md)
+  - [Outer Enum](4-FRAME/06-Outer-Enum-slides.md)
+  - [Balance Management in FRAME](4-FRAME/07-Fungible-slides.md)
 - 3:00 - 3:30
   - Coffee break
 - 3:30 - 5:00
@@ -155,7 +155,7 @@
 
 - 8:00 - 10:00
   - Shawn Tabrizi
-  - [FRAME Storage](4-FRAME/05-Storage-slides.md)
+  - [FRAME Storage](4-FRAME/08-Storage-slides.md)
 
 ---
 
@@ -169,19 +169,19 @@
 
 - 8:00 - 10:00
   - Shawn Tabrizi
-  - [Pallet Hooks](4-FRAME/07-Pallet-Hooks-slides.md)
-  - [Pallet Coupling](4-FRAME/12-Pallet-Coupling-slides.md)
+  - [Pallet Hooks](4-FRAME/09-Pallet-Hooks-slides.md)
+  - [Pallet Coupling](4-FRAME/10-Pallet-Coupling-slides.md)
 - 10:00 - 10:30
   - Coffee break
 - 10:30 - 12:30
   - Shawn Tabrizi
-  - [Construct Runtime](4-FRAME/09-Construct-Runtime-slides.md)
-  - [FRAME Testing](4-FRAME/09a-Testing-slides.md)
+  - [Construct Runtime](4-FRAME/11-Construct-Runtime-slides.md)
+  - [FRAME Testing](4-FRAME/12-Testing-slides.md)
 - 12:30 - 1:30
   - Lunch break
 - 1:30 - 3:00
   - Shawn Tabrizi
-  - [FRAME Benchmarking](4-FRAME/14-Benchmarking-slides.md)
+  - [FRAME Benchmarking](4-FRAME/13-Benchmarking-slides.md)
 - 3:00 - 3:30
   - Coffee break
 - 3:30 - 5:00
@@ -194,12 +194,12 @@
 
 - 8:00 - 10:00
   - Shawn Tabrizi
-  - [Transaction Extensions](4-FRAME/15-Transaction-Extensions-slides.md)
+  - [Transaction Extensions](4-FRAME/14-Transaction-Extensions-slides.md)
 - 10:00 - 10:30
   - Coffee break
 - 10:30 - 12:30
   - Shawn Tabrizi
-  - [Migrations and Try Runtime](4-FRAME/16-Migrations-and-Try-Runtime-slides.md)
+  - [Migrations and Try Runtime](4-FRAME/15-Migrations-and-Try-Runtime-slides.md)
   - [Contributing to the Polkadot SDK](6-Extra/10-contributing-to-polkadot-slides.md)
 - 12:30 - 1:30
   - Lunch break
