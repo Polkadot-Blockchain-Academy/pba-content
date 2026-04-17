@@ -696,145 +696,46 @@ Unfortunately this was wrong.
 
 ---
 
-## Example: AI Tooling with Web3
+## Applying Web3 to the Top of the Internet
 
 <div class="text-small">
 
-**Web2 Foundation:**
-
-- The development of core AI models will likely remain in the hands of specialized, centralized teams.
-- User-friendly interfaces will abstract away the underlying complexity.
-
-**Web3 Enhancements:**
-
-- **Verifiable Training Data:** Cryptographic proof of the exact data set used to train an AI model.
-- **Provable Inference:** Proof that a specific AI model was run with specific inputs to generate a result.
-- **DAO Governance:** Community ownership and control over the development and use of AI models.
-- **Data Bounties:** A transparent market for users to be compensated for providing high-quality data.
+| Category      | Web2 stays             | Web3 adds                                           |
+| ------------- | ---------------------- | --------------------------------------------------- |
+| **AI**        | Model training, UX     | Verifiable training data, provable inference        |
+| **Search**    | Crawling, indexing     | Transparent ranking, verifiable indexes             |
+| **Social**    | Front-ends, hosting    | Portable identity & social graph, creator economies |
+| **Streaming** | CDN delivery           | Resilient hosting, transparent algorithms           |
+| **Shopping**  | Logistics, warehousing | Verifiable supply chains, decentralized reputation  |
+| **News**      | Journalism, hosting    | Immutable records, censorship-resistant publishing  |
+| **Gambling**  | Live UX, streaming     | Provably fair games, self-custody, instant payouts  |
 
 </div>
+
+> The pattern: Web2 handles performance and UX. Web3 handles trust, ownership, and resilience.
 
 ---
 
-## Example: Online Search with Web3
+## Web3 Doesn't Replace Web2, It Enhances It
 
-<div class="text-small">
+The same few Web3 primitives show up across every category:
 
-**Web2 Foundation:**
+<pba-cols class="text-small">
+<pba-col>
 
-- The core infrastructure of crawling, indexing, and ranking remains largely centralized for efficiency.
-- The shift continues toward AI models that understand user intent.
+- **Verifiability:** Prove that data, algorithms, and processes are honest.
+- **Self-Sovereignty:** Users own their identity, data, and assets across platforms.
+- **Censorship Resistance:** Content and services that cannot be silenced by any single party.
 
-**Web3 Enhancements:**
+</pba-col>
+<pba-col>
 
-- **Verifiable Index:** Cryptographic proof of the search index's contents and integrity.
-- **Transparent Curation:** User control over the algorithms that rank and filter results.
-- **DAO-Managed Registries:** Token-curated lists allow communities to govern what content is prioritized.
-- **New Economic Model:** A shift from an ad-based model to direct micropayments for valuable content.
-- **Verifiable AI:** Proof of the data used to train the AI models that power search.
+- **Direct Economics:** Micropayments and p2p commerce replace ad-driven middlemen.
+- **Community Governance:** DAOs let users and creators collectively own and steer platforms.
+- **Permissionless Access:** Global, borderless participation without gatekeepers.
 
-</div>
-
----
-
-## Example: Social Networks with Web3
-
-<div class="text-small">
-
-**Web2 Foundation:**
-
-- Sleek front-end applications and the hosting of non-controversial content will likely remain centralized for the best user experience.
-
-**Web3 Enhancements:**
-
-- **Own Your Identity & Graph:** Your profile and connections follow as you move between platforms.
-- **Protocol-Agnostic:** A single social graph can be accessed by countless different apps and front-ends.
-- **Direct Monetization:** No more platform cuts; the creator economy becomes a true p2p economy.
-- **Community Empowerment:** Create and govern communities with real financial power and treasuries.
-
-</div>
-
----
-
-## Example: Video Streaming with Web3
-
-<div class="text-small">
-
-**Web2 Foundation:**
-
-- For performance / cost, most video content will likely remain hosted on traditional centralized servers.
-
-**Web3 Enhancements:**
-
-- **Sovereign Identity:** Users log in with their Web3 accounts, not corporate accounts.
-- **Resilient Hosting:** Key videos can use decentralized storage for censorship resistance and global access.
-- **Transparent Algorithms:** User-controlled curation and discovery, free from opaque corporate influence.
-- **Value-Added Micropayments:** Reward users directly for quality comments, subtitles, or engagement.
-- **Creator DAOs:** Tools for creators to build sovereign communities and economies with their audience.
-
-</div>
-
----
-
-## Example: Online Shopping with Web3
-
-<div class="text-small">
-
-**Web2 Foundation:**
-
-- The real-world logistics of delivery, warehousing, and physical supply chains will not be decentralized.
-
-**Web3 Enhancements:**
-
-- **Decentralized Marketplaces:** Curated product catalogs managed by communities or DAOs.
-- **Verifiable Reputation:** Tamper-proof review systems for both buyers and sellers, across all platforms.
-- **Digital Proof of Purchase:** NFTs that act as receipts for warranties, returns, and proof of ownership.
-- **Supply Chain Verifiability:** Track a product from its origin to your doorstep, ensuring authenticity.
-- **Direct-to-Consumer:** Brands can engage and sell directly to their audience with lower fees.
-
-</div>
-
----
-
-## Example: Online News with Web3
-
-<div class="text-small">
-
-**Web2 Foundation:**
-
-- Recognized journalists are still the ultimate source of news and oracles of new data.
-- Most articles will still be hosted on performant Web2 servers.
-
-**Web3 Enhancements:**
-
-- **Verifiable Identity:** Cryptographically prove the identity and reputation of authors and publications.
-- **Censorship Resistance:** Protect journalists / publications from de-platforming or government takedowns.
-- **Immutable Record:** Prove an article's authenticity and prevent it from being silently edited or deleted.
-- **New Funding Models:** Move beyond ads with article micropayments or reader-governed funding DAOs.
-- **Transparent Fact-Checking:** On-chain systems for verifying sources and tracking corrections.
-
-</div>
-
----
-
-## Example: Online Gambling with Web3
-
-<div class="text-small">
-
-**Web2 Foundation:**
-
-- The front-end user experience will remain a sleek, centralized application for performance.
-- Live elements, such as video streams for live dealers, will continue to use traditional web technologies.
-
-**Web3 Enhancements:**
-
-- **Provably Fair Games:** All game logic (card shuffles, dice rolls) is executed by verifiable random functions.
-- **Self-Custody of Funds:** Users play directly from their wallets, ensuring sovereign control of their funds.
-- **Instant & Automated Payouts:** Payments are executed automatically the moment a game concludes.
-- **DAO-Governed House:** The "house" itself can be a DAO, allowing players to become stakeholders.
-- **Permissionless Global Access:** Access to everyone, bypassing traditional geo-blocks and gatekeeping.
-
-</div>
+</pba-col>
+</pba-cols>
 
 ---
 
@@ -897,10 +798,10 @@ Web3 should be appealing to most companies:
 
 - Companies often do NOT want to be responsible for personally identifiable information.
   <!-- .element: class="fragment" -->
-      - Most use Federated Identity Management and Single Sign-On
+  - Most use Federated Identity Management and Single Sign-On
 - Companies want to maximize profits, often by reducing middlemen.
   <!-- .element: class="fragment" -->
-      - Payments, Subscriptions, Secondary-Sales, Global Access, etc...
+  - Payments, Subscriptions, Secondary-Sales, Global Access, etc...
 - Companies want deeper integration with their customers.
 <!-- .element: class="fragment" -->
 - Companies want to provide verifiable guarantees to their customers.
@@ -1037,7 +938,10 @@ A potentially tough pill to swallow.
 
 ## Neutrality
 
-We must also remember that real blockchains are “neutral”, as Andreas Antonopoulos explained more than 11 years ago.
+Blockchains are “neutral”.
+
+<pba-cols class="text-small">
+<pba-col>
 
 Replacing his thoughts on “currencies” and “bitcoin” to a more general “blockchain” view:
 
@@ -1045,6 +949,35 @@ Replacing his thoughts on “currencies” and “bitcoin” to a more general �
 - Neutrality is the most important principle of [blockchains].
 - A neutral [blockchain] can be used for any political system, whether it is the political system you like or not.
 - A neutral [blockchain] isn’t anymore of a libertarian [blockchain] than it is communist [blockchain]. It is just a [blockchain].
+
+</pba-col>
+<pba-col>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/EiW4lKrMXQ4?si=0JN9ZFlUvr66Y70v" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+</pba-col>
+</pba-cols>
+
+---
+
+## Alegality
+
+Blockchains are "allegal".
+
+<pba-cols>
+<pba-col>
+
+“Allegality” is property of a system which cannot care if its actions are considered legal or illegal.
+
+This is one of the reasons that these systems are considered “unstoppable” or “resilient”.
+
+</pba-col>
+<pba-col>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/Zh9BxYTSrGU?si=GQlnqvbXvDSNvW1K" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+</pba-col>
+</pba-cols>
 
 ---
 
