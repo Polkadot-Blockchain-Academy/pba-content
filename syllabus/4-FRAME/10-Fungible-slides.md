@@ -49,7 +49,7 @@ What would happen if we do not enforce ED? <!-- .element: class="fragment" -->
 
 > An asset where each unit is interchangeable and has the same value as any other unit of the same kind.
 
----v
+---
 
 ## What is Fungible?
 
@@ -69,7 +69,7 @@ use frame_support::traits::{Currency, ReservableCurrency, LockableCurrency};
 
 </pba-flex>
 
----v
+---
 
 ## Note on Legacy Code
 
@@ -272,7 +272,7 @@ pub trait Config: frame_system::Config {
 Notes:
 https://paritytech.github.io/polkadot-sdk/master/frame_support/pallet_macros/attr.composite_enum.html
 
----v
+---
 
 ## Configuring your Runtime for Holds
 
@@ -332,7 +332,7 @@ pub enum FreezeReason {
 }
 ```
 
----v
+---
 
 ## Holds vs Freezes
 
@@ -351,7 +351,7 @@ pub enum FreezeReason {
 
 > Some sort of cost taken from account temporarily in order to offset the cost to the chain of holding some data **footprint** in state.
 
----v
+---
 
 ## What is a Footprint
 
@@ -360,7 +360,7 @@ The resource footprint of a bunch of blobs
 Note:
 https://paritytech.github.io/polkadot-sdk/master/frame_support/traits/struct.Footprint.html
 
----v
+---
 
 ## Convert<Footprint, Balance>
 
@@ -438,7 +438,7 @@ pub mod pallet {
 }
 ```
 
----v
+---
 
 ## Configuring Runtime to use Consideration
 
