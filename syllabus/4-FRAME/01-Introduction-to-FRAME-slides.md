@@ -269,6 +269,84 @@ impl pallet_timestamp::Config for Runtime {
 
 ---
 
+## Pallet vs. Smart Contract
+
+Both let you deploy logic on Polkadot. Which should you build?
+
+- **Smart Contract**: application logic deployed _on top of_ an existing runtime.
+- **Pallet**: application logic compiled _into_ the runtime itself.
+
+Notes:
+A common question for new builders: should I write a pallet, or deploy a smart contract?
+The short answer: start with a contract. Only reach for a pallet when you hit the ceiling.
+
+---
+
+## Start With a Smart Contract
+
+Default to a smart contract unless you have a reason not to.
+
+- **Faster to deploy**: no governance, no runtime upgrade, no new chain.
+- **Faster to iterate**: redeploy in minutes; MVPs are cheap.
+- **Lower blast radius**: a buggy contract does not brick a chain.
+- **Reuses an existing chain's security, accounts, and users.**
+
+Notes:
+Writing a pallet is a commitment.
+It requires a runtime upgrade (or your own chain), benchmarking, governance, and careful audit — a broken pallet can halt block production.
+A smart contract can ship today, get real users, and prove the idea is worth the engineering investment a pallet demands.
+
+---
+
+## When to Reach for a Pallet
+
+Move to a pallet when a contract genuinely _cannot_ do the job:
+
+- You need **runtime hooks**: `on_initialize`, `on_finalize`, `on_idle`, offchain workers.
+- You need **custom transaction extensions** or fee logic (e.g. fee-less calls).
+- You need **deep integration**: custom origins, governance, staking, XCM.
+- You need **predictable, benchmarked weights** instead of metered gas.
+- Contract overhead is your actual bottleneck — not a theoretical one.
+
+Notes:
+"I might need this someday" is not a reason. Measure first.
+A pallet is the right answer when you have evidence a contract can't meet a concrete requirement.
+
+---
+
+## Smart Contract vs. Pallet
+
+<div class="text-small">
+
+|                 | Smart Contract             | Pallet                            |
+| --------------- | -------------------------- | --------------------------------- |
+| Deployment      | Transaction on any chain   | Runtime upgrade (or new chain)    |
+| Iteration       | Redeploy freely            | Governance + migration            |
+| Execution cost  | Metered gas (dynamic)      | Pre-dispatch weight (benchmarked) |
+| Upgradability   | Immutable (proxy patterns) | Forkless runtime upgrade          |
+| Blast radius    | One contract               | Entire chain                      |
+| Low-level hooks | No                         | Yes                               |
+| Best for        | MVPs, apps, DeFi logic     | Core protocol, deep integration   |
+
+</div>
+
+---
+
+## Scaling a Successful Contract
+
+If your contract outgrows shared blockspace, you have options:
+
+1. **Migrate hot paths into a pallet** on an existing parachain.
+2. **Launch your own chain** — on-demand coretime, then a dedicated parachain.
+3. **With JAM**: run your app as a service directly on Polkadot — continuations let long-running computation span blocks without launching your own chain.
+
+Notes:
+The classic Polkadot scaling story was "contract → pallet → parachain".
+JAM adds a new option: services with continuations let programs save state and resume across blocks, so the contract itself can scale without ever launching a dedicated blockchain.
+The lesson: don't pre-optimize by starting with a pallet. Start small, measure, and upgrade only the parts that actually need it.
+
+---
+
 ## Summary
 
 - **FRAME**: A Rust framework that simplifies Substrate runtime development.
