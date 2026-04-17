@@ -8,7 +8,7 @@ duration: 60 min
 
 ---
 
-<img style="width: 1000px" src="assets/Contributing/intro.png" />
+<img style="width: 1000px" src="./img/intro.png" />
 
 ---
 
@@ -30,7 +30,7 @@ duration: 60 min
 
 <pba-col left>
 
-<img style="width: 600px" src="assets/Contributing/PBA.png"/>
+<img style="width: 600px" src="./img/PBA.png"/>
 
 </pba-col>
 
@@ -197,7 +197,7 @@ https://github.com/polkadot-fellows
 
 ### Fellowship Manifesto
 
-<img style="width: 800px" src="assets/Contributing/Manifesto.png" />
+<img style="width: 800px" src="./img/Manifesto.png" />
 
 https://github.com/polkadot-fellows/manifesto
 
@@ -205,7 +205,7 @@ https://github.com/polkadot-fellows/manifesto
 
 ### Polkadot Fellows
 
-<img style="width: 800px" src="assets/Contributing/fellows.png" />
+<img style="width: 800px" src="./img/fellows.png" />
 
 The current Polkadot Fellows.
 
@@ -280,7 +280,7 @@ Possible examples of a “modest but substantial contribution” may be:
 
 ---
 
-<img style="width: 1000px" src="assets/Contributing/omg.png" />
+<img style="width: 1000px" src="./img/omg.png" />
 
 ---
 
@@ -336,19 +336,19 @@ _Not all issues are created equal:_
 
 #### Issue Filters: C1-Mentor, C2-Good-First-Issue, D0-Easy
 
-<img style="width: 1000px" src="assets/Contributing/issues.png" />
+<img style="width: 1000px" src="./img/issues.png" />
 
 ---
 
 ## A Nonsensitive Entry Point to the Runtime
 
-<img style="width: 1000px" src="assets/Contributing/example1.png" />
+<img style="width: 1000px" src="./img/example1.png" />
 
 ---
 
 ### An Issue that Rust Compiler Can Entirely Check
 
-<img style="width: 1000px" src="assets/Contributing/example2.png" />
+<img style="width: 1000px" src="./img/example2.png" />
 
 ---
 
@@ -388,7 +388,7 @@ A large PR is the easiest way to get repository owners to place your code at the
 
 ## Write Tests!
 
-<img style="float:right;  padding-left:20px" src="assets/Contributing/boyscoutrule.png" />
+<img style="float:right;  padding-left:20px" src="./img/boyscoutrule.png" />
 
 - The best way for a reviewer to sanity check your work is to read and understand your tests, and verify it passes.
   - You will be surprised how even the most trivial changes can (and should) include a test!
@@ -417,7 +417,7 @@ A large PR is the easiest way to get repository owners to place your code at the
 
 ## My First PR 😬
 
-<img style="width: 1000px" src="assets/Contributing/firstpr.png" />
+<img style="width: 1000px" src="./img/firstpr.png" />
 
 https://github.com/paritytech/substrate/pull/868
 
@@ -425,13 +425,13 @@ https://github.com/paritytech/substrate/pull/868
 
 ## Get Paid!
 
-<img style="width: 1000px" src="assets/Contributing/tip.png" />
+<img style="width: 1000px" src="./img/tip.png" />
 
 ---
 
 ## Expect Chaos
 
-<img style="width: 1000px" src="assets/Contributing/visualizer.png" />
+<img style="width: 1000px" src="./img/visualizer.png" />
 
 https://www.youtube.com/watch?v=aHcoFKhaUzA
 
