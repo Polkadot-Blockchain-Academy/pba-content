@@ -33,7 +33,7 @@ Notes:
 
 https://paritytech.github.io/substrate/master/frame_support/traits/trait.Hooks.html
 
----v
+---
 
 ### Hooks: All In One
 
@@ -83,7 +83,7 @@ Has its own lecture, more over there.
 - Useful for any kind of **automatic** and **necessary** operation.
 - The weight you return is interpreted as `DispatchClass::Mandatory`.
 
----v
+---
 
 ### Hooks: `on_initialize`
 
@@ -98,7 +98,7 @@ fn on_initialize(_n: BlockNumberFor<T>) -> Weight {
 
 <!-- .element: class="fragment" -->
 
----v
+---
 
 ### Hooks: `on_initialize`
 
@@ -148,7 +148,7 @@ fn on_finalize(_n: BlockNumberFor<T>) -> Weight {} // ❌
 
 <!-- .element: class="fragment" -->
 
----v
+---
 
 ### Hooks: `on_finalize`
 
@@ -165,10 +165,10 @@ Sometimes, rather than thinking "at the end of block N", consider writing code "
 ## Hooks: `on_idle`
 
 - **_Optional_** variant of `on_finalize`, also executed at the end of the block, that uses left-over weight.
-- Small semantic difference: executes pallets' hooks randomly, rather than in pallet index order, and only
+- Small semantic difference: rotates pallets' hook order by block number (`n % pallet_count`), rather than in pallet index order, and only
   if there is weight left.
 
----v
+---
 
 ## Best Practice: Prefer Non-Mandatory Hooks
 
@@ -230,7 +230,7 @@ Inherents are always applied first, before user transactions.
   - &shy;<!-- .element: class="fragment" --> Is this invoked every time you run `cargo run`?
 - `#[pallet::genesis_build]`.
 
----v
+---
 
 ### Hooks: `genesis_build`
 
@@ -265,7 +265,7 @@ impl<T: Config> BuildGenesisConfig for GenesisConfig<T> {
 
 <!-- .element: class="fragment" -->
 
----v
+---
 
 ### Hooks: `genesis_build`
 
@@ -297,7 +297,7 @@ Notes:
 
 https://paritytech.github.io/substrate/master/node_template_runtime/struct.RuntimeGenesisConfig.html
 
----v
+---
 
 ### Hooks: `genesis_build`
 
@@ -332,7 +332,7 @@ founders to be careful with this!
 
 https://paritytech.github.io/substrate/master/pallet_examples/index.html
 
----v
+---
 
 ### Hooks: `offchain_worker`
 
@@ -348,7 +348,7 @@ https://paritytech.github.io/substrate/master/pallet_examples/index.html
 
 ```
 
----v
+---
 
 ### Hooks: `offchain_worker`
 
@@ -362,7 +362,7 @@ Notes:
 
 https://paritytech.github.io/substrate/master/sp_runtime/offchain/storage_lock/index.html
 
----v
+---
 
 ### Hooks: `offchain_worker`
 
