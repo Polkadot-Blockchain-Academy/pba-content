@@ -153,9 +153,12 @@
 
 ## Saturday, April 18
 
-- 8:00 - 10:00
+- 10:00 - 11:30
   - Shawn Tabrizi
-  - [FRAME Storage](4-FRAME/08-Storage-slides.md)
+  - [The World Computer](6-Extra/12-the-world-computer-slides.md)
+- 11:30 - 12:30
+  - Kian
+  - JAM Demystified
 
 ---
 
@@ -169,19 +172,19 @@
 
 - 8:00 - 10:00
   - Shawn Tabrizi
-  - [Pallet Hooks](4-FRAME/09-Pallet-Hooks-slides.md)
-  - [Pallet Coupling](4-FRAME/10-Pallet-Coupling-slides.md)
+  - [FRAME Storage](4-FRAME/08-Storage-slides.md)
 - 10:00 - 10:30
   - Coffee break
 - 10:30 - 12:30
   - Shawn Tabrizi
-  - [Construct Runtime](4-FRAME/11-Construct-Runtime-slides.md)
-  - [FRAME Testing](4-FRAME/12-Testing-slides.md)
+  - [Pallet Hooks](4-FRAME/09-Pallet-Hooks-slides.md)
+  - [Pallet Coupling](4-FRAME/10-Pallet-Coupling-slides.md)
 - 12:30 - 1:30
   - Lunch break
 - 1:30 - 3:00
   - Shawn Tabrizi
-  - [FRAME Benchmarking](4-FRAME/13-Benchmarking-slides.md)
+  - [Construct Runtime](4-FRAME/11-Construct-Runtime-slides.md)
+  - [FRAME Testing](4-FRAME/12-Testing-slides.md)
 - 3:00 - 3:30
   - Coffee break
 - 3:30 - 5:00
@@ -194,18 +197,18 @@
 
 - 8:00 - 10:00
   - Shawn Tabrizi
-  - [Transaction Extensions](4-FRAME/14-Transaction-Extensions-slides.md)
+  - [FRAME Benchmarking](4-FRAME/13-Benchmarking-slides.md)
 - 10:00 - 10:30
   - Coffee break
 - 10:30 - 12:30
   - Shawn Tabrizi
-  - [Migrations and Try Runtime](4-FRAME/15-Migrations-and-Try-Runtime-slides.md)
-  - [Contributing to the Polkadot SDK](6-Extra/10-contributing-to-polkadot-slides.md)
+  - [Transaction Extensions](4-FRAME/14-Transaction-Extensions-slides.md)
 - 12:30 - 1:30
   - Lunch break
 - 1:30 - 3:00
   - Shawn Tabrizi
-  - [The World Computer](6-Extra/12-the-world-computer-slides.md)
+  - [Migrations and Try Runtime](4-FRAME/15-Migrations-and-Try-Runtime-slides.md)
+  - [Contributing to the Polkadot SDK](6-Extra/10-contributing-to-polkadot-slides.md)
 - 3:00 - 3:30
   - Coffee break
 - 3:30 - 5:00
