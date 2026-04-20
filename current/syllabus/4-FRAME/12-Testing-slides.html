@@ -31,22 +31,22 @@
 <!-- .slide: data-background-image="../../assets/img/0-Shared/bg/PBA_Background.png" data-background-size="cover" -->
 
 # FRAME Testing
-</script></section><section ><section data-markdown><script type="text/template">
+</script></section><section  data-markdown><script type="text/template">
 ## Testing and Mocks
 
-A test requires a mock runtime, so we need to do a full `construct_runtime` 😱
+A test requires a mock runtime, so we need to do a full `#[runtime]` 😱
 
 .. but luckily, most types can be mocked 😮‍💨
 
 <!-- .element: class="fragment" -->
-</script></section><section data-markdown><script type="text/template">
+</script></section><section  data-markdown><script type="text/template">
 ### Testing and Mocks
 
 - `u32` account id.
 - `u128` balance.
 - `u32` block number.
 - ...
-</script></section></section><section ><section data-markdown><script type="text/template">
+</script></section><section  data-markdown><script type="text/template">
 ## Testing: `Get<_>`
 
 - Next, we want to supply some value to those `Get<_>` associated types.
@@ -57,7 +57,7 @@ pub trait Config: frame_system::Config {
   type MaxVoters: Get<u32>;
 }
 ```
-</script></section><section data-markdown><script type="text/template">
+</script></section><section  data-markdown><script type="text/template">
 ### Testing: `Get<_>`
 
 ```rust
@@ -75,7 +75,7 @@ impl pallet_template::Config for Runtime {
 <!-- .element: class="fragment" -->
 
 <aside class="notes"><p><code>parameter_types</code> generates <code>impl Get for MyMaxVoters</code></p>
-</aside></script></section><section data-markdown><script type="text/template">
+</aside></script></section><section  data-markdown><script type="text/template">
 ### Testing: `Get<_>`
 
 - Or, if your value is always constant:
@@ -85,7 +85,7 @@ impl pallet_dpos::Config for Runtime {
   type MaxVoters = frame_support::traits::ConstU32<16>;
 }
 ```
-</script></section><section data-markdown><script type="text/template">
+</script></section><section  data-markdown><script type="text/template">
 ### Testing: `Get<_>`
 
 - Or, if you want to torture yourself:
@@ -102,7 +102,7 @@ impl pallet_dpos::Config for Runtime {
   type MaxVoters = MyMaxVoters;
 }
 ```
-</script></section></section><section ><section data-markdown><script type="text/template">
+</script></section><section  data-markdown><script type="text/template">
 ## Testing: `derive_impl`
 
 Manually implementing every `Config` type for test mocks is verbose. The `derive_impl` macro fills in sensible defaults so you only specify what you need.
@@ -127,7 +127,7 @@ impl frame_system::Config for Runtime {
   type Block = Block;
 }
 ```
-</script></section><section data-markdown><script type="text/template">
+</script></section><section  data-markdown><script type="text/template">
 ### `derive_impl`: How It Works
 
 - Pallets define `#[pallet::config(with_default)]` to generate a `DefaultConfig` trait.
@@ -152,7 +152,7 @@ impl pallet_balances::Config for Runtime {
   type AccountStore = System;
 }
 ```
-</script></section></section><section ><section data-markdown><script type="text/template">
+</script></section><section  data-markdown><script type="text/template">
 ## Testing: Genesis and Builder
 
 - Next, if you want to feed some data into your pallet's genesis state, we must first setup the
@@ -174,7 +174,7 @@ impl<T: Config> BuildGenesisConfig for GenesisConfig<T> {
   }
 }
 ```
-</script></section><section data-markdown><script type="text/template">
+</script></section><section  data-markdown><script type="text/template">
 ### Testing and Mocks: Genesis and Builder
 
 - Then, we build a builder pattern to construct the genesis config.
@@ -196,7 +196,7 @@ impl Builder {
 ```
 
 <!-- .element: class="fragment" -->
-</script></section><section data-markdown><script type="text/template">
+</script></section><section  data-markdown><script type="text/template">
 ### Testing and Mocks: Genesis and Builder
 
 - Finally:
@@ -216,7 +216,7 @@ impl Builder {
   }
 }
 ```
-</script></section><section data-markdown><script type="text/template">
+</script></section><section  data-markdown><script type="text/template">
 ### Testing and Mocks
 
 - Finally, this allows you to write a test like this:
@@ -232,7 +232,7 @@ fn test_stuff() {
     });
 }
 ```
-</script></section></section><section ><section data-markdown><script type="text/template">
+</script></section><section  data-markdown><script type="text/template">
 ## Testing: Adjustable `parameter_types!`
 
 - What if you want to change that `MyMaxVoters`?
@@ -255,7 +255,7 @@ MyMaxVoters::get();
 </div>
 
 <aside class="notes"><p>This is <em>testing only</em> and will create a static variable that you can adjust for your tests.</p>
-</aside></script></section><section data-markdown><script type="text/template">
+</aside></script></section><section  data-markdown><script type="text/template">
 ## Testing: Adjustable `parameter_types!`
 
 ```rust
@@ -270,13 +270,13 @@ MyMaxVoters::get();
 ```
 
 <aside class="notes"><p>This uses the given name as a storage key, so be careful with collisions!</p>
-</aside></script></section></section><section ><section data-markdown><script type="text/template">
+</aside></script></section><section  data-markdown><script type="text/template">
 ## Testing: Progressing Blocks
 
 - Often in your test, you want to mimic the progression of an empty block.
 - De-nada! We can fake everything in tests 🤠
 <!-- .element: class="fragment" -->
-</script></section><section data-markdown><script type="text/template">
+</script></section><section  data-markdown><script type="text/template">
 ### Progressing Blocks
 
 ```rust
@@ -291,7 +291,7 @@ pub fn next_block() {
   Dpos::on_initialize(now + 1);
 }
 ```
-</script></section><section data-markdown><script type="text/template">
+</script></section><section  data-markdown><script type="text/template">
 ### Progressing Blocks
 
 ```rust
@@ -304,10 +304,9 @@ pub fn next_block() {
   AllPalletsWithSystem::on_initialize(now + 1)
 }
 ```
-</script></section><section data-markdown><script type="text/template">
+</script></section><section  data-markdown><script type="text/template">
 ### Progressing Blocks
 
-````rust
 ```rust
 #[test]
 fn test() {
@@ -327,10 +326,8 @@ fn test() {
     // repeat..
   });
 }
-````
-
 ```
-</script></section></section><section  data-markdown><script type="text/template">
+</script></section><section  data-markdown><script type="text/template">
 ## Additional Resources 😋
 
 > Check speaker notes (click "s" 😉)
@@ -342,10 +339,15 @@ fn test() {
 <li>On usage of macros in Substrate: <a href="https://github.com/paritytech/substrate/issues/12331">https://github.com/paritytech/substrate/issues/12331</a></li>
 <li>Discussion on advanced testing: <a href="https://forum.polkadot.network/t/testing-complex-frame-pallets-discussion-tools/356">https://forum.polkadot.network/t/testing-complex-frame-pallets-discussion-tools/356</a></li>
 <li>Reserve topic: Reading events.</li>
-<li>Reserve-topic: try-state.
-```</li>
+<li>Reserve-topic: try-state.</li>
 </ul>
-</aside></script></section>
+<p>```</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+<!-- .slide: data-background-color="#000000" -->
+
+# Questions
+```
+</script></section>
     </article>
   </main>
 

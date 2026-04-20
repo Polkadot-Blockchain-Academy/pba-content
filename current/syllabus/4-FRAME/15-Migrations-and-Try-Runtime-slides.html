@@ -41,16 +41,16 @@
 - WHEN: runtime migrations are needed.
 - HOW: to write a runtime migration, end-to-end.
 - VERIFY: Test your runtime upgrades with `try-runtime` and `remote-externalities`.
-</script></section><section ><section data-markdown><script type="text/template">
+</script></section><section  data-markdown><script type="text/template">
 ## When is a Migration Required?
-</script></section><section data-markdown><script type="text/template">
+</script></section><section  data-markdown><script type="text/template">
 ### When is a Migration Required?
 
 - In a typical runtime upgrade, you only replace `:code:`. This is a _**Runtime Upgrade**_.
 - If you change the _storage layout_, then this is also a _**Runtime Migration**_.
 
 > Anything that changes **encoding** is a migration!
-</script></section><section data-markdown><script type="text/template">
+</script></section><section  data-markdown><script type="text/template">
 ### When is a Migration Required?
 
 ```rust
@@ -68,7 +68,7 @@ pub struct Foo(u64)
 - A clear migration.
 
 <!-- .element: class="fragment" -->
-</script></section><section data-markdown><script type="text/template">
+</script></section><section  data-markdown><script type="text/template">
 ### When is a Migration Required?
 
 ```rust
@@ -88,7 +88,7 @@ pub struct Foo(u16, u16)
 - The data still _fits_, but the _interpretation_ is almost certainly different!
 
 <!-- .element: class="fragment" -->
-</script></section><section data-markdown><script type="text/template">
+</script></section><section  data-markdown><script type="text/template">
 ### When is a Migration Required?
 
 ```rust
@@ -106,7 +106,7 @@ pub struct Foo { a: u32, b: u32, c: u32 }
 - This is still a migration, because `Foo`'s decoding changed.
 
 <!-- .element: class="fragment" -->
-</script></section><section data-markdown><script type="text/template">
+</script></section><section  data-markdown><script type="text/template">
 ### When is a Migration Required?
 
 ```rust
@@ -124,7 +124,7 @@ pub struct Foo { a: u32, b: u32, c: PhantomData<_> }
 - If `c` has a type whose encoding is zero-length (like `PhantomData` or `()`), then this would work without a migration.
 
 <!-- .element: class="fragment" -->
-</script></section><section data-markdown><script type="text/template">
+</script></section><section  data-markdown><script type="text/template">
 ### When is a Migration Required?
 
 ```rust
@@ -146,7 +146,7 @@ pub type FooValue = StorageValue<_, Foo>;
 - Assuming that no value is initialized with `C`, this is _not_ a migration.
 
 <!-- .element: class="fragment" -->
-</script></section><section data-markdown><script type="text/template">
+</script></section><section  data-markdown><script type="text/template">
 ### When is a Migration Required?
 
 ```rust
@@ -164,14 +164,14 @@ pub enum Foo { A(u32), C(u128), B(u32) }
 - You probably _never_ want to do this, but it is a migration.
 
 <!-- .element: class="fragment" -->
-</script></section><section data-markdown><script type="text/template">
+</script></section><section  data-markdown><script type="text/template">
 ### 🦀 Rust Recall 🦀
 
 Enums are encoded as the variant index, followed by the inner data:
 
 - The order matters! Both in `struct` and `enum`.
 - Enums that implement `Encode` cannot have more than 255 variants.
-</script></section><section data-markdown><script type="text/template">
+</script></section><section  data-markdown><script type="text/template">
 ### When is a Migration Required?
 
 ```rust
@@ -194,7 +194,7 @@ pub type BarValue = StorageValue<_, u32>;
 </div>
 
 <!-- .element: class="fragment" -->
-</script></section><section data-markdown><script type="text/template">
+</script></section><section  data-markdown><script type="text/template">
 ### When is a Migration Required?
 
 ```rust
@@ -213,16 +213,16 @@ pub type I_can_NOW_BE_renamEd_hahAA = StorageValue<_, u32>;
 - This does _not_ require a migration.
 
 <!-- .element: class="fragment" -->
-</script></section></section><section ><section data-markdown><script type="text/template">
+</script></section><section  data-markdown><script type="text/template">
 ## Writing Runtime Migrations
 
 - Now that we know how to detect if a storage change is a **migration**, let's see how we write one.
-</script></section><section data-markdown><script type="text/template">
+</script></section><section  data-markdown><script type="text/template">
 ### Writing Runtime Migrations
 
 - Once you upgrade a runtime, the code is expecting the data to be in a new format.
 - Any `on_initialize` or transaction might fail decoding data, and potentially `panic!`
-</script></section><section data-markdown><script type="text/template">
+</script></section><section  data-markdown><script type="text/template">
 ### Writing Runtime Migrations
 
 - We need a **_hook_** that is executed **ONCE** as a part of the new runtime...
@@ -231,9 +231,9 @@ pub type I_can_NOW_BE_renamEd_hahAA = StorageValue<_, u32>;
 > This is `OnRuntimeUpgrade`.
 
 <!-- .element: class="fragment" -->
-</script></section></section><section ><section data-markdown><script type="text/template">
+</script></section><section  data-markdown><script type="text/template">
 ## The Problem: Migration Safety
-</script></section><section data-markdown><script type="text/template">
+</script></section><section  data-markdown><script type="text/template">
 ### What Can Go Wrong?
 
 ```rust
@@ -251,7 +251,7 @@ impl<T: Config> OnRuntimeUpgrade for Pallet<T> {
 - Data gets transformed again → corruption
 - Already-migrated data may not decode properly
 - Chain could brick!
-</script></section><section data-markdown><script type="text/template">
+</script></section><section  data-markdown><script type="text/template">
 ### Version Checking is Critical
 
 ```rust
@@ -268,9 +268,9 @@ But managing this manually is error-prone:
 - Forgetting version checks
 - Incorrect version comparisons
 - Forgetting to update version after migration
-</script></section></section><section ><section data-markdown><script type="text/template">
+</script></section><section  data-markdown><script type="text/template">
 ## How We Write Migrations
-</script></section><section data-markdown><script type="text/template">
+</script></section><section  data-markdown><script type="text/template">
 ### Two Migration Approaches
 
 1. **Single-Block Migrations** - Using `VersionedMigration`
@@ -279,9 +279,9 @@ But managing this manually is error-prone:
 2. **Multi-Block Migrations** - Using `SteppedMigration`
    - For heavy migrations that exceed block limits
    - Executes across multiple blocks
-</script></section></section><section ><section data-markdown><script type="text/template">
+</script></section><section  data-markdown><script type="text/template">
 ## Single-Block Migrations: VersionedMigration
-</script></section><section data-markdown><script type="text/template">
+</script></section><section  data-markdown><script type="text/template">
 ### Using VersionedMigration
 
 Handles version checking automatically:
@@ -297,7 +297,7 @@ pub type MigrateV0ToV1<T> = VersionedMigration<
     <T as frame_system::Config>::DbWeight
 >;
 ```
-</script></section><section data-markdown><script type="text/template">
+</script></section><section  data-markdown><script type="text/template">
 ### Writing Migration Logic
 
 Migrations implement `UncheckedOnRuntimeUpgrade`:
@@ -321,7 +321,7 @@ pub mod v1 {
     }
 }
 ```
-</script></section><section data-markdown><script type="text/template">
+</script></section><section  data-markdown><script type="text/template">
 ### Storage Version Management
 
 Always declare your pallet's storage version:
@@ -342,7 +342,7 @@ let current = Pallet::<T>::current_storage_version();
 // Version stored on-chain
 let onchain = Pallet::<T>::on_chain_storage_version();
 ```
-</script></section><section data-markdown><script type="text/template">
+</script></section><section  data-markdown><script type="text/template">
 ### Testing Migrations with Try-Runtime
 
 ```rust
@@ -362,9 +362,9 @@ fn post_upgrade(state: Vec<u8>) -> Result<(), TryRuntimeError> {
     Ok(())
 }
 ```
-</script></section></section><section ><section data-markdown><script type="text/template">
+</script></section><section  data-markdown><script type="text/template">
 ## Multi-Block Migrations
-</script></section><section data-markdown><script type="text/template">
+</script></section><section  data-markdown><script type="text/template">
 ### When to Use Multi-Block Migrations
 
 - Migration touches millions of storage items
@@ -373,7 +373,7 @@ fn post_upgrade(state: Vec<u8>) -> Result<(), TryRuntimeError> {
 Examples:
 
 - Migrating all account balances
-</script></section><section data-markdown><script type="text/template">
+</script></section><section  data-markdown><script type="text/template">
 ### Multi-Block Migration Implementation
 
 ```rust
@@ -431,9 +431,9 @@ impl<T: Config> SteppedMigration for LazyMigrationV1<T> {
 ```
 
 <aside class="notes"><p><a href="https://github.com/paritytech/polkadot-sdk/blob/polkadot-stable2506/substrate/frame/examples/multi-block-migrations/src/migrations/v1/mod.rs">https://github.com/paritytech/polkadot-sdk/blob/polkadot-stable2506/substrate/frame/examples/multi-block-migrations/src/migrations/v1/mod.rs</a></p>
-</aside></script></section><section data-markdown><script type="text/template">
+</aside></script></section><section  data-markdown><script type="text/template">
 ## Setting Migrations in Runtime
-</script></section><section data-markdown><script type="text/template">
+</script></section><section  data-markdown><script type="text/template">
 ### Single Block Migrations in Runtime
 
 Declare single-block migrations in your runtime:
@@ -456,7 +456,7 @@ pub type Executive = frame_executive::Executive<
     Migrations,  // Single-block migrations execute here
 >;
 ```
-</script></section><section data-markdown><script type="text/template">
+</script></section><section  data-markdown><script type="text/template">
 ### Multi-Block Migrations in Runtime
 
 For multi-block migrations, also configure `pallet-migrations`:
@@ -479,7 +479,7 @@ impl pallet_migrations::Config for Runtime {
     type MaxServiceWeight = MbmServiceWeight;
 }
 ```
-</script></section></section><section  data-markdown><script type="text/template">
+</script></section><section  data-markdown><script type="text/template">
 ### Migration Utilities
 
 `frame-support` provides helpful utilities:
@@ -500,9 +500,9 @@ MyStorage::<T>::translate(|old: OldType| -> NewType {
     transform(old)
 });
 ```
-</script></section><section ><section data-markdown><script type="text/template">
+</script></section><section  data-markdown><script type="text/template">
 ## Testing Upgrades with Try-Runtime
-</script></section><section data-markdown><script type="text/template">
+</script></section><section  data-markdown><script type="text/template">
 ### Try-Runtime Overview
 
 `try-runtime` is Substrate's testing framework for runtime upgrades:
@@ -515,7 +515,7 @@ MyStorage::<T>::translate(|old: OldType| -> NewType {
 # Install try-runtime CLI
 cargo install --git https://github.com/paritytech/try-runtime-cli --locked
 ```
-</script></section><section data-markdown><script type="text/template">
+</script></section><section  data-markdown><script type="text/template">
 ### Try-Runtime Commands
 
 Test your migration against a live chain:
@@ -528,7 +528,7 @@ try-runtime \
     --checks all \
     live --uri wss://rpc.polkadot.io
 ```
-</script></section><section data-markdown><script type="text/template">
+</script></section><section  data-markdown><script type="text/template">
 ### Remote Externalities
 
 Load live chain state for testing:
@@ -548,7 +548,7 @@ ext.execute_with(|| {
     // Your test code here
 });
 ```
-</script></section><section data-markdown><script type="text/template">
+</script></section><section  data-markdown><script type="text/template">
 ### Try-Runtime Hooks
 
 Ensure runtime invariants still hold:
@@ -564,25 +564,29 @@ fn try_state(_: BlockNumber) -> Result<(), TryRuntimeError> {
     Ok(())
 }
 ```
-</script></section><section data-markdown><script type="text/template">
+</script></section><section  data-markdown><script type="text/template">
 ### Migration Testing Workflow
 
 1. Write properly benchmarked migration with try-runtime hooks
 2. Test locally
 3. Test against live state
-</script></section><section data-markdown><script type="text/template">
+</script></section><section  data-markdown><script type="text/template">
 ### Best Practices
 
 - Always implement `pre_upgrade` and `post_upgrade`
 - Use `try_state` to verify invariants
 - Test against multiple networks (dev, testnet, mainnet)
-</script></section></section><section  data-markdown><script type="text/template">
+</script></section><section  data-markdown><script type="text/template">
 ## Additional Resources 😋
 
 > Check speaker notes (click "s" 😉)
 
 <aside class="notes"><p>A Great talk about try-runtime and further testing of your runtime: <a href="https://www.youtube.com/watch?v=a_u3KMG-n-I">https://www.youtube.com/watch?v=a_u3KMG-n-I</a></p>
-</aside></script></section>
+</aside></script></section><section  data-markdown><script type="text/template">
+<!-- .slide: data-background-color="#000000" -->
+
+# Questions
+</script></section>
     </article>
   </main>
 

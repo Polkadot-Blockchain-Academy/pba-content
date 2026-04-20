@@ -26,23 +26,23 @@
   </footer>
   <main class="reveal">
     <article class="slides">
-      <section ><section data-markdown><script type="text/template">
+      <section  data-markdown><script type="text/template">
 
 <!-- .slide: data-background-image="../../assets/img/0-Shared/bg/PBA_Background.png" data-background-size="cover" -->
 
 # Transaction Extensions
-</script></section><section data-markdown><script type="text/template">
+</script></section><section  data-markdown><script type="text/template">
 # Transaction Extensions
 
 ## Or: Lifecycle of a Transaction
-</script></section><section data-markdown><script type="text/template">
+</script></section><section  data-markdown><script type="text/template">
 ## Motivation
 
 We want to handle different aspects of executing a transaction for every transaction coming into the pool, but want to
 
 1. have the node know as little about the transaction format as is possible
 2. while allowing the runtime to customize the behavior as much as is possible.
-</script></section><section data-markdown><script type="text/template">
+</script></section><section  data-markdown><script type="text/template">
 ## Summary
 
 - In this lecture you will learn about one of the more advanced FRAME concepts, [_Transaction Extensions_](https://paritytech.github.io/polkadot-sdk/master/polkadot_sdk_frame/traits/trait.TransactionExtension.html).
@@ -52,14 +52,14 @@ We want to handle different aspects of executing a transaction for every transac
 - Transaction extensions allow for a multitude of custom features to be added to FRAME transactions.
 
 - They allow hooking into and configuring the transaction lifecycle in the transaction pool and the block execution.
-</script></section></section><section ><section data-markdown><script type="text/template">
+</script></section><section  data-markdown><script type="text/template">
 ## Recap: Transaction Pool
 
 The transaction pool has two jobs:
 
 1. Transaction Validation
 2. Transaction Ordering
-</script></section><section data-markdown><script type="text/template">
+</script></section><section  data-markdown><script type="text/template">
 ### 1. Transaction Validation
 
 Moving transactions from one list to the other.
@@ -72,7 +72,7 @@ graph LR
 </diagram>
 
 <aside class="notes"><p>Greatly simplified from the actual tx pool of course. Feel free to check it out.</p>
-</aside></script></section><section data-markdown><script type="text/template">
+</aside></script></section><section  data-markdown><script type="text/template">
 ### 1. Transaction Validation
 
 - Transaction validity is exclusively outside of the transaction pool, and is **100% determined by the Runtime**.
@@ -87,15 +87,15 @@ graph LR
 <li>Pesky question: but be aware that from the runtime&#39;s perspective, the node could be malicious. The runtime cannot trust the node to obey.
 ** THE RUNTIME MUST RE-VALIDATE TRANSACTIONS LATER in block building and import as well **</li>
 </ul>
-</aside></script></section><section data-markdown><script type="text/template">
+</aside></script></section><section  data-markdown><script type="text/template">
 ### Shower Thought: Runtime vs STF
 
 <img style="width: 1100px;" src="../3-Substrate/img/tx-pool/peter-parker-glasses-off.png" />
-</script></section><section data-markdown><script type="text/template">
+</script></section><section  data-markdown><script type="text/template">
 ### Shower Thought: Runtime vs STF
 
 <img style="width: 1100px;" src="../3-Substrate/img/tx-pool/peter-parker-glasses-on.png" />
-</script></section><section data-markdown><script type="text/template">
+</script></section><section  data-markdown><script type="text/template">
 ### 1. Transaction Validation
 
 ```rust[1-100|5-6|8-9|11-12|14-100|1-100]
@@ -124,7 +124,7 @@ type Tag = Vec<u8>
 ```
 
 <aside class="notes"><p>So some code in our Runtime will have to provide this data!</p>
-</aside></script></section><section data-markdown><script type="text/template">
+</aside></script></section><section  data-markdown><script type="text/template">
 ### 2. Transaction Ordering
 
 - `provides` and `requires` is a very flexible mechanism; it allows you to:
@@ -139,7 +139,7 @@ graph LR
 </diagram>
 
 <aside class="notes"><p>it essentially forms a graph.</p>
-</aside></script></section><section data-markdown><script type="text/template">
+</aside></script></section><section  data-markdown><script type="text/template">
 ### 2. Transaction Ordering: `priority`
 
 From the **Ready pool**, when all requirements are met, then `priority` dictates the order.
@@ -152,13 +152,13 @@ Further tie breakers:
 <!-- .element: class="fragment" -->
 
 <aside class="notes"><p><a href="https://github.com/paritytech/polkadot-sdk/blob/bc53b9a03a742f8b658806a01a7bf853cb9a86cd/substrate/client/transaction-pool/src/graph/ready.rs#L146">https://github.com/paritytech/polkadot-sdk/blob/bc53b9a03a742f8b658806a01a7bf853cb9a86cd/substrate/client/transaction-pool/src/graph/ready.rs#L146</a></p>
-</aside></script></section></section><section  data-markdown><script type="text/template">
+</aside></script></section><section  data-markdown><script type="text/template">
 ## What Are Transaction Extensions?
 
 - Transaction extensions are
   - used to provide ordering and validity information for a transaction (as discussed earlier).
   - a generic way to **extend** the logic executed for every transaction.
-</script></section><section ><section data-markdown><script type="text/template">
+</script></section><section  data-markdown><script type="text/template">
 ## Flow
 
 There are two flows with respect to the transaction extensions:
@@ -170,7 +170,7 @@ There are two flows with respect to the transaction extensions:
 <ul>
 <li>Transaction extensions remind me of other pipelines in computer graphics or data processing where you pass data from one stage to another.</li>
 </ul>
-</aside></script></section><section data-markdown><script type="text/template">
+</aside></script></section><section  data-markdown><script type="text/template">
 ## Flow: Transaction Lifecycle
 
 The flow of data through the different stages of execution.
@@ -205,7 +205,7 @@ graph LR
     class B,C,D,E phase
 
 </diagram>
-</script></section><section data-markdown><script type="text/template">
+</script></section><section  data-markdown><script type="text/template">
 ## Flow: Within One Stage
 
 As an example here is the flow of a pipeline of extensions through the `prepare` implementations.
@@ -235,7 +235,7 @@ graph LR
     class A flow
 
 </diagram>
-</script></section></section><section ><section data-markdown><script type="text/template">
+</script></section><section  data-markdown><script type="text/template">
 ## Anatomy
 
 A transaction extension can be either or both of the following things:
@@ -250,7 +250,7 @@ A transaction extension can be either or both of the following things:
   - Perhaps refund the fee partially 🤑.
 
 <!-- .element: class="fragment" -->
-</script></section><section data-markdown><script type="text/template">
+</script></section><section  data-markdown><script type="text/template">
 ### Anatomy
 
 - Some additional validation logic that is used to validate the transaction, and give feedback to the pool.
@@ -263,7 +263,7 @@ A transaction extension can be either or both of the following things:
   - Spec version and genesis hash is part of all transactions' signature payload!
 
 <!-- .element: class="fragment" -->
-</script></section><section data-markdown><script type="text/template">
+</script></section><section  data-markdown><script type="text/template">
 ### Anatomy: Let's Peek at the Trait
 
 ```rust [1-100|4-6|11|12-21|22-29|32-38]
@@ -321,14 +321,14 @@ where Call: Dispatchable,
     /* snip */
 }
 ```
-</script></section><section data-markdown><script type="text/template">
+</script></section><section  data-markdown><script type="text/template">
 ### Anatomy: The Functions
 
 - `validate` does not mutate state.
   - → writing to storage in here will be reverted and wastes resources
 - `prepare` does write, prepares the state to execute with.
 - `post_dispatch_details` cleans up (e.g. refunds) and returns unspent weight.
-</script></section><section data-markdown><script type="text/template">
+</script></section><section  data-markdown><script type="text/template">
 ### Anatomy: Example Implementation
 
 ```rust
@@ -365,7 +365,7 @@ where Call: Dispatchable,
     }
 }
 ```
-</script></section></section><section ><section data-markdown><script type="text/template">
+</script></section><section  data-markdown><script type="text/template">
 ## Grouping Transaction Extensions
 
 - A tuple of extensions is also a transaction extension itself!
@@ -375,7 +375,7 @@ where Call: Dispatchable,
   - Combines results
 
 <aside class="notes"><p>TODO: how <code>TransactionValidity</code> is <code>combined_with</code> is super important here, but probably something to cover more somewhere else and recap here.</p>
-</aside></script></section><section data-markdown><script type="text/template">
+</aside></script></section><section  data-markdown><script type="text/template">
 ## Usage In The Runtime
 
 - Each runtime has a set of transaction extensions. They are grouped as a tuple.
@@ -402,7 +402,7 @@ type UncheckedExt = generic::UncheckedExtrinsic<Address, Call, Signature, TxExte
 <aside class="notes"><p>We will get to this later as well, but recall that TransactionExtensions are not a <em>FRAME/Pallet</em>
 concept per se. FRAME just implements them. This also implies that everything regarding transaction
 extensions is applied to <strong>all transactions</strong>, throughout the runtime.</p>
-</aside></script></section></section><section ><section data-markdown><script type="text/template">
+</aside></script></section><section  data-markdown><script type="text/template">
 ## Encoding
 
 ```rust
@@ -425,7 +425,7 @@ pub struct UncheckedExtrinsic<Address, Call, Signature, (Foo)>
 ```
 
 - Two `u32` are decoded as `self`, `42u32` is expected to be in the signature payload.
-</script></section><section data-markdown><script type="text/template">
+</script></section><section  data-markdown><script type="text/template">
 ## Encoding
 
 Here's the `check` function of `CheckedExtrinsic` to hint at this:
@@ -448,7 +448,7 @@ fn check(self, lookup: &Lookup) -> Result<Self::Checked, TransactionValidityErro
   })
 }
 ```
-</script></section></section><section  data-markdown><script type="text/template">
+</script></section><section  data-markdown><script type="text/template">
 ## Transaction Pool Validation
 
 - Recall that transaction pool validation should be minimum effort and static.
@@ -460,12 +460,12 @@ fn check(self, lookup: &Lookup) -> Result<Self::Checked, TransactionValidityErro
 <p>Transaction queue is not part of the consensus system. Validation of transactions are <em>free</em>. Doing
 too much work in validation of transactions is essentially opening a door to be DOS-ed.</p>
 </blockquote>
-</aside></script></section><section ><section data-markdown><script type="text/template">
+</aside></script></section><section  data-markdown><script type="text/template">
 ## Notable Transaction Extensions
 
 - These are some of the default transaction extensions that come in FRAME.
 - See if you can predict how they are made!
-</script></section><section data-markdown><script type="text/template">
+</script></section><section  data-markdown><script type="text/template">
 ### `ChargeAssetTxPayment`
 
 Charge payments, refund if `Pays::No`.
@@ -491,7 +491,7 @@ pub enum Pre<T: Config> {
 ```
 
 <!-- .element: class="fragment" -->
-</script></section><section data-markdown><script type="text/template">
+</script></section><section  data-markdown><script type="text/template">
 ### `CheckGenesis`
 
 Wants to make sure you are signing against the right chain.
@@ -503,13 +503,13 @@ Put the genesis hash in `implicit`.
 `CheckSpecVersion` and `CheckTxVersion` work very similarly.
 
 <!-- .element: class="fragment" -->
-</script></section><section data-markdown><script type="text/template">
+</script></section><section  data-markdown><script type="text/template">
 ### `CheckNonZeroSender`
 
 - Interesting story: any account can sign on behalf of the `0x00` account.
 - Discovered by [@xlc](https://github.com/xlc). ([Fix PR](https://github.com/paritytech/substrate/issues/10413))
 - Uses `validate` to ensure the signing account is not `0x00`.
-</script></section><section data-markdown><script type="text/template">
+</script></section><section  data-markdown><script type="text/template">
 ### `CheckNonce`
 
 - `validate`: check the nonce (reads storage), DO NOT WRITE ANYTHING, returns `provides` and `requires`.
@@ -525,7 +525,7 @@ Put the genesis hash in `implicit`.
 </div>
 
 <!-- .element: class="fragment" -->
-</script></section><section data-markdown><script type="text/template">
+</script></section><section  data-markdown><script type="text/template">
 ### `CheckNonce`
 
 Each nonce transaction: `provides = (account, nonce)`, `requires = (account, nonce - 1)`.
@@ -547,7 +547,7 @@ bob   nonce 0  ✅ Ready (no requires)
 alice nonce 1  ✅ Ready (alice, 0 now provided)
 alice nonce 2  ✅ Ready (alice, 1 now provided)
 ```
-</script></section><section data-markdown><script type="text/template">
+</script></section><section  data-markdown><script type="text/template">
 ### `CheckWeight`
 
 - Check there is enough weight in `validate`.
@@ -555,7 +555,7 @@ alice nonce 2  ✅ Ready (alice, 1 now provided)
 - Adjust consumed weight in `post_dispatch` based on unspent weight.
 
 <!-- .element: class="fragment" -->
-</script></section><section data-markdown><script type="text/template">
+</script></section><section  data-markdown><script type="text/template">
 ## Feeless Transaction Extension
 
 - Idea: If some condition meets, do not charge any fee.
@@ -575,7 +575,7 @@ pub type TxExtension = (
 	>,
 );
 ```
-</script></section></section><section  data-markdown><script type="text/template">
+</script></section><section  data-markdown><script type="text/template">
 ## Wrapping Up: Key Takeaways
 
 **Transaction Extensions** are the runtime's way to customize transaction behavior while keeping the node agnostic about transaction format.
@@ -601,6 +601,10 @@ pub type TxExtension = (
 - TransactionExtension that keeps a counter of all successful/failed transactions
 - TransactionExtension that tries to refund the transaction from each account as long as they submit less
   than 1tx/day.
+</script></section><section  data-markdown><script type="text/template">
+<!-- .slide: data-background-color="#000000" -->
+
+# Questions
 </script></section>
     </article>
   </main>

@@ -35,7 +35,7 @@
 You can not only execute logic in calls, but also regularly on block events.
 
 <aside class="notes"><p>One of the distinctions from contracts that always need to be called.</p>
-</aside></script></section><section ><section data-markdown><script type="text/template">
+</aside></script></section><section  data-markdown><script type="text/template">
 ## Hooks: All In One
 
 - Onchain / STF
@@ -51,7 +51,7 @@ You can not only execute logic in calls, but also regularly on block events.
   - `try_state`
 
 <aside class="notes"><p><a href="https://paritytech.github.io/substrate/master/frame_support/traits/trait.Hooks.html">https://paritytech.github.io/substrate/master/frame_support/traits/trait.Hooks.html</a></p>
-</aside></script></section><section data-markdown><script type="text/template">
+</aside></script></section><section  data-markdown><script type="text/template">
 ### Hooks: All In One
 
 ```rust
@@ -76,7 +76,7 @@ impl<T: Config> BuildGenesisConfig for GenesisConfig<T> {
 
 <aside class="notes"><p>Many of these functions receive the block number as an argument, but that can easily be fetched from
 <code>frame_system::Pallet::&lt;T&gt;::block_number()</code></p>
-</aside></script></section></section><section  data-markdown><script type="text/template">
+</aside></script></section><section  data-markdown><script type="text/template">
 ## Hooks: `on_runtime_upgrade`
 
 - Called every time the `spec_version`/`spec_name` is bumped.
@@ -86,12 +86,12 @@ impl<T: Config> BuildGenesisConfig for GenesisConfig<T> {
 
 <aside class="notes"><p>Because very often runtime upgrades need to be accompanied by some kind of state migration.
 Has its own lecture, more over there.</p>
-</aside></script></section><section ><section data-markdown><script type="text/template">
+</aside></script></section><section  data-markdown><script type="text/template">
 ## Hooks: `on_initialize`
 
 - Useful for any kind of **automatic** and **necessary** operation.
 - The weight you return is interpreted as `DispatchClass::Mandatory`.
-</script></section><section data-markdown><script type="text/template">
+</script></section><section  data-markdown><script type="text/template">
 ### Hooks: `on_initialize`
 
 - `Mandatory` Hooks should really be lightweight and predictable, with a bounded complexity.
@@ -104,7 +104,7 @@ fn on_initialize(_n: BlockNumberFor<T>) -> Weight {
 ```
 
 <!-- .element: class="fragment" -->
-</script></section><section data-markdown><script type="text/template">
+</script></section><section  data-markdown><script type="text/template">
 ### Hooks: `on_initialize`
 
 - &shy;<!-- .element: class="fragment" --> Question: If you have 3 pallets, in which order are their `on_initialize` hooks called?
@@ -118,7 +118,7 @@ fn on_initialize(_n: BlockNumberFor<T>) -> Weight {
 block will take longer to produce, but it eventually will. If you have your eyes set on being a
 parachain developer, you should treat overweight blocks as fatal as well.</li>
 </ul>
-</aside></script></section></section><section  data-markdown><script type="text/template">
+</aside></script></section><section  data-markdown><script type="text/template">
 ## Hooks: `on_poll`
 
 ```rust
@@ -130,7 +130,7 @@ fn on_poll(_n: BlockNumber, _weight: &mut WeightMeter)
 - Comes with a weight meter that needs to be adhered to. More on weights in the dedicated lecture.
 
 <aside class="notes"><p>See <a href="https://github.com/paritytech/substrate/pull/14279">https://github.com/paritytech/substrate/pull/14279</a> , <a href="https://github.com/paritytech/polkadot-sdk/pull/1781">https://github.com/paritytech/polkadot-sdk/pull/1781</a> and related PRs</p>
-</aside></script></section><section ><section data-markdown><script type="text/template">
+</aside></script></section><section  data-markdown><script type="text/template">
 ## Hooks: `on_finalize`
 
 - Extension of `on_initialize`, but at the end of the block.
@@ -146,7 +146,7 @@ fn on_finalize(_n: BlockNumberFor<T>) -> Weight {} // ❌
 - Nothing to do with _finality_ in the consensus context.
 
 <!-- .element: class="fragment" -->
-</script></section><section data-markdown><script type="text/template">
+</script></section><section  data-markdown><script type="text/template">
 ### Hooks: `on_finalize`
 
 > Generally, avoid using it unless something REALLY needs to happen at the end of the block.
@@ -154,20 +154,20 @@ fn on_finalize(_n: BlockNumberFor<T>) -> Weight {} // ❌
 &shy;<!-- .element: class="fragment" --> _Tip_: Sometimes, rather than thinking "at the end of block N", consider writing code "at the beginning of block N+1".
 
 <aside class="notes"><p>Sometimes, rather than thinking &quot;at the end of block N&quot;, consider writing code &quot;at the beginning of block N+1&quot;</p>
-</aside></script></section></section><section ><section data-markdown><script type="text/template">
+</aside></script></section><section  data-markdown><script type="text/template">
 ## Hooks: `on_idle`
 
 - **_Optional_** variant of `on_finalize`, also executed at the end of the block, that uses left-over weight.
-- Small semantic difference: executes pallets' hooks randomly, rather than in pallet index order, and only
+- Small semantic difference: rotates pallets' hook order by block number (`n % pallet_count`), rather than in pallet index order, and only
   if there is weight left.
-</script></section><section data-markdown><script type="text/template">
+</script></section><section  data-markdown><script type="text/template">
 ## Best Practice: Prefer Non-Mandatory Hooks
 
 - Prefer `on_poll` over `on_initialize`
 - Prefer `on_idle` over `on_finalize`
 - Use multi-block migrations for large state changes
 - Use optional service work via extrinsics where possible
-</script></section></section><section  data-markdown><script type="text/template">
+</script></section><section  data-markdown><script type="text/template">
 ## Recap: Onchain/STF Hooks
 
 <diagram class="mermaid">
@@ -207,14 +207,14 @@ end
 </diagram>
 
 <aside class="notes"><p>Inherents are always applied first, before user transactions.</p>
-</aside></script></section><section ><section data-markdown><script type="text/template">
+</aside></script></section><section  data-markdown><script type="text/template">
 ## Hooks: `genesis_build`
 
 - Means for each pallet to specify a $f(input): state$ at genesis.
 - This is called only once, by the client, when you **create a new chain**.
   - &shy;<!-- .element: class="fragment" --> Is this invoked every time you run `cargo run`?
 - `#[pallet::genesis_build]`.
-</script></section><section data-markdown><script type="text/template">
+</script></section><section  data-markdown><script type="text/template">
 ### Hooks: `genesis_build`
 
 ```rust
@@ -247,7 +247,7 @@ impl<T: Config> BuildGenesisConfig for GenesisConfig<T> {
 ```
 
 <!-- .element: class="fragment" -->
-</script></section><section data-markdown><script type="text/template">
+</script></section><section  data-markdown><script type="text/template">
 ### Hooks: `genesis_build`
 
 - `GenesisConfig` is a composite/amalgamated item at the top level runtime.
@@ -275,14 +275,14 @@ struct RuntimeGenesisConfig {
 <!-- .element: class="fragment" -->
 
 <aside class="notes"><p><a href="https://paritytech.github.io/substrate/master/node_template_runtime/struct.RuntimeGenesisConfig.html">https://paritytech.github.io/substrate/master/node_template_runtime/struct.RuntimeGenesisConfig.html</a></p>
-</aside></script></section><section data-markdown><script type="text/template">
+</aside></script></section><section  data-markdown><script type="text/template">
 ### Hooks: `genesis_build`
 
 - `genesis_build` is now invoked via a runtime API, not the native runtime.
 - `#[cfg(feature = "std")]` guards in pallets are no longer needed for genesis.
 
 <aside class="notes"><p><a href="https://github.com/paritytech/substrate/issues/13334">https://github.com/paritytech/substrate/issues/13334</a></p>
-</aside></script></section></section><section ><section data-markdown><script type="text/template">
+</aside></script></section><section  data-markdown><script type="text/template">
 ## Hooks: `offchain_worker`
 
 **Fully offchain application**:
@@ -301,7 +301,7 @@ struct RuntimeGenesisConfig {
 <aside class="notes"><p>People have often thought that they can do magic with OCW, please don&#39;t. Big warning to
 founders to be careful with this!</p>
 <p><a href="https://paritytech.github.io/substrate/master/pallet_examples/index.html">https://paritytech.github.io/substrate/master/pallet_examples/index.html</a></p>
-</aside></script></section><section data-markdown><script type="text/template">
+</aside></script></section><section  data-markdown><script type="text/template">
 ### Hooks: `offchain_worker`
 
 - Execution entirely up to the client.
@@ -315,7 +315,7 @@ founders to be careful with this!</p>
     - when-authority
 
 ```
-</script></section><section data-markdown><script type="text/template">
+</script></section><section  data-markdown><script type="text/template">
 ### Hooks: `offchain_worker`
 
 - Threads can **overlap**, each is reading the state of its corresponding block
@@ -325,7 +325,7 @@ founders to be careful with this!</p>
 <!-- .element: class="fragment" -->
 
 <aside class="notes"><p><a href="https://paritytech.github.io/substrate/master/sp_runtime/offchain/storage_lock/index.html">https://paritytech.github.io/substrate/master/sp_runtime/offchain/storage_lock/index.html</a></p>
-</aside></script></section><section data-markdown><script type="text/template">
+</aside></script></section><section  data-markdown><script type="text/template">
 ### Hooks: `offchain_worker`
 
 - &shy;<!-- .element: class="fragment" -->Offchain workers have their own **special host
@@ -341,7 +341,7 @@ founders to be careful with this!</p>
 <li>Max single allocation limited</li>
 <li>Max total allocation limited.</li>
 </ul>
-</aside></script></section></section><section  data-markdown><script type="text/template">
+</aside></script></section><section  data-markdown><script type="text/template">
 ## Hooks: `integrity_test`
 
 - Put into a test by the runtime macro.
@@ -442,7 +442,11 @@ end
 Offchain worker, like tx-pool api, is only called from an offchain context. Node operators can
 easily use the runtime overrides feature to change the behavior of their offchain worker anytime
 they want.</p>
-</aside></script></section>
+</aside></script></section><section  data-markdown><script type="text/template">
+<!-- .slide: data-background-color="#000000" -->
+
+# Questions
+</script></section>
     </article>
   </main>
 
