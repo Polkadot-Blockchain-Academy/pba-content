@@ -13,7 +13,7 @@ instructors: ["Kian Paimani"]
 
 ## Testing and Mocks
 
-A test requires a mock runtime, so we need to do a full `construct_runtime` 😱
+A test requires a mock runtime, so we need to do a full `#[runtime]` 😱
 
 .. but luckily, most types can be mocked 😮‍💨
 
@@ -320,7 +320,6 @@ pub fn next_block() {
 
 ### Progressing Blocks
 
-````rust
 ```rust
 #[test]
 fn test() {
@@ -340,8 +339,6 @@ fn test() {
     // repeat..
   });
 }
-````
-
 ```
 
 ---
