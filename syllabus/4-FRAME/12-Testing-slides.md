@@ -356,6 +356,7 @@ Notes:
 - Discussion on advanced testing: https://forum.polkadot.network/t/testing-complex-frame-pallets-discussion-tools/356
 - Reserve topic: Reading events.
 - Reserve-topic: try-state.
+
 ```
 
 ---
@@ -363,3 +364,4 @@ Notes:
 <!-- .slide: data-background-color="#000000" -->
 
 # Questions
+```
