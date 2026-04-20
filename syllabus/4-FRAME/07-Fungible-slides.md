@@ -489,3 +489,9 @@ mod runtime {
   pub type MyPallet = pallet_mypallet;
 }
 ```
+
+---
+
+<!-- .slide: data-background-color="#000000" -->
+
+# Questions

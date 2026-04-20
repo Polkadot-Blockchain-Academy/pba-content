@@ -7,13 +7,13 @@ description: Transaction Extensions, Transaction Priority.
 
 # Transaction Extensions
 
----v
+---
 
 # Transaction Extensions
 
 ## Or: Lifecycle of a Transaction
 
----v
+---
 
 ## Motivation
 
@@ -22,7 +22,7 @@ We want to handle different aspects of executing a transaction for every transac
 1. have the node know as little about the transaction format as is possible
 2. while allowing the runtime to customize the behavior as much as is possible.
 
----v
+---
 
 ## Summary
 
@@ -43,7 +43,7 @@ The transaction pool has two jobs:
 1. Transaction Validation
 2. Transaction Ordering
 
----v
+---
 
 ### 1. Transaction Validation
 
@@ -59,7 +59,7 @@ graph LR
 Notes:
 Greatly simplified from the actual tx pool of course. Feel free to check it out.
 
----v
+---
 
 ### 1. Transaction Validation
 
@@ -77,19 +77,19 @@ Important, must pause and ask!
 - Pesky question: but be aware that from the runtime's perspective, the node could be malicious. The runtime cannot trust the node to obey.
   ** THE RUNTIME MUST RE-VALIDATE TRANSACTIONS LATER in block building and import as well **
 
----v
+---
 
 ### Shower Thought: Runtime vs STF
 
 <img style="width: 1100px;" src="../3-Substrate/img/tx-pool/peter-parker-glasses-off.png" />
 
----v
+---
 
 ### Shower Thought: Runtime vs STF
 
 <img style="width: 1100px;" src="../3-Substrate/img/tx-pool/peter-parker-glasses-on.png" />
 
----v
+---
 
 ### 1. Transaction Validation
 
@@ -122,7 +122,7 @@ Notes:
 
 So some code in our Runtime will have to provide this data!
 
----v
+---
 
 ### 2. Transaction Ordering
 
@@ -139,7 +139,7 @@ graph LR
 
 Note: it essentially forms a graph.
 
----v
+---
 
 ### 2. Transaction Ordering: `priority`
 
@@ -178,7 +178,7 @@ Big Picture: Pipeline of Extensions
 
 - Transaction extensions remind me of other pipelines in computer graphics or data processing where you pass data from one stage to another.
 
----v
+---
 
 ## Flow: Transaction Lifecycle
 
@@ -215,7 +215,7 @@ graph LR
 
 </diagram>
 
----v
+---
 
 ## Flow: Within One Stage
 
@@ -264,7 +264,7 @@ A transaction extension can be either or both of the following things:
 
 <!-- .element: class="fragment" -->
 
----v
+---
 
 ### Anatomy
 
@@ -279,7 +279,7 @@ A transaction extension can be either or both of the following things:
 
 <!-- .element: class="fragment" -->
 
----v
+---
 
 ### Anatomy: Let's Peek at the Trait
 
@@ -339,7 +339,7 @@ where Call: Dispatchable,
 }
 ```
 
----v
+---
 
 ### Anatomy: The Functions
 
@@ -348,7 +348,7 @@ where Call: Dispatchable,
 - `prepare` does write, prepares the state to execute with.
 - `post_dispatch_details` cleans up (e.g. refunds) and returns unspent weight.
 
----v
+---
 
 ### Anatomy: Example Implementation
 
@@ -401,7 +401,7 @@ Notes:
 
 TODO: how `TransactionValidity` is `combined_with` is super important here, but probably something to cover more somewhere else and recap here.
 
----v
+---
 
 ## Usage In The Runtime
 
@@ -457,7 +457,7 @@ pub struct UncheckedExtrinsic<Address, Call, Signature, (Foo)>
 
 - Two `u32` are decoded as `self`, `42u32` is expected to be in the signature payload.
 
----v
+---
 
 ## Encoding
 
@@ -503,7 +503,7 @@ Notes:
 - These are some of the default transaction extensions that come in FRAME.
 - See if you can predict how they are made!
 
----v
+---
 
 ### `ChargeAssetTxPayment`
 
@@ -531,7 +531,7 @@ pub enum Pre<T: Config> {
 
 <!-- .element: class="fragment" -->
 
----v
+---
 
 ### `CheckGenesis`
 
@@ -545,7 +545,7 @@ Put the genesis hash in `implicit`.
 
 <!-- .element: class="fragment" -->
 
----v
+---
 
 ### `CheckNonZeroSender`
 
@@ -553,7 +553,7 @@ Put the genesis hash in `implicit`.
 - Discovered by [@xlc](https://github.com/xlc). ([Fix PR](https://github.com/paritytech/substrate/issues/10413))
 - Uses `validate` to ensure the signing account is not `0x00`.
 
----v
+---
 
 ### `CheckNonce`
 
@@ -571,7 +571,7 @@ Put the genesis hash in `implicit`.
 
 <!-- .element: class="fragment" -->
 
----v
+---
 
 ### `CheckNonce`
 
@@ -595,7 +595,7 @@ alice nonce 1  ✅ Ready (alice, 0 now provided)
 alice nonce 2  ✅ Ready (alice, 1 now provided)
 ```
 
----v
+---
 
 ### `CheckWeight`
 
@@ -605,7 +605,7 @@ alice nonce 2  ✅ Ready (alice, 1 now provided)
 
 <!-- .element: class="fragment" -->
 
----v
+---
 
 ## Feeless Transaction Extension
 
@@ -656,3 +656,9 @@ pub type TxExtension = (
 - TransactionExtension that keeps a counter of all successful/failed transactions
 - TransactionExtension that tries to refund the transaction from each account as long as they submit less
   than 1tx/day.
+
+---
+
+<!-- .slide: data-background-color="#000000" -->
+
+# Questions

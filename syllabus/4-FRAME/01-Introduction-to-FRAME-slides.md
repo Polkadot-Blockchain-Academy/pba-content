@@ -357,3 +357,9 @@ The lesson: don't pre-optimize by starting with a pallet. Start small, measure, 
   - **FRAME Executive**: Coordinates runtime execution (initialization, checks, extrinsic processing).
   - **Construct Runtime**: Combines pallets into a complete runtime
 - **Development approach**: Uses Rust macros to generate boilerplate code while keeping the developer interface clean.
+
+---
+
+<!-- .slide: data-background-color="#000000" -->
+
+# Questions

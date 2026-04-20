@@ -566,3 +566,9 @@ Remember other pallets can deposit events, too!
 - Events usually signify some successful thing happening.
 - Errors signify when something has gone bad (and all changes are reverted).
 - Both are accessible by and intended for the end user when they occur.
+
+---
+
+<!-- .slide: data-background-color="#000000" -->
+
+# Questions

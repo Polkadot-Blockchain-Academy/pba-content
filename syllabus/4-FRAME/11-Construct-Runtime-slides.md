@@ -1,13 +1,13 @@
 ---
-title: Construct Runtime
-description: Deep dive into the Construct Runtime macro
+title: Constructing a Runtime
+description: Deep dive into the `#[runtime]` macro
 duration: 1 hour
 instructors: ["Kian Paimani"]
 ---
 
 <!-- .slide: data-background-image="../../assets/img/0-Shared/bg/PBA_Background.png" data-background-size="cover" -->
 
-# `construct_runtime!` 🔨
+# `#[runtime]` 🔨
 
 ---
 
@@ -25,11 +25,11 @@ A runtime is really ✌️ things:
 1. A struct that implements `Config` of all pallets.
 2. A type that helps `Executive` implement `RuntimeApis`.
 
----v
+---
 
 ### Pallet <=> Runtime
 
-We build a runtime - using `construct_runtime!` XOR `#[runtime]` - typically twice:
+We build a runtime - using the `#[runtime]` macro - typically twice:
 
 1. Per pallet, there is a mock runtime.
 2. A real runtime elsewhere.
@@ -42,29 +42,7 @@ Benchmarking can then use both of these runtimes.
 
 ---
 
-## `construct_runtime`: `Runtime` type
-
-<div class="flex-container text-small">
-<div class="left" style="max-width: 50%;">
-
-Legacy syntax:
-
-```rust [1-100|2]
-frame_support::construct_runtime!(
-  pub struct Runtime {
-    System: frame_system,
-    Timestamp: pallet_timestamp,
-    Balances: pallet_balances,
-    Aura: pallet_aura,
-    Dpos: pallet_dpos,
-  }
-);
-```
-
-</div>
-<div class="right" style="max-width: 50%; padding-left: 10px;">
-
-New syntax:
+## `#[runtime]`: `Runtime` type
 
 ```rust [1-100|5]
 #[frame_support::runtime]
@@ -83,13 +61,10 @@ mod runtime {
 }
 ```
 
-</div>
-</div>
-
 Note:
-Note the differences between the 2 versions, e.g. indices no longer being optional.
+Pallet indices are mandatory in the new `#[runtime]` syntax (unlike the legacy `construct_runtime!` where they were optional).
 
----v
+---
 
 ### `Runtime` type
 
@@ -105,7 +80,7 @@ impl pallet_dpos::Config for Runtime { .. }
 Notes:
 Which means that the Runtime is configured at the type level at compile time.
 
----v
+---
 
 ### `<T: Config>` ==> `Runtime`
 
@@ -122,30 +97,7 @@ frame_system::Account::<Runtime>::get(42u32);
 
 ---
 
-## `construct_runtime`: Pallet List
-
-<div class="flex-container text-small">
-<div class="left" style="max-width: 50%;">
-
-Legacy syntax:
-
-```rust [3-7|8]
-frame_support::construct_runtime!(
-  pub struct Runtime {
-    System: frame_system = 0,
-    Timestamp: pallet_timestamp = 1,
-    Balances: pallet_balances,
-    Aura: pallet_aura,
-    Dpos: pallet_dpos = 42,
-    <NameYouChoose>: path_to_crate,
-  }
-);
-```
-
-</div>
-<div class="right" style="max-width: 50%; padding-left: 10px;">
-
-New syntax:
+## `#[runtime]`: Pallet List
 
 ```rust [6-11|12-13]
 #[frame_support::runtime]
@@ -164,10 +116,7 @@ mod runtime {
 }
 ```
 
-</div>
-</div>
-
----v
+---
 
 ### Pallet List
 
@@ -182,7 +131,7 @@ type DPos = pallet_dpos::Pallet<Runtime>;
 
 - Recall that `Runtime` implements `<T: Config>` of all pallets.
 
----v
+---
 
 ### Pallet List
 
@@ -194,7 +143,7 @@ frame_system::Pallet::<Runtime>::account(42u32); // 🤮
 System::account(42u32); // 🥳
 ```
 
----v
+---
 
 ### Pallet List
 
@@ -222,7 +171,7 @@ Notes:
 Question: What will be the order of `fn on_initialize()`?
 There's also `type AllPalletsWithoutSystem`.
 
----v
+---
 
 ### Pallet List + Outer Enums
 
@@ -233,14 +182,16 @@ There's also `type AllPalletsWithoutSystem`.
   - `RuntimeError`
   - `RuntimeOrigin`
   - `RuntimeHoldReason` / `RuntimeFreezeReason`
+  - `RuntimeSlashReason` / `RuntimeLockId`
   - `RuntimeTask`
+  - `RuntimeViewFunction`
   - `RuntimeGenesisConfig`
 
 Notes:
 
 See the lecture on individual item, and the "Outer Enum" lecture.
 
----v
+---
 
 ### Pallet List: `RuntimeCall` Example
 
@@ -273,29 +224,11 @@ enum RuntimeCall {
 
 <!-- .element: class="fragment" -->
 
----v
+---
 
-### Pallet List: Pallet Parts
+### Pallet List: Pallet Customization
 
-```rust [1-100|3-5]
-frame_support::construct_runtime!(
-  pub struct Runtime {
-    System: frame_system::{Pallet, Call, Config, Storage, Event<T>},
-    Balances: pallet_balances::{Pallet, Call, Storage, Config<T>, Event<T>},
-    Dpos: pallet_dpos,
-  }
-);
-```
-
-- Omitting them will exclude them from the metadata, or the "outer/runtime types"
-
-<!-- .element: class="fragment" -->
-
----v
-
-### Pallet List: Pallet Parts
-
-New syntax doesn't have parts in the same way but offers customization:
+The `#[runtime]` macro pulls pallet parts in automatically, but you can opt-out of a few things per pallet:
 
 ```rust [2-3|6-7]
 #[runtime::pallet_index(1)]
@@ -310,10 +243,10 @@ pub type Balances = pallet_balances;
 
 ---
 
-## `construct_runtime`: Final Thoughts
+## `#[runtime]`: Final Thoughts
 
-- Order in the `construct_runtime` matters! (but not in `#[runtime]`)
-- Recall `integrity_test()` is called upon `construct_runtime`.
+- Order of pallets does not matter in `#[runtime]` (pallet indices drive the ordering).
+- Recall `integrity_test()` is called when the runtime is built.
 
 ```sh
 test mock::__construct_runtime_integrity_test::runtime_integrity_tests ... ok
@@ -330,12 +263,12 @@ a runtime amalgamator is composed of the following:
 1. all pallet's `Config` implemented by a `struct Runtime`;
 1. construct `Executive` and use it to implement all the runtime APIs
 1. Optionally, some boilerplate to setup benchmarking.
-1. invoke `construct_runtime!`.
+1. invoke the `#[frame_support::runtime]` macro.
 1. Alias for each pallet.
 
-The `construct_runtime!` itself does a few things under the hood:
+The `#[runtime]` macro itself does a few things under the hood:
 
-1. crate `struct Runtime`.
+1. create `struct Runtime`.
 1. amalgamate `enum RuntimeCall`; // passed inwards to some pallets that want to store calls.
 1. amalgamate `enum RuntimeEvent`; // passed inwards to all pallets.
 1. amalgamate `enum RuntimeOrigin` (this is a fixed struct, not an amalgamation);
@@ -347,9 +280,10 @@ The `construct_runtime!` itself does a few things under the hood:
 
 > `RuntimeError` now exists as an amalgamated type, similar to `RuntimeEvent` and `RuntimeCall`.
 
-- Ordering in `construct_runtime` matters.
-- Pallet parts can be optional in `construct_runtime!`.
+- Pallet indices are mandatory in `#[runtime]`.
 
-```
+---
 
-```
+<!-- .slide: data-background-color="#000000" -->
+
+# Questions

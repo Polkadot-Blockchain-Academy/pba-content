@@ -13,13 +13,13 @@ instructors: ["Kian Paimani"]
 
 ## Testing and Mocks
 
-A test requires a mock runtime, so we need to do a full `construct_runtime` 😱
+A test requires a mock runtime, so we need to do a full `#[runtime]` 😱
 
 .. but luckily, most types can be mocked 😮‍💨
 
 <!-- .element: class="fragment" -->
 
----v
+---
 
 ### Testing and Mocks
 
@@ -41,7 +41,7 @@ pub trait Config: frame_system::Config {
 }
 ```
 
----v
+---
 
 ### Testing: `Get<_>`
 
@@ -61,7 +61,7 @@ impl pallet_template::Config for Runtime {
 
 Note: `parameter_types` generates `impl Get for MyMaxVoters`
 
----v
+---
 
 ### Testing: `Get<_>`
 
@@ -73,7 +73,7 @@ impl pallet_dpos::Config for Runtime {
 }
 ```
 
----v
+---
 
 ### Testing: `Get<_>`
 
@@ -119,7 +119,7 @@ impl frame_system::Config for Runtime {
 }
 ```
 
----v
+---
 
 ### `derive_impl`: How It Works
 
@@ -170,7 +170,7 @@ impl<T: Config> BuildGenesisConfig for GenesisConfig<T> {
 }
 ```
 
----v
+---
 
 ### Testing and Mocks: Genesis and Builder
 
@@ -194,7 +194,7 @@ impl Builder {
 
 <!-- .element: class="fragment" -->
 
----v
+---
 
 ### Testing and Mocks: Genesis and Builder
 
@@ -216,7 +216,7 @@ impl Builder {
 }
 ```
 
----v
+---
 
 ### Testing and Mocks
 
@@ -259,7 +259,7 @@ MyMaxVoters::get();
 
 Note: This is _testing only_ and will create a static variable that you can adjust for your tests.
 
----v
+---
 
 ## Testing: Adjustable `parameter_types!`
 
@@ -284,7 +284,7 @@ Note: This uses the given name as a storage key, so be careful with collisions!
 - De-nada! We can fake everything in tests 🤠
 <!-- .element: class="fragment" -->
 
----v
+---
 
 ### Progressing Blocks
 
@@ -301,7 +301,7 @@ pub fn next_block() {
 }
 ```
 
----v
+---
 
 ### Progressing Blocks
 
@@ -316,11 +316,10 @@ pub fn next_block() {
 }
 ```
 
----v
+---
 
 ### Progressing Blocks
 
-````rust
 ```rust
 #[test]
 fn test() {
@@ -340,8 +339,6 @@ fn test() {
     // repeat..
   });
 }
-````
-
 ```
 
 ---
@@ -359,4 +356,12 @@ Notes:
 - Discussion on advanced testing: https://forum.polkadot.network/t/testing-complex-frame-pallets-discussion-tools/356
 - Reserve topic: Reading events.
 - Reserve-topic: try-state.
+
+```
+
+---
+
+<!-- .slide: data-background-color="#000000" -->
+
+# Questions
 ```
