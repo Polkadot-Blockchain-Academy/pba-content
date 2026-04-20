@@ -281,3 +281,9 @@ The `#[runtime]` macro itself does a few things under the hood:
 > `RuntimeError` now exists as an amalgamated type, similar to `RuntimeEvent` and `RuntimeCall`.
 
 - Pallet indices are mandatory in `#[runtime]`.
+
+---
+
+<!-- .slide: data-background-color="#000000" -->
+
+# Questions

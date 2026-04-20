@@ -498,3 +498,9 @@ Regarding this drawback to offchain workers that you can only upgrade in cadence
 Offchain worker, like tx-pool api, is only called from an offchain context. Node operators can
 easily use the runtime overrides feature to change the behavior of their offchain worker anytime
 they want.
+
+---
+
+<!-- .slide: data-background-color="#000000" -->
+
+# Questions

@@ -656,3 +656,9 @@ pub type TxExtension = (
 - TransactionExtension that keeps a counter of all successful/failed transactions
 - TransactionExtension that tries to refund the transaction from each account as long as they submit less
   than 1tx/day.
+
+---
+
+<!-- .slide: data-background-color="#000000" -->
+
+# Questions

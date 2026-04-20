@@ -1503,3 +1503,9 @@ We need to store some metadata about the configuration of each validator.
 - The principles of Substrate Storage directly inform what kinds of behaviors you can do in FRAME.
 - Just because something does not exist in FRAME does not mean you cannot do it!
 - Just because something does exist in FRAME does not mean you can use it without thinking!
+
+---
+
+<!-- .slide: data-background-color="#000000" -->
+
+# Questions
