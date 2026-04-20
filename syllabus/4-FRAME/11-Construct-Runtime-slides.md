@@ -25,7 +25,7 @@ A runtime is really ✌️ things:
 1. A struct that implements `Config` of all pallets.
 2. A type that helps `Executive` implement `RuntimeApis`.
 
----v
+---
 
 ### Pallet <=> Runtime
 
@@ -64,7 +64,7 @@ mod runtime {
 Note:
 Pallet indices are mandatory in the new `#[runtime]` syntax (unlike the legacy `construct_runtime!` where they were optional).
 
----v
+---
 
 ### `Runtime` type
 
@@ -80,7 +80,7 @@ impl pallet_dpos::Config for Runtime { .. }
 Notes:
 Which means that the Runtime is configured at the type level at compile time.
 
----v
+---
 
 ### `<T: Config>` ==> `Runtime`
 
@@ -116,7 +116,7 @@ mod runtime {
 }
 ```
 
----v
+---
 
 ### Pallet List
 
@@ -131,7 +131,7 @@ type DPos = pallet_dpos::Pallet<Runtime>;
 
 - Recall that `Runtime` implements `<T: Config>` of all pallets.
 
----v
+---
 
 ### Pallet List
 
@@ -143,7 +143,7 @@ frame_system::Pallet::<Runtime>::account(42u32); // 🤮
 System::account(42u32); // 🥳
 ```
 
----v
+---
 
 ### Pallet List
 
@@ -171,7 +171,7 @@ Notes:
 Question: What will be the order of `fn on_initialize()`?
 There's also `type AllPalletsWithoutSystem`.
 
----v
+---
 
 ### Pallet List + Outer Enums
 
@@ -191,7 +191,7 @@ Notes:
 
 See the lecture on individual item, and the "Outer Enum" lecture.
 
----v
+---
 
 ### Pallet List: `RuntimeCall` Example
 
@@ -224,7 +224,7 @@ enum RuntimeCall {
 
 <!-- .element: class="fragment" -->
 
----v
+---
 
 ### Pallet List: Pallet Customization
 
@@ -281,8 +281,3 @@ The `#[runtime]` macro itself does a few things under the hood:
 > `RuntimeError` now exists as an amalgamated type, similar to `RuntimeEvent` and `RuntimeCall`.
 
 - Pallet indices are mandatory in `#[runtime]`.
-- The legacy `construct_runtime!` macro still exists for backward compatibility but is no longer recommended for new runtimes.
-
-```
-
-```

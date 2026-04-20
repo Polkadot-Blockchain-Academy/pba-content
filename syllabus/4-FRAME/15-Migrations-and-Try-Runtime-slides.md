@@ -27,7 +27,7 @@ teaching-assistants: [".."]
 
 ## When is a Migration Required?
 
----v
+---
 
 ### When is a Migration Required?
 
@@ -36,7 +36,7 @@ teaching-assistants: [".."]
 
 > Anything that changes **encoding** is a migration!
 
----v
+---
 
 ### When is a Migration Required?
 
@@ -56,7 +56,7 @@ pub struct Foo(u64)
 
 <!-- .element: class="fragment" -->
 
----v
+---
 
 ### When is a Migration Required?
 
@@ -78,7 +78,7 @@ pub struct Foo(u16, u16)
 
 <!-- .element: class="fragment" -->
 
----v
+---
 
 ### When is a Migration Required?
 
@@ -98,7 +98,7 @@ pub struct Foo { a: u32, b: u32, c: u32 }
 
 <!-- .element: class="fragment" -->
 
----v
+---
 
 ### When is a Migration Required?
 
@@ -118,7 +118,7 @@ pub struct Foo { a: u32, b: u32, c: PhantomData<_> }
 
 <!-- .element: class="fragment" -->
 
----v
+---
 
 ### When is a Migration Required?
 
@@ -142,7 +142,7 @@ pub type FooValue = StorageValue<_, Foo>;
 
 <!-- .element: class="fragment" -->
 
----v
+---
 
 ### When is a Migration Required?
 
@@ -162,7 +162,7 @@ pub enum Foo { A(u32), C(u128), B(u32) }
 
 <!-- .element: class="fragment" -->
 
----v
+---
 
 ### 🦀 Rust Recall 🦀
 
@@ -171,7 +171,7 @@ Enums are encoded as the variant index, followed by the inner data:
 - The order matters! Both in `struct` and `enum`.
 - Enums that implement `Encode` cannot have more than 255 variants.
 
----v
+---
 
 ### When is a Migration Required?
 
@@ -196,7 +196,7 @@ pub type BarValue = StorageValue<_, u32>;
 
 <!-- .element: class="fragment" -->
 
----v
+---
 
 ### When is a Migration Required?
 
@@ -223,14 +223,14 @@ pub type I_can_NOW_BE_renamEd_hahAA = StorageValue<_, u32>;
 
 - Now that we know how to detect if a storage change is a **migration**, let's see how we write one.
 
----v
+---
 
 ### Writing Runtime Migrations
 
 - Once you upgrade a runtime, the code is expecting the data to be in a new format.
 - Any `on_initialize` or transaction might fail decoding data, and potentially `panic!`
 
----v
+---
 
 ### Writing Runtime Migrations
 
@@ -245,7 +245,7 @@ pub type I_can_NOW_BE_renamEd_hahAA = StorageValue<_, u32>;
 
 ## The Problem: Migration Safety
 
----v
+---
 
 ### What Can Go Wrong?
 
@@ -265,7 +265,7 @@ impl<T: Config> OnRuntimeUpgrade for Pallet<T> {
 - Already-migrated data may not decode properly
 - Chain could brick!
 
----v
+---
 
 ### Version Checking is Critical
 
@@ -288,7 +288,7 @@ But managing this manually is error-prone:
 
 ## How We Write Migrations
 
----v
+---
 
 ### Two Migration Approaches
 
@@ -303,7 +303,7 @@ But managing this manually is error-prone:
 
 ## Single-Block Migrations: VersionedMigration
 
----v
+---
 
 ### Using VersionedMigration
 
@@ -321,7 +321,7 @@ pub type MigrateV0ToV1<T> = VersionedMigration<
 >;
 ```
 
----v
+---
 
 ### Writing Migration Logic
 
@@ -347,7 +347,7 @@ pub mod v1 {
 }
 ```
 
----v
+---
 
 ### Storage Version Management
 
@@ -370,7 +370,7 @@ let current = Pallet::<T>::current_storage_version();
 let onchain = Pallet::<T>::on_chain_storage_version();
 ```
 
----v
+---
 
 ### Testing Migrations with Try-Runtime
 
@@ -396,7 +396,7 @@ fn post_upgrade(state: Vec<u8>) -> Result<(), TryRuntimeError> {
 
 ## Multi-Block Migrations
 
----v
+---
 
 ### When to Use Multi-Block Migrations
 
@@ -407,7 +407,7 @@ Examples:
 
 - Migrating all account balances
 
----v
+---
 
 ### Multi-Block Migration Implementation
 
@@ -468,11 +468,11 @@ impl<T: Config> SteppedMigration for LazyMigrationV1<T> {
 Notes:
 https://github.com/paritytech/polkadot-sdk/blob/polkadot-stable2506/substrate/frame/examples/multi-block-migrations/src/migrations/v1/mod.rs
 
----v
+---
 
 ## Setting Migrations in Runtime
 
----v
+---
 
 ### Single Block Migrations in Runtime
 
@@ -497,7 +497,7 @@ pub type Executive = frame_executive::Executive<
 >;
 ```
 
----v
+---
 
 ### Multi-Block Migrations in Runtime
 
@@ -549,7 +549,7 @@ MyStorage::<T>::translate(|old: OldType| -> NewType {
 
 ## Testing Upgrades with Try-Runtime
 
----v
+---
 
 ### Try-Runtime Overview
 
@@ -564,7 +564,7 @@ MyStorage::<T>::translate(|old: OldType| -> NewType {
 cargo install --git https://github.com/paritytech/try-runtime-cli --locked
 ```
 
----v
+---
 
 ### Try-Runtime Commands
 
@@ -579,7 +579,7 @@ try-runtime \
     live --uri wss://rpc.polkadot.io
 ```
 
----v
+---
 
 ### Remote Externalities
 
@@ -601,7 +601,7 @@ ext.execute_with(|| {
 });
 ```
 
----v
+---
 
 ### Try-Runtime Hooks
 
@@ -619,7 +619,7 @@ fn try_state(_: BlockNumber) -> Result<(), TryRuntimeError> {
 }
 ```
 
----v
+---
 
 ### Migration Testing Workflow
 
@@ -627,7 +627,7 @@ fn try_state(_: BlockNumber) -> Result<(), TryRuntimeError> {
 2. Test locally
 3. Test against live state
 
----v
+---
 
 ### Best Practices
 
