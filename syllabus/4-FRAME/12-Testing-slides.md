@@ -357,11 +357,8 @@ Notes:
 - Reserve topic: Reading events.
 - Reserve-topic: try-state.
 
-```
-
 ---
 
 <!-- .slide: data-background-color="#000000" -->
 
 # Questions
-```
