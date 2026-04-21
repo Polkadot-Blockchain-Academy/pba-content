@@ -150,8 +150,6 @@ Further tie breakers:
 2. ttl: shortest `longevity` goes first
 3. time in the queue: longest to have waited goes first
 
-<!-- .element: class="fragment" -->
-
 Note:
 
 https://github.com/paritytech/polkadot-sdk/blob/bc53b9a03a742f8b658806a01a7bf853cb9a86cd/substrate/client/transaction-pool/src/graph/ready.rs#L146
@@ -256,13 +254,9 @@ A transaction extension can be either or both of the following things:
 - Some additional data that is attached to the transaction.
   - The tip!
 
-<!-- .element: class="fragment" -->
-
 - Some hooks that are executed before and after the transaction is executed.
   - Before each transaction is executed, it must pay its fee upfront.
   - Perhaps refund the fee partially 🤑.
-
-<!-- .element: class="fragment" -->
 
 ---
 
@@ -271,13 +265,9 @@ A transaction extension can be either or both of the following things:
 - Some additional validation logic that is used to validate the transaction, and give feedback to the pool.
   - Set priority of the transaction based on some metric!
 
-<!-- .element: class="fragment" -->
-
 - Some additional data that must be present in the signed payload of each transaction.
   - Data that the sender has, the chain also has, it is not communicated itself, but it is part of the signature payload.
   - Spec version and genesis hash is part of all transactions' signature payload!
-
-<!-- .element: class="fragment" -->
 
 ---
 
@@ -604,8 +594,6 @@ pub enum Pre<T: Config> {
 }
 ```
 
-<!-- .element: class="fragment" -->
-
 ---
 
 ### `CheckGenesis`
@@ -614,11 +602,7 @@ Wants to make sure you are signing against the right chain.
 
 Put the genesis hash in `implicit`.
 
-<!-- .element: class="fragment" -->
-
 `CheckSpecVersion` and `CheckTxVersion` work very similarly.
-
-<!-- .element: class="fragment" -->
 
 ---
 
@@ -635,16 +619,12 @@ Put the genesis hash in `implicit`.
 - `validate`: check the nonce (reads storage), DO NOT WRITE ANYTHING, returns `provides` and `requires`.
 - `prepare`: check nonce and actually update it.
 
-<!-- .element: class="fragment" -->
-
 <div>
 
 - remember that:
   - `validate` should be lightweight; reads are allowed but writes are reverted.
 
 </div>
-
-<!-- .element: class="fragment" -->
 
 ---
 
@@ -677,8 +657,6 @@ alice nonce 2  ✅ Ready (alice, 1 now provided)
 - Check there is enough weight in `validate`.
 - Calculate and update the consumed weight in `prepare`.
 - Adjust consumed weight in `post_dispatch` based on unspent weight.
-
-<!-- .element: class="fragment" -->
 
 ---
 
