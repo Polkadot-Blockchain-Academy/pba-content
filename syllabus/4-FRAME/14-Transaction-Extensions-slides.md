@@ -434,6 +434,31 @@ extensions is applied to **all transactions**, throughout the runtime.
 
 ---
 
+## Specific Transaction Extensions Explained Simply
+
+```
+[F] - Functional check, no data needed.
+[H] - Implicit data, not sent on-chain, reintroduced by runtime.
+[I] - Explicit data, directly included in the extrinsic.
+```
+
+<div class="text-small">
+
+1. `CheckNonZeroSender`: [F] Ensures that we do not allow calls from the all `0` address.
+2. `CheckSpecVersion`: [H] Verifies the transaction was created for the current runtime specification.
+3. `CheckTxVersion`: [H] Confirms the runtime can understand the transaction payload.
+4. `CheckGenesis`: [H] Makes sure the transaction is valid only for a specific blockchain.
+5. `CheckMortality`: [I] Guarantees a transaction is only valid for a limited time, preventing replays.
+6. `CheckNonce`: [I] Enables transaction ordering and prevents transaction replay.
+7. `CheckWeight`: [F] Checks the transaction's weight fits in the block.
+8. `ChargeTransactionPayment`: [I] Allows tips and deducts the final transaction fee.
+9. `PrevalidateAttests`: [F] Specifically used for Ethereum ICO claims of DOT.
+10. `CheckMetadataHash`: [H] Ensures the transaction was created using the appropriate metadata.
+
+</div>
+
+---
+
 ## Encoding
 
 ```rust
@@ -481,6 +506,56 @@ fn check(self, lookup: &Lookup) -> Result<Self::Checked, TransactionValidityErro
   })
 }
 ```
+
+---
+
+## Hidden Data: Simplified
+
+<div class="text-small">
+
+Suppose we want to submit a message for a specific chain like Polkadot.
+
+Everyone knows the Polkadot Genesis Hash is:
+
+```rust
+0x91b171bb158e2d3848fa23a9f1c25182fb8e20313b2c1eb49219da7a70ce90c3
+```
+
+We can construct a message like:
+
+```rust
+// Simplified idea of a signature
+Blake2_256(
+  "hello, world!",
+  "0x91b171bb158e2d3848fa23a9f1c25182fb8e20313b2c1eb49219da7a70ce90c3",
+) = 0x4429c519aac4859ac0f7783dc42f230264959edcbcb8d70d9d784907bcb98c76
+```
+
+Then we only send to the node the message, and the final hash / signature:
+
+```rust
+message: "hello, world!"
+hash / signature: "0x4429c519aac4859ac0f7783dc42f230264959edcbcb8d70d9d784907bcb98c76"
+```
+
+And the node can re-inject the genesis hash, calculate, and ensure the final hash / signature matches.
+
+</div>
+
+---
+
+## Final Signed Payload
+
+To create a signature, the signer will sign over:
+
+- Call Payload
+- All Extension Data (both explicit and implicit)
+  - Era, Nonce, Tip, Spec Version, Transaction Version, Genesis Hash, Block Hash, etc...
+  - But remember we only include into the extrinsic payload what is not implicit.
+
+If the final payload is larger than 256 bytes (which it almost always is), we hash the payload first, and sign the hash instead, saving compute complexity.
+
+See: `struct SignedPayload`.
 
 ---
 
@@ -626,6 +701,26 @@ pub type TxExtension = (
 	>,
 );
 ```
+
+---
+
+## Future: v5 General Extrinsic Format
+
+The Polkadot SDK now supports a v5 "General" extrinsic format where the signature is **not** in the preamble. Instead, authorization is handled entirely by transaction extensions.
+
+<div class="text-small">
+
+**What v5 brings:**
+
+- **`AuthorizeCall`**: A new extension that validates authorization logic defined on the call itself.
+- **`VerifySignature`**: Signature verification moves into the extension pipeline.
+- **`WeightReclaim`**: Refunds unused weight back to users.
+- **Meta-transactions**: Someone can submit a transaction on behalf of another account.
+- **General transactions**: Authorization without traditional account signatures.
+
+</div>
+
+> Polkadot mainnet currently uses the v4 Signed format. The transition to v5 General is part of the ongoing [Extrinsic Horizon](https://github.com/paritytech/polkadot-sdk/issues/2415) effort, already available in the SDK.
 
 ---
 
