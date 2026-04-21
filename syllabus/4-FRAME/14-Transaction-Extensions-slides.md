@@ -150,8 +150,6 @@ Further tie breakers:
 2. ttl: shortest `longevity` goes first
 3. time in the queue: longest to have waited goes first
 
-<!-- .element: class="fragment" -->
-
 Note:
 
 https://github.com/paritytech/polkadot-sdk/blob/bc53b9a03a742f8b658806a01a7bf853cb9a86cd/substrate/client/transaction-pool/src/graph/ready.rs#L146
@@ -256,13 +254,9 @@ A transaction extension can be either or both of the following things:
 - Some additional data that is attached to the transaction.
   - The tip!
 
-<!-- .element: class="fragment" -->
-
 - Some hooks that are executed before and after the transaction is executed.
   - Before each transaction is executed, it must pay its fee upfront.
   - Perhaps refund the fee partially 🤑.
-
-<!-- .element: class="fragment" -->
 
 ---
 
@@ -271,13 +265,9 @@ A transaction extension can be either or both of the following things:
 - Some additional validation logic that is used to validate the transaction, and give feedback to the pool.
   - Set priority of the transaction based on some metric!
 
-<!-- .element: class="fragment" -->
-
 - Some additional data that must be present in the signed payload of each transaction.
   - Data that the sender has, the chain also has, it is not communicated itself, but it is part of the signature payload.
   - Spec version and genesis hash is part of all transactions' signature payload!
-
-<!-- .element: class="fragment" -->
 
 ---
 
@@ -434,6 +424,31 @@ extensions is applied to **all transactions**, throughout the runtime.
 
 ---
 
+## Specific Transaction Extensions Explained Simply
+
+```
+[F] - Functional check, no data needed.
+[H] - Implicit data, not sent on-chain, reintroduced by runtime.
+[I] - Explicit data, directly included in the extrinsic.
+```
+
+<div class="text-small">
+
+1. `CheckNonZeroSender`: [F] Ensures that we do not allow calls from the all `0` address.
+2. `CheckSpecVersion`: [H] Verifies the transaction was created for the current runtime specification.
+3. `CheckTxVersion`: [H] Confirms the runtime can understand the transaction payload.
+4. `CheckGenesis`: [H] Makes sure the transaction is valid only for a specific blockchain.
+5. `CheckMortality`: [I] Guarantees a transaction is only valid for a limited time, preventing replays.
+6. `CheckNonce`: [I] Enables transaction ordering and prevents transaction replay.
+7. `CheckWeight`: [F] Checks the transaction's weight fits in the block.
+8. `ChargeTransactionPayment`: [I] Allows tips and deducts the final transaction fee.
+9. `PrevalidateAttests`: [F] Specifically used for Ethereum ICO claims of DOT.
+10. `CheckMetadataHash`: [H] Ensures the transaction was created using the appropriate metadata.
+
+</div>
+
+---
+
 ## Encoding
 
 ```rust
@@ -484,6 +499,56 @@ fn check(self, lookup: &Lookup) -> Result<Self::Checked, TransactionValidityErro
 
 ---
 
+## Hidden Data: Simplified
+
+<div class="text-small">
+
+Suppose we want to submit a message for a specific chain like Polkadot.
+
+Everyone knows the Polkadot Genesis Hash is:
+
+```rust
+0x91b171bb158e2d3848fa23a9f1c25182fb8e20313b2c1eb49219da7a70ce90c3
+```
+
+We can construct a message like:
+
+```rust
+// Simplified idea of a signature
+Blake2_256(
+  "hello, world!",
+  "0x91b171bb158e2d3848fa23a9f1c25182fb8e20313b2c1eb49219da7a70ce90c3",
+) = 0x4429c519aac4859ac0f7783dc42f230264959edcbcb8d70d9d784907bcb98c76
+```
+
+Then we only send to the node the message, and the final hash / signature:
+
+```rust
+message: "hello, world!"
+hash / signature: "0x4429c519aac4859ac0f7783dc42f230264959edcbcb8d70d9d784907bcb98c76"
+```
+
+And the node can re-inject the genesis hash, calculate, and ensure the final hash / signature matches.
+
+</div>
+
+---
+
+## Final Signed Payload
+
+To create a signature, the signer will sign over:
+
+- Call Payload
+- All Extension Data (both explicit and implicit)
+  - Era, Nonce, Tip, Spec Version, Transaction Version, Genesis Hash, Block Hash, etc...
+  - But remember we only include into the extrinsic payload what is not implicit.
+
+If the final payload is larger than 256 bytes (which it almost always is), we hash the payload first, and sign the hash instead, saving compute complexity.
+
+See: `struct SignedPayload`.
+
+---
+
 ## Transaction Pool Validation
 
 - Recall that transaction pool validation should be minimum effort and static.
@@ -529,8 +594,6 @@ pub enum Pre<T: Config> {
 }
 ```
 
-<!-- .element: class="fragment" -->
-
 ---
 
 ### `CheckGenesis`
@@ -539,11 +602,7 @@ Wants to make sure you are signing against the right chain.
 
 Put the genesis hash in `implicit`.
 
-<!-- .element: class="fragment" -->
-
 `CheckSpecVersion` and `CheckTxVersion` work very similarly.
-
-<!-- .element: class="fragment" -->
 
 ---
 
@@ -560,16 +619,12 @@ Put the genesis hash in `implicit`.
 - `validate`: check the nonce (reads storage), DO NOT WRITE ANYTHING, returns `provides` and `requires`.
 - `prepare`: check nonce and actually update it.
 
-<!-- .element: class="fragment" -->
-
 <div>
 
 - remember that:
   - `validate` should be lightweight; reads are allowed but writes are reverted.
 
 </div>
-
-<!-- .element: class="fragment" -->
 
 ---
 
@@ -603,8 +658,6 @@ alice nonce 2  ✅ Ready (alice, 1 now provided)
 - Calculate and update the consumed weight in `prepare`.
 - Adjust consumed weight in `post_dispatch` based on unspent weight.
 
-<!-- .element: class="fragment" -->
-
 ---
 
 ## Feeless Transaction Extension
@@ -626,6 +679,26 @@ pub type TxExtension = (
 	>,
 );
 ```
+
+---
+
+## Future: v5 General Extrinsic Format
+
+The Polkadot SDK now supports a v5 "General" extrinsic format where the signature is **not** in the preamble. Instead, authorization is handled entirely by transaction extensions.
+
+<div class="text-small">
+
+**What v5 brings:**
+
+- **`AuthorizeCall`**: A new extension that validates authorization logic defined on the call itself.
+- **`VerifySignature`**: Signature verification moves into the extension pipeline.
+- **`WeightReclaim`**: Refunds unused weight back to users.
+- **Meta-transactions**: Someone can submit a transaction on behalf of another account.
+- **General transactions**: Authorization without traditional account signatures.
+
+</div>
+
+> Polkadot mainnet currently uses the v4 Signed format. The transition to v5 General is part of the ongoing [Extrinsic Horizon](https://github.com/paritytech/polkadot-sdk/issues/2415) effort, already available in the SDK.
 
 ---
 
