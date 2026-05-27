@@ -2,7 +2,7 @@
 title: Substrate Transaction Pool
 ---
 
-<!-- .slide: data-background-image="../../../assets/img/0-Shared/bg/PBA_Background.png" data-background-size="cover" -->
+<!-- .slide: data-background-image="../../assets/img/0-Shared/bg/PBA_Background.png" data-background-size="cover" -->
 
 # Substrate Transaction Pool
 
@@ -52,7 +52,7 @@ Let's take a closer look.
 
 ## Context
 
-<image rounded src="../../../assets/img/5-Substrate/dev-pool-context.svg">
+<img rounded src="../../assets/img/5-Substrate/dev-pool-context.svg" />
 
 Notes:
 
@@ -483,7 +483,7 @@ Notes:
 
 > Check speaker notes (click "s" 😉)
 
-<img width="300px" rounded src="../../../assets/img/5-Substrate/thats_all_folks.png" />
+<img width="300px" rounded src="../../assets/img/5-Substrate/thats_all_folks.png" />
 
 Notes:
 

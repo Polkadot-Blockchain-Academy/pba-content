@@ -24,7 +24,7 @@ cargo build --release -p minimal-template-runtime
 
 ## Substrate Node's Little Secret
 
-<img src="../../../assets/img/5-Substrate/dev-4-3-omni.svg" />
+<img src="../../assets/img/5-Substrate/dev-4-3-omni.svg" />
 
 ---v
 
@@ -82,7 +82,7 @@ chain-spec-builder create --runtime ./minimal_template_runtime.wasm default
 
 ## JSON RPC
 
-<img style="width: 800px;" src="../../../assets/img/5-Substrate/dev-4-1-json.svg" />
+<img style="width: 800px;" src="../../assets/img/5-Substrate/dev-4-1-json.svg" />
 
 ---
 

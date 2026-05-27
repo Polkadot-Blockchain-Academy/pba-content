@@ -16,7 +16,7 @@ The two ways of transferring assets between consensus systems are teleports and 
 
 ## 1. Asset teleportation
 
-<img rounded style="width: 500px;" src="./img/teleport.png">
+<img rounded style="width: 500px;" src="./img/teleport.png" />
 
 Notes:
 
@@ -45,7 +45,7 @@ graph LR
 
 ## 2. Reserve asset transfers
 
-<img rounded style="width: 400px;" src="./img/reserve-tx.png">
+<img rounded style="width: 400px;" src="./img/reserve-tx.png" />
 
 Notes:
 
@@ -109,25 +109,25 @@ We'll look at an example and build on it as the lectures go on.
 
 ## Locations
 
-<img src="img/Example Flow - Locations.png">
+<img src="img/Example Flow - Locations.png" />
 
 ---v
 
 ## Assets
 
-<img src="img/Example Flow - Assets.png">
+<img src="img/Example Flow - Assets.png" />
 
 ---v
 
 ## Instructions (simple)
 
-<img src="img/Example Flow - Instructions (simple).png">
+<img src="img/Example Flow - Instructions (simple).png" />
 
 ---v
 
 ## Instructions (actual)
 
-<img src="img/Example Flow - Instructions (actual).png">
+<img src="img/Example Flow - Instructions (actual).png" />
 
 ---
 
