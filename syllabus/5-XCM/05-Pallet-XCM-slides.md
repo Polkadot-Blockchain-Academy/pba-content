@@ -137,7 +137,7 @@ Notes:
 
 ---v
 
-<img src="img/Example Flow - XCM Pallet.png">
+<img src="img/Example Flow - XCM Pallet.png" />
 
 ---
 

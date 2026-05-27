@@ -170,7 +170,7 @@ This protects against runtime upgrades breaking everything.
 
 # XCM vs Message Passing
 
-<img src="img/XCM Post truck.png">
+<img height="500" width="500" src="img/XCM Post truck.png" />
 
 Notes:
 
@@ -223,7 +223,7 @@ More about their executable nature later.
 
 # Example Flow
 
-<img src="img/Example Flow - Introduction.png">
+<img src="img/Example Flow - Introduction.png" />
 
 Notes:
 

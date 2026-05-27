@@ -87,7 +87,7 @@ Each can be configured to support different assets.
 
 ## Example (continued)
 
-<img src="img/Example Flow - Asset Transactor.png">
+<img src="img/Example Flow - Asset Transactor.png" />
 
 Notes:
 
@@ -120,7 +120,7 @@ Chains can configure its barrier to immediately filter unwanted messages.
 
 ---v
 
-<img src="img/Example Flow - Barrier (intro).png">
+<img src="img/Example Flow - Barrier (intro).png" />
 
 Notes:
 
@@ -128,7 +128,7 @@ Our example would need to pass the barrier to reach its destination and be execu
 
 ---v
 
-<img src="img/Example Flow - Barrier (wrong origin).png">
+<img src="img/Example Flow - Barrier (wrong origin).png" />
 
 Notes:
 
@@ -161,7 +161,7 @@ They come with some degree of customizability.
 
 ### AllowTopLevelPaidExecutionFrom
 
-<img src="img/Example Flow - Barrier (no fees).png">
+<img src="img/Example Flow - Barrier (no fees).png" />
 
 Notes:
 
@@ -172,7 +172,7 @@ this barrier will allow them to pass.
 
 ### AllowExplicitUnpaidExecutionFrom
 
-<img src="img/Example Flow - Barrier (explicit unpaid).png">
+<img src="img/Example Flow - Barrier (explicit unpaid).png" />
 
 Notes:
 
@@ -219,11 +219,11 @@ Specifies reserve locations for particular assets.
 
 ---v
 
-<img src="img/Example Flow - IsReserve.png">
+<img src="img/Example Flow - IsReserve.png" />
 
 ---v
 
-<img src="img/Example Flow - IsTeleporter.png">
+<img src="img/Example Flow - IsTeleporter.png" />
 
 ---
 
@@ -258,7 +258,7 @@ Different configuration items change the benchmarks.
 
 ---v
 
-<img src="img/Example Flow - Weigher.png">
+<img src="img/Example Flow - Weigher.png" />
 
 Notes:
 

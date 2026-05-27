@@ -159,27 +159,27 @@ The executor's state is transient, so any state changes to the underlying system
 
 ---v
 
-<img src="img/Example Flow - Local Instructions (simple).png">
+<img src="img/Example Flow - Local Instructions (simple).png" />
 
 ---v
 
-<img src="img/Example Flow - Local Instructions (actual).png">
+<img src="img/Example Flow - Local Instructions (actual).png" />
 
 ---v
 
-<img src="img/Example Flow - Local Instructions (step 1).png">
+<img src="img/Example Flow - Local Instructions (step 1).png" />
 
 ---v
 
-<img src="img/Example Flow - Local Instructions (step 2).png">
+<img src="img/Example Flow - Local Instructions (step 2).png" />
 
 ---v
 
-<img src="img/Example Flow - Local Instructions (step 3).png">
+<img src="img/Example Flow - Local Instructions (step 3).png" />
 
 ---v
 
-<img src="img/Example Flow - Local Instructions (final).png">
+<img src="img/Example Flow - Local Instructions (final).png" />
 
 ---v
 
@@ -187,31 +187,31 @@ The executor's state is transient, so any state changes to the underlying system
 
 ---v
 
-<img src="img/Example Flow - Instructions (actual).png">
+<img src="img/Example Flow - Instructions (actual).png" />
 
 ---v
 
-<img src="img/Example Flow - Remote Instructions (step 1).png">
+<img src="img/Example Flow - Remote Instructions (step 1).png" />
 
 ---v
 
-<img src="img/Example Flow - Remote Instructions (step 2).png">
+<img src="img/Example Flow - Remote Instructions (step 2).png" />
 
 ---v
 
-<img src="img/Example Flow - Remote Instructions (step 3).png">
+<img src="img/Example Flow - Remote Instructions (step 3).png" />
 
 ---v
 
-<img src="img/Example Flow - Remote Instructions (step 4).png">
+<img src="img/Example Flow - Remote Instructions (step 4).png" />
 
 ---v
 
-<img src="img/Example Flow - Remote Instructions (step 5).png">
+<img src="img/Example Flow - Remote Instructions (step 5).png" />
 
 ---v
 
-<img src="img/Example Flow - Remote Instructions (final).png">
+<img src="img/Example Flow - Remote Instructions (final).png" />
 
 ---
 
