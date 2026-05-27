@@ -90,7 +90,7 @@ Each can be configured to support different assets.</p>
 </aside></script></section><section data-markdown><script type="text/template">
 ## Example (continued)
 
-<img src="img/Example Flow - Asset Transactor.png">
+<img src="img/Example Flow - Asset Transactor.png" />
 
 <aside class="notes"><p>DOT lives in <code>pallet-balances</code>.
 USDT lives in an instance of <code>pallet-assets</code>.
@@ -113,11 +113,11 @@ It&#39;s a firewall.</p>
 
 Chains can configure its barrier to immediately filter unwanted messages.
 </script></section><section data-markdown><script type="text/template">
-<img src="img/Example Flow - Barrier (intro).png">
+<img src="img/Example Flow - Barrier (intro).png" />
 
 <aside class="notes"><p>Our example would need to pass the barrier to reach its destination and be executed.</p>
 </aside></script></section><section data-markdown><script type="text/template">
-<img src="img/Example Flow - Barrier (wrong origin).png">
+<img src="img/Example Flow - Barrier (wrong origin).png" />
 
 <aside class="notes"><p>We can filter messages from unwanted origins.
 We can also filter messages with unwanted instructions.
@@ -142,14 +142,14 @@ They come with some degree of customizability.</p>
 </aside></script></section><section data-markdown><script type="text/template">
 ### AllowTopLevelPaidExecutionFrom
 
-<img src="img/Example Flow - Barrier (no fees).png">
+<img src="img/Example Flow - Barrier (no fees).png" />
 
 <aside class="notes"><p>As long as they include the <code>PayFees</code> instruction, meaning they intend to pay fees,
 this barrier will allow them to pass.</p>
 </aside></script></section><section data-markdown><script type="text/template">
 ### AllowExplicitUnpaidExecutionFrom
 
-<img src="img/Example Flow - Barrier (explicit unpaid).png">
+<img src="img/Example Flow - Barrier (explicit unpaid).png" />
 
 <aside class="notes"><p>This barrier will allow messages from some origins when they use the <code>UnpaidExecution</code>
 instruction.
@@ -182,9 +182,9 @@ The second is very generic and can be used to generate accounts for any type of 
 
 Specifies reserve locations for particular assets.
 </script></section><section data-markdown><script type="text/template">
-<img src="img/Example Flow - IsReserve.png">
+<img src="img/Example Flow - IsReserve.png" />
 </script></section><section data-markdown><script type="text/template">
-<img src="img/Example Flow - IsTeleporter.png">
+<img src="img/Example Flow - IsTeleporter.png" />
 </script></section></section><section ><section data-markdown><script type="text/template">
 ## Weigher
 
@@ -208,7 +208,7 @@ XCM instructions need to be weighed by each runtime!
 
 Different configuration items change the benchmarks.
 </script></section><section data-markdown><script type="text/template">
-<img src="img/Example Flow - Weigher.png">
+<img src="img/Example Flow - Weigher.png" />
 
 <aside class="notes"><p>If you&#39;re using <code>pallet-assets</code> for example, instructions that use the <code>AssetTransactor</code>
 will inevitably be more expensive.
