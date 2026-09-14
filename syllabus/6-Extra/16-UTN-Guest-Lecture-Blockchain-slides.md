@@ -2,323 +2,440 @@
 title: La arquitectura de blockchains modernas
 description: Charla invitada para la UTN (Universidad Tecnológica Nacional, Argentina) por la Polkadot Blockchain Academy.
 duration: 2 hours
-owner: TODO
 ---
 
 <!-- .slide: data-background-image="../../assets/img/0-Shared/bg/PBA_Background.png" data-background-size="cover" -->
 
 # La arquitectura de blockchains modernas
 
-TODO: título, tu nombre, branding de PBA + UTN
+Francisco Aguirre, UTN Setiembre 2026
 
 ---
 
-## El punto de partida
-
-TODO: ustedes ya escriben smart contracts — un contrato es un huésped en la máquina de otro: corre bajo reglas que no puede cambiar. Hoy vemos cómo se construye la máquina. Agenda por actos.
-
-Diagram idea: un contrato chiquito (ícono de documento) viviendo adentro de una máquina grande etiquetada "blockchain", con un candado en las reglas de la máquina
-
----
-
-# Acto 1
-
-## Anatomía de una blockchain
-
----
-
-## La máquina de estados
-
-TODO: definir estado, extrinsics y la state transition function (STF): `estado_nuevo = STF(estado, extrinsic)`; la cadena como historial de transiciones que cualquiera puede re-ejecutar y verificar
-
-Diagram idea: caja "Estado S" + flecha etiquetada "extrinsic" pasando por una caja "STF" hacia otra caja "Estado S'"; abajo, dos personas recomputando y llegando al mismo resultado con tilde
-
----
-
-## Las capas de la máquina
-
-TODO: presentar las 4 capas — networking, consenso, runtime (protocolo), aplicación — y qué vive en cada una; la charla las recorre de abajo hacia arriba
-
-Diagram idea: stack vertical de 4 capas etiquetadas "Networking / Consenso / Runtime / Aplicación" con ejemplos chicos al costado de cada una
-
----
-
-## Networking
-
-TODO: gossip P2P, mempool, propagación de bloques y transacciones entre pares sin servidor central
-
-Diagram idea: malla de nodos conectados entre sí con flechas de gossip propagando una transacción que nace en un nodo
-
----
-
-## Consenso
-
-TODO: qué le garantiza el consenso al runtime: un único historial ordenado y finalidad; mencionar PoW/PoS/BFT solo a nivel conceptual
-
-Diagram idea: varios nodos proponiendo historiales distintos y una flecha de "consenso" seleccionando un único historial final con tilde
-
----
-
-## Aplicación
-
-TODO: la capa que la audiencia ya conoce: contratos (y pallets) viviendo dentro del runtime, usando las garantías de las capas de abajo
-
-Diagram idea: zoom al tope del stack donde varios contratos/pallets chiquitos se apoyan sobre la caja "Runtime"
-
----
-
-## ¿Cómo se cambian las reglas de esta máquina?
-
-TODO: slide puente sin contenido — dejar la pregunta plantada para abrir el Acto 2
-
-Diagram idea: la máquina del stack con un signo de pregunta grande sobre la capa "Runtime" y un engranaje roto
-
----
-
-# Acto 2
-
-## El runtime: por qué separarlo del nodo
-
----
-
-## El problema de ingeniería
-
-TODO: si las reglas viven embebidas en el software del nodo, actualizarlas exige coordinar a miles de operadores: hard forks, clientes desactualizados, riesgo de split de la cadena
-
-Diagram idea: línea de tiempo con una actualización v1→v2 donde la mitad de los nodos actualiza y la otra mitad no, y la cadena se bifurca en dos
-
----
-
-## La solución: nodo vs runtime
-
-TODO: separar el nodo/cliente (networking, consenso, DB) del runtime (la STF, la lógica de la aplicación) como artefactos independientes
-
-Diagram idea: una caja de nodo dividida horizontalmente — abajo "Nodo: networking, consenso, DB", arriba "Runtime: STF / lógica" — con flechas entre ellas etiquetadas "runtime APIs / host functions"
-
----
-
-## La analogía de la consola
-
-TODO: el nodo es la consola, el runtime es el cartucho intercambiable: el mismo hardware corre cualquier juego
-
-Diagram idea: consola etiquetada "nodo" con slot de cartucho; un cartucho "runtime A" siendo cambiado por otro "runtime B"
-
----
-
-## El runtime vive on-chain
-
-TODO: el runtime se guarda como Wasm en el propio estado de la cadena — la cadena transporta sus propias reglas
-
-Diagram idea: cadena de bloques con una celda de storage resaltada etiquetada "Runtime (Wasm)" y una flecha desde esa celda hacia la caja runtime del nodo
-
----
-
-## Forkless upgrades y el nodo "oblivious"
-
-TODO: la gobernanza on-chain actualiza la lógica sin que los operadores toquen nada; el nodo ni siquiera necesita saber qué lógica corre
-
-Diagram idea: línea de tiempo donde el cartucho/runtime se actualiza v1→v2→v3 por votos de gobernanza mientras la consola/nodo de abajo queda intacta
-
----
-
-## Substrate, conceptualmente
-
-TODO: el framework del nodo: networking (libp2p), motores de consenso, base de datos, executor Wasm — todo lo que no es la lógica de la cadena
-
-Diagram idea: la caja "nodo" del stack explotada en sus piezas internas (networking, consenso, DB, executor) con la etiqueta "Substrate"
-
----
-
-## FRAME, conceptualmente
-
-TODO: el runtime se compone de pallets: módulos con storage, calls, events, hooks; el runtime es la suma de sus pallets
-
-Diagram idea: la caja "runtime" como un rompecabezas armado con piezas etiquetadas "Balances", "Staking", "tu pallet"
-
----
-
-## Pallet vs smart contract
-
-TODO: la comparación clave para esta audiencia — qué se puede expresar en cada uno, quién paga por los bugs, cómo se actualiza cada uno, límites de la sandbox del contrato
-
-Diagram idea: tabla de dos columnas "Smart contract" / "Pallet" con filas "qué puede tocar", "cómo se actualiza", "quién gobierna las reglas" y marcas simples
-
----
-
-## ¿Cuándo graduar un contrato a pallet?
-
-TODO: el camino natural: prototipar como contrato, y cuando necesitás más control (lógica de consenso, fees propios, performance) migrar a pallet
-
-Diagram idea: flecha de graduación de izquierda a derecha: "contrato" → "pallet" → con umbrales etiquetados "más control", "más responsabilidad"
-
----
-
-## ¿Y si una sola máquina no alcanza?
-
-TODO: slide puente — una máquina bien diseñada sigue teniendo un techo; abre el Acto 3
-
-Diagram idea: la máquina del stack con un techo físico encima y una flecha de tráfico creciente chocando contra el techo
-
----
-
-# Acto 3
-
-## Escalar: de una cadena a muchas
-
----
-
-## El techo monolítico
-
-TODO: cada nodo re-ejecuta todo; subir el throughput exige más hardware, y más hardware excluye validadores — el trilema como trade-off de ingeniería (throughput / seguridad / descentralización)
-
-Diagram idea: triángulo con vértices "throughput", "seguridad", "descentralización" y un punto adentro mostrando que solo podés acercarte a dos
-
----
-
-## La división modular
-
-TODO: separar la blockchain en capas especializadas: ejecución / settlement / consenso / data availability — cada una escala por su cuenta
-
-Diagram idea: la torre monolítica cortada en 4 capas horizontales (ejecución / settlement / consenso / DA) con flechas mostrándolas como piezas intercambiables
-
----
-
-## Rollups: la respuesta que ya conocen
-
-TODO: ejecución afuera de la L1, settlement y DA prestados de la L1; optimistic vs ZK en una línea cada uno
-
-Diagram idea: bloques de ejecución del rollup arriba, una flecha con el "resumen + prueba" bajando hacia la L1 etiquetada "settlement + DA"
-
----
-
-## El costo de los rollups
-
-TODO: fragmentación de liquidez y componibilidad entre rollups, y los puentes como punto débil de seguridad
-
-Diagram idea: varios rollups como islas sobre la misma L1, con puentes frágiles entre ellos y un candado roto en uno
-
----
-
-## El problema del bootstrap de seguridad
-
-TODO: una cadena nueva tiene market cap chico y token especulativo → es barata de atacar → lanzar una cadena soberana segura es casi imposible al inicio
-
-Diagram idea: una cadena bebé con un escudo diminuto siendo mirada por un atacante grande, al lado de una cadena vieja con escudo enorme
-
----
-
-## Seguridad compartida
-
-TODO: muchas cadenas compartiendo un solo presupuesto económico de seguridad; mencionar que no todas las formas de "seguridad compartida" son equivalentes
-
-Diagram idea: varias cadenas chicas aportando sus escuditos a un escudo gigante compartido que las cubre a todas
-
----
-
-## Cómo lo hace Polkadot
-
-TODO: validadores de la relay chain asignados al azar re-validan los bloques de las parachains; approval checking a alto nivel; un bloque inválido se rechaza y el collator se penaliza
-
-Diagram idea: conjunto central de validadores con flechas hacia bloques de parachains que están re-chequeando, y un bloque inválido marcado con una X roja rechazado
-
----
-
-## Cores
-
-TODO: el core como unidad atómica de ejecución asegurada — el recurso real que Polkadot vende
-
-Diagram idea: la relay chain como una grilla de slots tipo núcleos de CPU, cada uno ejecutando una parachain distinta
-
----
-
-## Rollups vs parachains
-
-TODO: la misma idea modular con distinta historia de seguridad y componibilidad: seguridad prestada de una L1 de propósito general vs seguridad nativa compartida; puentes vs mensajería nativa (XCM)
-
-Diagram idea: dos columnas "Rollup (Ethereum)" / "Parachain (Polkadot)" con filas "de dónde viene la seguridad", "cómo se comunican entre pares", "quién define el entorno de ejecución"
-
----
-
-## ¿Es este modelo el final?
-
-TODO: slide puente — relay chain + parachains funciona, pero es rígido: cadenas enteras por core, cadencia fija; abre el Acto 4
-
-Diagram idea: la grilla de cores con cada parachain encadenada a su slot, y un signo de pregunta: "¿y si solo quiero correr un programa chico?"
-
----
-
-# Acto 4
-
-## La frontera: coretime, PolkaVM, JAM
-
----
-
-## Agile coretime
-
-TODO: el blockspace como producto: comprar cores en bulk o on-demand según necesidad, en lugar de subastas largas; qué es una región de coretime
-
-Diagram idea: la grilla de cores con etiquetas de precio: algunos slots marcados "bulk" y uno marcado "on-demand" con un carrito de compras
-
----
-
-## PolkaVM
-
-TODO: una VM basada en RISC-V con performance casi nativa; reemplaza Wasm/EVM como motor de ejecución de Polkadot; Solidity compila a PVM vía pallet-revive
-
-Diagram idea: gráfico de barras o velocímetro comparando EVM / Wasm / PolkaVM (RISC-V), con PolkaVM cerca de "velocidad nativa"
-
----
-
-## JAM: un computador descentralizado
-
-TODO: JAM generaliza el modelo: de relay chain + parachains a un pool de cores corriendo servicios arbitrarios y permissionless — una cadena es solo un tipo más de servicio
-
-Diagram idea: flecha de transformación — izquierda "relay chain + parachains", derecha "JAM: pool de cores" corriendo servicios heterogéneos (una cadena, un rollup, una app)
-
----
-
-## Qué cambia para quien construye
-
-TODO: el camino se acorta: en lugar de lanzar una cadena, deployás código — contratos hoy, servicios mañana; la escalera de opciones se completa
-
-Diagram idea: camino de izquierda a derecha con tres escalones: "contrato" → "parachain" → "servicio en JAM", cada uno más cerca del core
-
----
-
-# Acto 5
-
-## Demo en vivo
-
----
-
-## Demo A: tour de un runtime
-
-TODO: checklist en pantalla — abrir Polkadot.js Apps sobre Paseo testnet; mostrar la lista de pallets; explorar storage items de un pallet; enviar un extrinsic; leer los eventos emitidos
-
-TODO: preparar red local de backup por si falla la conexión
-
----
-
-## Demo B: coretime y parachains en vivo
-
-TODO: checklist en pantalla — mostrar los cores y su asignación; ver una venta de coretime (Coretime chain o UI tipo RegionX); mostrar una parachain produciendo bloques en tiempo real
-
-TODO: preparar capturas de backup por si falla la conexión
-
----
-
-# Cierre
-
----
-
-## Recap: la escalera
-
-TODO: contrato → pallet → parachain → core: cada nivel te da más control sobre la máquina a cambio de más responsabilidad; cerrar el arco con la pregunta inicial — ahora saben cómo se construye la máquina
-
-Diagram idea: la escalera de 4 escalones (contrato / pallet / parachain / core) con una flecha ascendente etiquetada "más control, más responsabilidad"
+<img style="max-width: 800px; max-height: 550px" src="./img/UTN-lecture/UTN lecture 1.excalidraw.png" alt="UTN lecture diagram 1" />
 
 ---
 
 <!-- .slide: data-background-color="#000000" -->
 
-# Preguntas
+# Capítulo 1
+
+## Blockchain
+
+---
+
+<img style="max-width: 800px; max-height: 550px" src="./img/UTN-lecture/UTN lecture 2.excalidraw.png" alt="UTN lecture diagram 2" />
+
+---
+
+<img style="max-width: 800px; max-height: 550px" src="./img/UTN-lecture/UTN lecture 4.excalidraw.png" alt="UTN lecture diagram 4" />
+
+---
+
+<img style="max-width: 800px; max-height: 550px" src="./img/UTN-lecture/UTN lecture 5.excalidraw.png" alt="UTN lecture diagram 5" />
+
+---
+
+<img style="max-width: 800px; max-height: 550px" src="./img/UTN-lecture/UTN lecture 6.excalidraw.png" alt="UTN lecture diagram 6" />
+
+---
+
+<img style="max-width: 800px; max-height: 550px" src="./img/UTN-lecture/UTN lecture 7.excalidraw.png" alt="UTN lecture diagram 7" />
+
+---
+
+<img style="max-width: 800px; max-height: 550px" src="./img/UTN-lecture/UTN lecture 8.excalidraw.png" alt="UTN lecture diagram 8" />
+
+---
+
+<img style="max-width: 800px; max-height: 550px" src="./img/UTN-lecture/UTN lecture 9.excalidraw.png" alt="UTN lecture diagram 9" />
+
+---
+
+<!-- .slide: data-background-color="#000000" -->
+
+# Capítulo 2
+
+## Generalizar
+
+---
+
+<!-- .slide: data-background-color="#000000" -->
+
+## Ethereum
+
+---
+
+<img style="max-width: 800px; max-height: 550px" src="./img/UTN-lecture/UTN lecture 10.excalidraw.png" alt="UTN lecture diagram 10" />
+
+---
+
+<img style="max-width: 800px; max-height: 550px" src="./img/UTN-lecture/UTN lecture 11.excalidraw.png" alt="UTN lecture diagram 11" />
+
+---
+
+<img style="max-width: 800px; max-height: 550px" src="./img/UTN-lecture/UTN lecture 12.excalidraw.png" alt="UTN lecture diagram 12" />
+
+---
+
+<img style="max-width: 800px; max-height: 550px" src="./img/UTN-lecture/UTN lecture 13.excalidraw.png" alt="UTN lecture diagram 13" />
+
+---
+
+<img style="max-width: 800px; max-height: 550px" src="./img/UTN-lecture/UTN lecture 14.excalidraw.png" alt="UTN lecture diagram 14" />
+
+---
+
+<!-- .slide: data-background-color="#000000" -->
+
+# Capítulo 3
+
+## Modularizar
+
+---
+
+<!-- .slide: data-background-color="#000000" -->
+
+## Substrate
+
+---
+
+<img style="max-width: 800px; max-height: 550px" src="./img/UTN-lecture/UTN lecture 15.excalidraw.png" alt="UTN lecture diagram 15" />
+
+---
+
+<img style="max-width: 800px; max-height: 550px" src="./img/UTN-lecture/UTN lecture 16.excalidraw.png" alt="UTN lecture diagram 16" />
+
+---
+
+<img style="max-width: 800px; max-height: 550px" src="./img/UTN-lecture/UTN lecture 17.excalidraw.png" alt="UTN lecture diagram 17" />
+
+---
+
+<img style="max-width: 800px; max-height: 550px" src="./img/UTN-lecture/UTN lecture 18.excalidraw.png" alt="UTN lecture diagram 18" />
+
+---
+
+<img style="max-width: 800px; max-height: 550px" src="./img/UTN-lecture/UTN lecture 19.excalidraw.png" alt="UTN lecture diagram 19" />
+
+---
+
+<img style="max-width: 1000px; max-height: 700px" src="./img/UTN-lecture/UTN lecture 20.excalidraw.png" alt="UTN lecture diagram 20" />
+
+---
+
+<!-- .slide: data-background-color="#000000" -->
+
+## FRAME
+
+---
+
+<img style="max-width: 800px; max-height: 550px" src="./img/UTN-lecture/UTN lecture 21.excalidraw.png" alt="UTN lecture diagram 21" />
+
+---
+
+<img style="max-width: 800px; max-height: 550px" src="./img/UTN-lecture/UTN lecture 22.excalidraw.png" alt="UTN lecture diagram 22" />
+
+---
+
+<img style="max-width: 800px; max-height: 550px" src="./img/UTN-lecture/UTN lecture 23.excalidraw.png" alt="UTN lecture diagram 23" />
+
+---
+
+<img style="max-width: 800px; max-height: 550px" src="./img/UTN-lecture/UTN lecture 24.excalidraw.png" alt="UTN lecture diagram 24" />
+
+---
+
+<img style="max-width: 800px; max-height: 550px" src="./img/UTN-lecture/UTN lecture 25.excalidraw.png" alt="UTN lecture diagram 25" />
+
+---
+
+<img style="max-width: 800px; max-height: 550px" src="./img/UTN-lecture/UTN lecture 26.excalidraw.png" alt="UTN lecture diagram 26" />
+
+---
+
+<img style="max-width: 800px; max-height: 550px" src="./img/UTN-lecture/UTN lecture 27.excalidraw.png" alt="UTN lecture diagram 27" />
+
+---
+
+<img style="max-width: 800px; max-height: 550px" src="./img/UTN-lecture/UTN lecture 28.excalidraw.png" alt="UTN lecture diagram 28" />
+
+---
+
+<img style="max-width: 800px; max-height: 550px" src="./img/UTN-lecture/UTN lecture 29.excalidraw.png" alt="UTN lecture diagram 29" />
+
+---
+
+<img style="max-width: 800px; max-height: 550px" src="./img/UTN-lecture/UTN lecture 30.excalidraw.png" alt="UTN lecture diagram 30" />
+
+---
+
+<img style="max-width: 800px; max-height: 550px" src="./img/UTN-lecture/UTN lecture 31.excalidraw.png" alt="UTN lecture diagram 31" />
+
+---
+
+<img style="max-width: 800px; max-height: 550px" src="./img/UTN-lecture/UTN lecture 32.excalidraw.png" alt="UTN lecture diagram 32" />
+
+---
+
+<img style="max-width: 800px; max-height: 550px" src="./img/UTN-lecture/UTN lecture 33.excalidraw.png" alt="UTN lecture diagram 33" />
+
+---
+
+<!-- .slide: data-background-color="#000000" -->
+
+## DEMO
+
+---
+
+<!-- .slide: data-background-color="#000000" -->
+
+## ¿Preguntas hasta acá?
+
+---
+
+<!-- .slide: data-background-color="#000000" -->
+
+# Capítulo 4
+
+## Escalar
+
+---
+
+<img style="max-width: 800px; max-height: 550px" src="./img/UTN-lecture/UTN lecture 34.excalidraw.png" alt="UTN lecture diagram 34" />
+
+---
+
+<img style="max-width: 800px; max-height: 550px" src="./img/UTN-lecture/UTN lecture 35.excalidraw.png" alt="UTN lecture diagram 35" />
+
+---
+
+<img style="max-width: 800px; max-height: 550px" src="./img/UTN-lecture/UTN lecture 36.excalidraw.png" alt="UTN lecture diagram 36" />
+
+---
+
+<img style="max-width: 800px; max-height: 550px" src="./img/UTN-lecture/UTN lecture 37.excalidraw.png" alt="UTN lecture diagram 37" />
+
+---
+
+<img style="max-width: 800px; max-height: 550px" src="./img/UTN-lecture/UTN lecture 38.excalidraw.png" alt="UTN lecture diagram 38" />
+
+---
+
+<img style="max-width: 800px; max-height: 550px" src="./img/UTN-lecture/panopticon.webp" alt="Panopticon" />
+
+---
+
+<!-- .slide: data-background-color="#000000" -->
+
+## ELVES
+
+---
+
+<img style="max-width: 800px; max-height: 550px" src="./img/UTN-lecture/UTN lecture 39.excalidraw.png" alt="UTN lecture diagram 39" />
+
+---
+
+<img style="max-width: 800px; max-height: 550px" src="./img/UTN-lecture/UTN lecture 40.excalidraw.png" alt="UTN lecture diagram 40" />
+
+---
+
+<img style="max-width: 800px; max-height: 550px" src="./img/UTN-lecture/UTN lecture 41.excalidraw.png" alt="UTN lecture diagram 41" />
+
+---
+
+<img style="max-width: 800px; max-height: 550px" src="./img/UTN-lecture/UTN lecture 42.excalidraw.png" alt="UTN lecture diagram 42" />
+
+---
+
+<img style="max-width: 800px; max-height: 550px" src="./img/UTN-lecture/UTN lecture 43.excalidraw.png" alt="UTN lecture diagram 43" />
+
+---
+
+<img style="max-width: 800px; max-height: 550px" src="./img/UTN-lecture/UTN lecture - 1.excalidraw.png" alt="UTN lecture diagram - 1" />
+
+---
+
+<!-- .slide: data-background-color="#000000" -->
+
+## 1. Collation
+
+---
+
+<img style="max-width: 800px; max-height: 550px" src="./img/UTN-lecture/UTN lecture 44.excalidraw.png" alt="UTN lecture diagram 44" />
+
+---
+
+<img style="max-width: 800px; max-height: 550px" src="./img/UTN-lecture/UTN lecture 45.excalidraw.png" alt="UTN lecture diagram 45" />
+
+---
+
+<img style="max-width: 800px; max-height: 550px" src="./img/UTN-lecture/UTN lecture 46.excalidraw.png" alt="UTN lecture diagram 46" />
+
+---
+
+<img style="max-width: 800px; max-height: 550px" src="./img/UTN-lecture/UTN lecture 47.excalidraw.png" alt="UTN lecture diagram 47" />
+
+---
+
+<img style="max-width: 800px; max-height: 550px" src="./img/UTN-lecture/UTN lecture 48.excalidraw.png" alt="UTN lecture diagram 48" />
+
+---
+
+<img style="max-width: 800px; max-height: 550px" src="./img/UTN-lecture/UTN lecture 49.excalidraw.png" alt="UTN lecture diagram 49" />
+
+---
+
+<!-- .slide: data-background-color="#000000" -->
+
+## 2. Backing
+
+---
+
+<img style="max-width: 800px; max-height: 550px" src="./img/UTN-lecture/UTN lecture 50.excalidraw.png" alt="UTN lecture diagram 50" />
+
+---
+
+<img style="max-width: 800px; max-height: 550px" src="./img/UTN-lecture/UTN lecture 51.excalidraw.png" alt="UTN lecture diagram 51" />
+
+---
+
+<!-- .slide: data-background-color="#000000" -->
+
+## 3. Data availability
+
+---
+
+<img style="max-width: 800px; max-height: 550px" src="./img/UTN-lecture/UTN lecture 52.excalidraw.png" alt="UTN lecture diagram 52" />
+
+---
+
+<!-- .slide: data-background-color="#000000" -->
+
+## 4. Approval checking
+
+---
+
+<img style="max-width: 800px; max-height: 550px" src="./img/UTN-lecture/UTN lecture 53.excalidraw.png" alt="UTN lecture diagram 53" />
+
+---
+
+<img style="max-width: 800px; max-height: 550px" src="./img/UTN-lecture/UTN lecture 54.excalidraw.png" alt="UTN lecture diagram 54" />
+
+---
+
+<img style="max-width: 800px; max-height: 550px" src="./img/UTN-lecture/UTN lecture 55.excalidraw.png" alt="UTN lecture diagram 55" />
+
+---
+
+<!-- .slide: data-background-color="#000000" -->
+
+## 5. Disputes
+
+---
+
+<img style="max-width: 800px; max-height: 550px" src="./img/UTN-lecture/UTN lecture 56.excalidraw.png" alt="UTN lecture diagram 56" />
+
+---
+
+<img style="max-width: 800px; max-height: 550px" src="./img/UTN-lecture/UTN lecture 57.excalidraw.png" alt="UTN lecture diagram 57" />
+
+---
+
+<!-- .slide: data-background-color="#000000" -->
+
+## DEMO
+
+---
+
+<!-- .slide: data-background-color="#000000" -->
+
+## ¿Preguntas hasta acá?
+
+---
+
+<!-- .slide: data-background-color="#000000" -->
+
+# Capítulo 5
+
+## Abstraer
+
+---
+
+<!-- .slide: data-background-color="#000000" -->
+
+## JAM
+
+---
+
+<div style="display: flex; justify-content: center; align-items: center; gap: 40px;">
+  <img style="height: 220px; width: auto" src="./img/UTN-lecture/wasm-logo.png" alt="WASM logo" />
+  <span style="font-size: 80px">→</span>
+  <img style="height: 220px; width: auto" src="./img/UTN-lecture/risc-v-logo.png" alt="Risc-V logo" />
+</div>
+
+---
+
+<img style="max-width: 800px; max-height: 550px" src="./img/UTN-lecture/UTN lecture 58.excalidraw.png" alt="UTN lecture diagram 58" />
+
+---
+
+<img style="max-width: 800px; max-height: 550px" src="./img/UTN-lecture/UTN lecture 59.excalidraw.png" alt="UTN lecture diagram 59" />
+
+---
+
+<img style="max-width: 800px; max-height: 550px" src="./img/UTN-lecture/UTN lecture 60.excalidraw.png" alt="UTN lecture diagram 60" />
+
+---
+
+<img style="max-width: 800px; max-height: 550px" src="./img/UTN-lecture/UTN lecture 61.excalidraw.png" alt="UTN lecture diagram 61" />
+
+---
+
+<img style="max-width: 800px; max-height: 550px" src="./img/UTN-lecture/UTN lecture 62.excalidraw.png" alt="UTN lecture diagram 62" />
+
+---
+
+<img style="max-width: 800px; max-height: 550px" src="./img/UTN-lecture/jam-doom-2.png" alt="UTN lecture diagram 62" />
+
+https://www.youtube.com/watch?v=hJcw5FMSjQs
+
+---
+
+<img style="max-width: 800px; max-height: 550px" src="./img/UTN-lecture/jam-doom.png" alt="UTN lecture diagram 62" />
+
+---
+
+<img style="max-width: 800px; max-height: 550px" src="./img/UTN-lecture/UTN lecture 63.excalidraw.png" alt="UTN lecture diagram 63" />
+
+---
+
+<img style="max-width: 800px; max-height: 550px" src="./img/UTN-lecture/UTN lecture 64.excalidraw.png" alt="UTN lecture diagram 64" />
+
+---
+
+<img style="max-width: 800px; max-height: 550px" src="./img/UTN-lecture/UTN lecture 65.excalidraw.png" alt="UTN lecture diagram 65" />
+
+---
+
+<img style="max-width: 800px; max-height: 550px" src="./img/UTN-lecture/UTN lecture 66.excalidraw.png" alt="UTN lecture diagram 66" />
+
+---
+
+<img style="max-width: 800px; max-height: 550px" src="./img/UTN-lecture/UTN lecture 67.excalidraw.png" alt="UTN lecture diagram 67" />
+
+---
+
+<img style="max-width: 800px; max-height: 550px" src="./img/UTN-lecture/UTN lecture 68.excalidraw.png" alt="UTN lecture diagram 68" />
+
+---
+
+<!-- .slide: data-background-color="#000000" -->
+
+## ¿Preguntas?
+
+---
+
+<!-- .slide: data-background-color="#000000" -->
+
+## Gracias

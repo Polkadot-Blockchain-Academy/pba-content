@@ -11,6 +11,12 @@
 	color: var(--r-color-controls);
 }
 
+/* keep UI chrome readable on dark slides (title slides, section headers) */
+.reveal.has-dark-background .controls,
+.reveal:has(.slides section.present[data-background-image]) .controls {
+	color: #fff;
+}
+
 /*********************************************
      * PROGRESS BAR
      *********************************************/
@@ -18,6 +24,25 @@
 	background: rgba(0, 0, 0, 0.2);
 	color: var(--r-color-controls);
 	height: 0.15em;
+}
+
+.reveal.has-dark-background .progress,
+.reveal:has(.slides section.present[data-background-image]) .progress {
+	color: #fff;
+}
+
+/*********************************************
+     * SLIDE NUMBER
+     *********************************************/
+.reveal .slide-number {
+	color: #444444;
+	background: rgba(0, 0, 0, 0.1);
+}
+
+.reveal.has-dark-background .slide-number,
+.reveal:has(.slides section.present[data-background-image]) .slide-number {
+	color: #fff;
+	background: rgba(255, 255, 255, 0.15);
 }
 
 /*********************************************
@@ -154,13 +179,13 @@
 :root {
 	--r-main-font-size: 35px;
 	--r-main-font: "Work Sans";
-	--r-main-color: #fff;
-	--r-background-color: #000000;
+	--r-main-color: #1a1a1a;
+	--r-background-color: #ffffff;
 	--r-code-background-color: #1a1a1a;
 	--r-block-margin: 0em 30px 15px 30px;
 	--r-heading-margin: 0em 0em 20px 0em;
 	--r-heading-font: "Unbounded";
-	--r-heading-color: #FFFFFF;
+	--r-heading-color: #1a1a1a;
 	--r-heading-line-height: 1.5em;
 	--r-heading-letter-spacing: 0.02em;
 	--r-heading-text-transform: none;
@@ -174,17 +199,17 @@
 	--r-code-font: monospace;
 	/* custom PBA var */
 	--r-code-font-size: 0.75em;
-	--r-link-color: #ccc;
-	--r-link-color-decoration: #FFFFFF;
-	--r-color-controls: #FFFFFF;
+	--r-link-color: #552BBF;
+	--r-link-color-decoration: #552BBF;
+	--r-color-controls: #444444;
 	--r-link-color-dark: #;
-	--r-link-color-hover: #cccccc;
-	--r-selection-background-color: #333333;
-	--r-selection-color: #fff;
+	--r-link-color-hover: #3d1f8a;
+	--r-selection-background-color: #e0d4f5;
+	--r-selection-color: #1a1a1a;
 	--r-padding: 24px;
 
 	/* POLKADOT MAIN COLORS */
-	--r-hub-cyan: #888888;
+	--r-hub-cyan: #555555;
 	--r-hub-purple: #552BBF;
 	--r-hub-pink: #E6007A;
 	--r-hub-lime: #D3FF33;
@@ -209,19 +234,39 @@ html {
 }
 
 .reveal-viewport {
-	background: #000;
+	background: #fff;
 	background-color: var(--r-background-color);
 }
 
-section.has-light-background,
-section.has-light-background p,
-section.has-light-background h1,
-section.has-light-background h2,
-section.has-light-background h3,
-section.has-light-background h4,
-section.has-light-background h5,
-section.has-light-background h6 {
-	color: #222;
+/*
+ * Dark slides keep white text:
+ * - title slides with the noise background image
+ * - section headers / dividers (reveal.js adds .has-dark-background
+ *   to slides with a dark data-background-color)
+ */
+.reveal .slides section.has-dark-background,
+.reveal .slides section[data-background-image],
+.reveal .slides section.has-dark-background p,
+.reveal .slides section[data-background-image] p,
+.reveal .slides section.has-dark-background h1,
+.reveal .slides section[data-background-image] h1,
+.reveal .slides section.has-dark-background h2,
+.reveal .slides section[data-background-image] h2,
+.reveal .slides section.has-dark-background h3,
+.reveal .slides section[data-background-image] h3,
+.reveal .slides section.has-dark-background h4,
+.reveal .slides section[data-background-image] h4,
+.reveal .slides section.has-dark-background h5,
+.reveal .slides section[data-background-image] h5,
+.reveal .slides section.has-dark-background h6,
+.reveal .slides section[data-background-image] h6 {
+	color: #fff;
+}
+
+.reveal .slides section.has-dark-background a,
+.reveal .slides section[data-background-image] a {
+	color: #ccc;
+	text-decoration-color: #fff;
 }
 
 .reveal {
@@ -541,9 +586,14 @@ pba-flex[right] {
 	display: inline-block;
 	padding: 0.7em;
 	font-style: italic;
-	background: rgba(255, 255, 255, 0.1);
+	background: rgba(0, 0, 0, 0.06);
 	border-radius: 0.6em;
 	margin: var(--r-block-margin);
+}
+
+.reveal .slides section.has-dark-background blockquote,
+.reveal .slides section[data-background-image] blockquote {
+	background: rgba(255, 255, 255, 0.1);
 }
 
 .reveal blockquote * {
@@ -570,6 +620,7 @@ pba-flex[right] {
 	text-transform: none;
 	tab-size: 2;
 	background-color: var(--r-code-background-color);
+	color: #f3f3f3;
 }
 
 .reveal pre code {
@@ -680,4 +731,27 @@ a {
 .reveal a:hover .r-frame {
 	border-color: var(--r-link-color);
 	box-shadow: 0 0 20px rgba(0, 0, 0, 0.55);
+}
+
+/*********************************************
+	 * FOOTER LOGO
+	 * Two logo lockups are stacked in the slide
+	 * template footer: the black one shows on the
+	 * default (light) slides, the white one shows
+	 * whenever the current slide has a dark
+	 * background (section headers) or the noise
+	 * background image (title slides).
+	 *********************************************/
+footer .pba-logo--dark {
+	display: none;
+}
+
+body:has(.reveal.has-dark-background) footer .pba-logo--dark,
+body:has(.reveal .slides section.present[data-background-image]) footer .pba-logo--dark {
+	display: inline;
+}
+
+body:has(.reveal.has-dark-background) footer .pba-logo--light,
+body:has(.reveal .slides section.present[data-background-image]) footer .pba-logo--light {
+	display: none;
 }

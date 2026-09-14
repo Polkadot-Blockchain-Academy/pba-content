@@ -84,7 +84,7 @@
 
 .storage-layer-table .ends {
 	background-color: transparent;
-	color: white;
+	color: inherit;
 }
 
 th {

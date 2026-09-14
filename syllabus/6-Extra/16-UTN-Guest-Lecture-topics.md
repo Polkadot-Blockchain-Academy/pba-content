@@ -8,75 +8,91 @@
 
 ## Estructura narrativa
 
-Hilo conductor: _un smart contract es un huésped en la máquina de otro — hoy vemos cómo se construye la máquina_. Cada acto abre con un problema técnico concreto y cierra con la pregunta que abre el siguiente.
+Una sola historia con cuatro movimientos — **generalizar → modularizar → escalar → abstraer** — contada sobre la lente de las capas: una base de **datos (DB, transversal a todo)** con **networking / consenso / runtime / aplicación** arriba. **La meta de la charla: que entiendan qué es un pallet y en qué se diferencia de un smart contract**, anclado en la analogía kernel space / user space (precompiles = syscalls).
 
-## Acto 0 — Intro (~5 min)
+Decisiones de diseño pedagógico:
 
-| #   | Tema                                                            | Material de origen en este repo |
-| --- | --------------------------------------------------------------- | ------------------------------- |
-| 1   | Título                                                          | —                               |
-| 2   | El punto de partida: el contrato como huésped; agenda por actos | —                               |
+- La **modularización se enseña antes que el escalado** (orden didáctico), con honestidad histórica: la separación nodo/runtime se imaginó para validar shards con ELVES, y los forkless upgrades vinieron de yapa. El círculo cierra en el capítulo 4.
+- Rollups / Solana / Cosmos son un **interludio breve** cuando aparece el problema de escala (capítulo 2), con un contraste de una línea cada uno en el capítulo 4 — no un capítulo propio.
+- La capa de **DB/estado merklizado** se introduce en Bitcoin y paga dos veces: light clients/SPV ahí mismo, y el PoV (proof of validity) en el capítulo 4 — es la segunda pieza que hace posible ELVES.
+- La distinción kernel/user space es **universal** (Ethereum: la EVM es el kernel y los precompiles son syscalls literales); en Polkadot el kernel se compone de pallets y cambia por gobernanza que se auto-ejecuta — te ahorrás el hard fork, no la gobernanza. La graduación máxima: parachain propia = el runtime es tuyo, sin sandbox.
 
-## Acto 1 — Anatomía de una blockchain (~25 min)
+## Intro (~10 min)
 
-| #   | Tema                                                    | Material de origen en este repo                                                            |
-| --- | ------------------------------------------------------- | ------------------------------------------------------------------------------------------ |
-| 3   | La máquina de estados: STF, historial verificable       | `syllabus/1-Fundamentals/06-Light-Client-State-Transition-Function-slides.md`              |
-| 4   | Las capas: networking / consenso / runtime / aplicación | `syllabus/3-Substrate/01-Introduction-to-Substrate-slides.md`                              |
-| 5   | Networking: gossip P2P, mempool, propagación            | Mismo archivo                                                                              |
-| 6   | Consenso: orden y finalidad para el runtime             | `previous_syllabus/prev_campuses/3-Blockchain/8-Consensus_Finality-slides.md` (conceptual) |
-| 7   | Aplicación: contratos y pallets dentro del runtime      | — (ancla con lo que ya conocen)                                                            |
-| 8   | Puente: ¿cómo se cambian las reglas?                    | —                                                                                          |
+| #   | Tema                                                                                  | Material de origen en este repo                               |
+| --- | ------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
+| 1   | Título                                                                                | —                                                             |
+| 2   | El punto de partida: el contrato como huésped; la meta: entender pallets vs contratos | —                                                             |
+| 3   | La lente: DB transversal + 4 capas + los 4 movimientos                                | `syllabus/3-Substrate/01-Introduction-to-Substrate-slides.md` |
 
-## Acto 2 — El runtime: por qué separarlo del nodo (~25 min)
+## Capítulo 1 — Bitcoin: la máquina específica (~10 min)
 
-| #   | Tema                                                             | Material de origen en este repo                                                               |
-| --- | ---------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
-| 9   | El problema: reglas en el software del nodo → hard forks, splits | `syllabus/3-Substrate/03-Wasm-Meta-Protocol-slides.md` ("BUT WAIT A MINUTE")                  |
-| 10  | Nodo vs runtime como artefactos separados                        | `syllabus/1-Fundamentals/06-...State-Transition-Function-slides.md` ("The Client vs Runtime") |
-| 11  | Analogía de la consola y el cartucho                             | Mismo archivo ("Game Console Analogy")                                                        |
-| 12  | El runtime vive on-chain (Wasm)                                  | `syllabus/3-Substrate/03-Wasm-Meta-Protocol-slides.md` (Part 1)                               |
-| 13  | Forkless upgrades, nodo "oblivious"                              | Mismo archivo ("Radical Upgradeability", "Oblivious Node")                                    |
-| 14  | Substrate conceptualmente                                        | `syllabus/3-Substrate/01-Introduction-to-Substrate-slides.md`                                 |
-| 15  | FRAME conceptualmente: pallets                                   | `syllabus/4-FRAME/01-Introduction-to-FRAME-slides.md`                                         |
-| 16  | Pallet vs smart contract — slide clave                           | Mismo archivo ("Pallet vs. Smart Contract", "Smart Contract vs. Pallet")                      |
-| 17  | Cuándo graduar un contrato a pallet                              | Mismo archivo ("When to Reach for a Pallet", "Scaling a Successful Contract")                 |
-| 18  | Puente: ¿y si una sola máquina no alcanza?                       | —                                                                                             |
+| #   | Tema                                                                                                | Material de origen en este repo                                                                                                                                        |
+| --- | --------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 4   | Bitcoin como máquina de estados (UTXOs, STF mínima)                                                 | `syllabus/1-Fundamentals/01-What-is-a-Blockchain-slides.md` ("Bitcoin As an Authority"); `previous_syllabus/prev_campuses/3-Blockchain/4-Accounts_and_UTXOs-slides.md` |
+| 5   | ¿Dónde vive todo esto? DB + historial merklizado (Bitcoin NO merkliza el estado); SPV/light clients | `syllabus/3-Substrate/04-Merklized-Storage-slides.md`; `syllabus/1-Fundamentals/03-Light-Client-Verifiable-Storage-Proofs-slides.md`                                   |
+| 6   | Las capas en Bitcoin (DB / P2P / PoW / Script / transferencias)                                     | `previous_syllabus/prev_campuses/3-Blockchain/2-P2P_Networks-slides.md`, `5-Consensus-Authoring-slides.md`                                                             |
+| 7   | Puente: ¿y si la STF ejecutara cualquier programa?                                                  | —                                                                                                                                                                      |
 
-## Acto 3 — Escalar: de una cadena a muchas (~25 min)
+## Capítulo 2 — Generalizar la computación: Ethereum (~15 min)
 
-| #   | Tema                                                        | Material de origen en este repo                                                                                                                                            |
-| --- | ----------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 19  | El techo monolítico / trilema                               | `syllabus/2-Polkadot/01-Introduction-to-Polkadot-slides.md` ("Blockchain Landscape"); `syllabus/2-Polkadot/06-Execution-Sharding-slides.md` ("Scalability of Blockchains") |
-| 20  | La división modular: ejecución / settlement / consenso / DA | `previous_syllabus/prev_campuses/7-Polkadot/Blockchain_Scaling_Part_2/Blockchain_Scaling-slides.md`                                                                        |
-| 21  | Rollups: ejecución afuera, settlement + DA prestados        | Mismo archivo                                                                                                                                                              |
-| 22  | El costo: fragmentación, puentes débiles                    | —                                                                                                                                                                          |
-| 23  | El bootstrap de seguridad                                   | `previous_syllabus/prev_campuses/7-Polkadot/2-shared-security-slides.md` ("The Bootstrapping Problem")                                                                     |
-| 24  | Seguridad compartida                                        | Mismo archivo ("Shared Security")                                                                                                                                          |
-| 25  | Cómo lo hace Polkadot: re-validación                        | Mismo archivo ("Deep Dive Into Polkadot Shared Security"); `syllabus/2-Polkadot/06-Execution-Sharding-slides.md` (approval checking, alto nivel)                           |
-| 26  | Cores: la unidad de ejecución asegurada                     | `syllabus/2-Polkadot/08-Agile-Coretime-slides.md`                                                                                                                          |
-| 27  | Rollups vs parachains                                       | Síntesis de los anteriores                                                                                                                                                 |
-| 28  | Puente: ¿es este modelo el final?                           | —                                                                                                                                                                          |
+| #   | Tema                                                                                                           | Material de origen en este repo                                                                                                                              |
+| --- | -------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| 8   | La EVM: la STF programable; plantar kernel/user space universal (precompiles de Ethereum = syscalls literales) | `syllabus/2-Polkadot/01-Introduction-to-Polkadot-slides.md` ("General Monolithic")                                                                           |
+| 9   | También se generalizan los datos: Ethereum merkliza el ESTADO (state root) → pruebas de storage; hook al cap 4 | `syllabus/3-Substrate/04-Merklized-Storage-slides.md`                                                                                                        |
+| 10  | Lo que NO cambió: dos problemas (reglas en el cliente / todos re-ejecutan)                                     | `syllabus/3-Substrate/03-Wasm-Meta-Protocol-slides.md` ("BUT WAIT A MINUTE")                                                                                 |
+| 11  | Interludio: tres respuestas rápidas al problema de escala (rollups, Solana, Cosmos)                            | `syllabus/2-Polkadot/01-Introduction-to-Polkadot-slides.md` ("Blockchain Landscape"); `previous_syllabus/prev_campuses/7-Polkadot/Blockchain_Scaling_Part_2` |
+| 12  | …y sus issues en una línea cada uno                                                                            | —                                                                                                                                                            |
+| 13  | Puente: Polkadot toma otro camino — abrir la máquina                                                           | —                                                                                                                                                            |
 
-## Acto 4 — La frontera (~15 min)
+## Capítulo 3 — Modularizar la máquina: Substrate/FRAME (~30 min, el centro)
 
-| #   | Tema                                               | Material de origen en este repo                                                                                                                                   |
-| --- | -------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 29  | Agile coretime: blockspace como producto           | `syllabus/2-Polkadot/08-Agile-Coretime-slides.md`                                                                                                                 |
-| 30  | PolkaVM: RISC-V, velocidad casi nativa             | `previous_syllabus/prev_campuses/7-Polkadot/2-shared-security-slides.md` ("PolkaVM"); `syllabus/1-Fundamentals/07-The-Polkadot-Stack-slides.md` ("pallet-revive") |
-| 31  | JAM: computador descentralizado, cores + servicios | `previous_syllabus/bali - 2025/6-JAM/13-demystifying-jam-slides.md`; `17-JAM-CoreVM-slides.md`                                                                    |
-| 32  | Qué cambia para quien construye                    | `syllabus/1-Fundamentals/07-The-Polkadot-Stack-slides.md`                                                                                                         |
+| #   | Tema                                                                                                                                                                              | Material de origen en este repo                                                                                                 |
+| --- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| 14  | Separar nodo y runtime; consola y cartucho                                                                                                                                        | `syllabus/1-Fundamentals/06-Light-Client-State-Transition-Function-slides.md` ("The Client vs Runtime", "Game Console Analogy") |
+| 15  | El runtime vive on-chain (Wasm)                                                                                                                                                   | `syllabus/3-Substrate/03-Wasm-Meta-Protocol-slides.md` (Part 1)                                                                 |
+| 16  | Lo que habilita: forkless upgrades + validadores que ejecutan cualquier STF                                                                                                       | Mismo archivo ("Radical Upgradeability", "Oblivious Node")                                                                      |
+| 17  | Dato histórico: se diseñó para ELVES; los upgrades vinieron de yapa                                                                                                               | `previous_syllabus/prev_campuses/7-Polkadot/2-shared-security-slides.md` ("Wasm", "A Polkadot Validator Node")                  |
+| 18  | Substrate: el framework del nodo                                                                                                                                                  | `syllabus/3-Substrate/01-Introduction-to-Substrate-slides.md`                                                                   |
+| 19  | FRAME: el runtime se compone de pallets                                                                                                                                           | `syllabus/4-FRAME/01-Introduction-to-FRAME-slides.md`                                                                           |
+| 20  | Anatomía de un pallet: storage, calls, events, hooks                                                                                                                              | Mismo archivo ("Building Blocks of Pallets")                                                                                    |
+| 21  | La analogía del SO: kernel/user es universal; en Polkadot el kernel se compone de pallets y cambia por gobernanza que se auto-ejecuta — te ahorrás el hard fork, no la gobernanza | Síntesis propia (ancla conceptual de la charla)                                                                                 |
+| 22  | El kernel de Polkadot: Governance, Staking, Assets (fungibles y NFTs), Multisig (espejo de Safe)                                                                                  | `syllabus/1-Fundamentals/07-The-Polkadot-Stack-slides.md` ("Asset Hub"); `syllabus/2-Polkadot/02-Staking-slides.md`             |
+| 23  | Superpoderes del kernel space: transaction extensions (incl. transacciones sponsoreadas), hooks, fees propios, offchain workers                                                   | `syllabus/4-FRAME/14-Transaction-Extensions-slides.md`; `syllabus/4-FRAME/09-Pallet-Hooks-slides.md`                            |
+| 24  | Precompiles = syscalls: contratos llamando pallets                                                                                                                                | `syllabus/1-Fundamentals/07-The-Polkadot-Stack-slides.md` ("pallet-revive"); material de precompiles de pallet-revive           |
+| 25  | **Pallet vs smart contract — la slide central; espejo Safe (contrato) vs pallet Multisig (kernel)**                                                                               | `syllabus/4-FRAME/01-Introduction-to-FRAME-slides.md` ("Pallet vs. Smart Contract", "Smart Contract vs. Pallet")                |
+| 26  | Cuándo graduar un contrato a pallet — y la graduación máxima: parachain propia = el runtime es tuyo, sin sandbox                                                                  | Mismo archivo ("When to Reach for a Pallet", "Scaling a Successful Contract")                                                   |
+| 27  | Puente: una máquina modular sigue siendo UNA máquina                                                                                                                              | —                                                                                                                               |
 
-## Acto 5 — Demo en vivo (~20 min)
+## Capítulo 4 — Escalar: ELVES y seguridad compartida (~20 min)
 
-| #   | Tema                                                      | Material de origen en este repo                                                                            |
-| --- | --------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
-| 33  | Demo A: tour de un runtime (Polkadot.js Apps sobre Paseo) | `syllabus/2-Polkadot/09-Polkadot-SDK-and-Tools-slides.md`; `syllabus/6-Extra/13-playground-demo-slides.md` |
-| 34  | Demo B: cores, venta de coretime, parachain en vivo       | Coretime chain en Polkadot.js Apps o UI tipo RegionX                                                       |
+| #   | Tema                                                                                                         | Material de origen en este repo                                                                                                            |
+| --- | ------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| 28  | Retomar el techo / trilema                                                                                   | `syllabus/2-Polkadot/06-Execution-Sharding-slides.md` ("Scalability of Blockchains")                                                       |
+| 29  | Muchas máquinas en paralelo (parachains)                                                                     | `syllabus/2-Polkadot/04-State-Sharding-slides.md`                                                                                          |
+| 30  | ¿Quién vigila cada shard? + bootstrap de seguridad                                                           | `previous_syllabus/prev_campuses/7-Polkadot/2-shared-security-slides.md` ("The Bootstrapping Problem")                                     |
+| 31  | Cierra el círculo: el runtime portable hace posible validar shards                                           | Mismo archivo ("Wasm", "A Polkadot Validator Node")                                                                                        |
+| 32  | ELVES: asignación aleatoria, backing, approval checking, PoV (callback al estado merklizado de Ethereum), DA | `syllabus/2-Polkadot/06-Execution-Sharding-slides.md` ("ELVES", "Approval Checking"); `syllabus/2-Polkadot/05-Data-Availability-slides.md` |
+| 33  | Lo que compra: seguridad compartida, cores; contraste con rollups/Solana/Cosmos                              | `syllabus/2-Polkadot/08-Agile-Coretime-slides.md`; síntesis del interludio                                                                 |
+
+## Capítulo 5 — La frontera: JAM (~10 min)
+
+| #   | Tema                                         | Material de origen en este repo                                                                                                                           |
+| --- | -------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 34  | Límites del modelo parachain; agile coretime | `syllabus/2-Polkadot/08-Agile-Coretime-slides.md`                                                                                                         |
+| 35  | JAM: cores + servicios; PolkaVM (RISC-V)     | `previous_syllabus/bali - 2025/6-JAM/13-demystifying-jam-slides.md`; `17-JAM-CoreVM-slides.md`; `syllabus/1-Fundamentals/07-The-Polkadot-Stack-slides.md` |
+| 36  | Qué cambia para quien construye              | —                                                                                                                                                         |
+
+## Demo en vivo (~15–20 min, flexible)
+
+| #   | Tema                                                                                            | Material de origen en este repo                                                                                                          |
+| --- | ----------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| 37  | Demo A: tour de un runtime — pallets (Governance, Staking, Assets), storage, extrinsic, eventos | `syllabus/2-Polkadot/09-Polkadot-SDK-and-Tools-slides.md`; `syllabus/6-Extra/13-playground-demo-slides.md`; Polkadot.js Apps sobre Paseo |
+| 38  | Demo B: cores, venta de coretime, parachain en vivo                                             | Coretime chain en Polkadot.js Apps o UI tipo RegionX                                                                                     |
 
 ## Cierre (~5 min)
 
-| #   | Tema                                                    | Material de origen en este repo |
-| --- | ------------------------------------------------------- | ------------------------------- |
-| 35  | Recap: la escalera contrato → pallet → parachain → core | —                               |
-| 36  | Preguntas                                               | —                               |
+| #   | Tema                                              | Material de origen en este repo |
+| --- | ------------------------------------------------- | ------------------------------- |
+| 39  | Recap: los cuatro movimientos + kernel/user space | —                               |
+| 40  | Preguntas                                         | —                               |

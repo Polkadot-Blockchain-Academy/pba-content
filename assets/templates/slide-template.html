@@ -38,7 +38,9 @@
 <body class="site">
   <footer style="position: fixed; top: 1.5%; left: 2%; z-index: 99;">
     <a href="{{{base}}}/index.html">
-      <img style="height: 3vw;" src="{{{base}}}/assets/img/0-Shared/logo/PBA_Logo_white.png"
+      <img class="pba-logo pba-logo--light" style="height: 3vw;" src="{{{base}}}/assets/img/0-Shared/logo/pba-logo-black.svg"
+        alt="PBA Logo">
+      <img class="pba-logo pba-logo--dark" style="height: 3vw;" src="{{{base}}}/assets/img/0-Shared/logo/pba-logo-white.svg"
         alt="PBA Logo">
     </a>
   </footer>
@@ -101,15 +103,15 @@
       },
       chart: {
         defaults: {
-          color: 'lightgray', // color of labels
+          color: '#555555', // color of labels
           scale: {
             beginAtZero: true,
             ticks: { stepSize: 1 },
-            grid: { color: "lightgray" }, // color of grid lines
+            grid: { color: "#cccccc" }, // color of grid lines
           },
         },
-        line: { borderColor: ["#ccc", "#FFFFFF", "#888888"], "borderDash": [[5, 10], [0, 0]] },
-        bar: { backgroundColor: ["#ccc", "#FFFFFF", "#888888"] },
+        line: { borderColor: ["#ccc", "#E6007A", "#555555"], "borderDash": [[5, 10], [0, 0]] },
+        bar: { backgroundColor: ["#ccc", "#E6007A", "#555555"] },
       },
       plugins: [
         RevealMarkdown,
