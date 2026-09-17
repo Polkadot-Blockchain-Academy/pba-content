@@ -20,6 +20,10 @@ Ex alumno de la primera PBA en Cambridge 2022.
 
 <img style="width: 900px; height: auto" src="./img/UTN-lecture/UTN lecture 1.excalidraw.png" alt="UTN lecture diagram 1" />
 
+Notes:
+
+Vamos a empezar desde lo más básico, qué es una blockchain, generalizar, modularizar, escalar y abstraer para obtener arquitecturas cada vez más complejas.
+
 ---
 
 <!-- .slide: data-background-color="#000000" -->
@@ -28,17 +32,81 @@ Ex alumno de la primera PBA en Cambridge 2022.
 
 ## Blockchain
 
+Notes:
+
+Así que empezamos por el comienzo: vamos a repasar qué es una blockchain.
+
 ---v
+
+### Estructura de datos
 
 <img style="max-width: 800px; max-height: 550px" src="./img/UTN-lecture/UTN lecture 2.excalidraw.png" alt="UTN lecture diagram 2" />
 
+Notes:
+
+Una blockchain es una estructura de datos muy simple en la que los bloques tienen una serie de operaciones (o transacciones) y cada bloque referencia al anterior mediante su hash.
+No es una linea recta sino que presenta forks.
+
 ---v
+
+<h3 style="margin-top: 150px; margin-bottom: -225px;">Sistema decentralizado</h3>
+<div style="display: flex; justify-content: center; align-items: center; gap: 40px; transform: scale(50%);">
+  <div style="display: flex; flex-direction: column;">
+    <img style="max-width: 800px; max-height: 550px" src="./img/UTN-lecture/PC.png" alt="UTN lecture diagram 4" />
+    <img style="max-width: 800px; max-height: 550px;" src="./img/UTN-lecture/UTN lecture 2.excalidraw.png" alt="UTN lecture diagram 2" />
+  </div>
+  <span style="font-size: 80px">↔</span>
+  <div style="display: flex; flex-direction: column;">
+    <img style="max-width: 800px; max-height: 550px" src="./img/UTN-lecture/PC.png" alt="UTN lecture diagram 4" />
+    <img style="max-width: 800px; max-height: 550px;" src="./img/UTN-lecture/UTN lecture 2.excalidraw.png" alt="UTN lecture diagram 2" />
+  </div>
+  <span style="font-size: 80px">↔</span>
+  <div style="display: flex; flex-direction: column;">
+    <img style="max-width: 800px; max-height: 550px" src="./img/UTN-lecture/PC.png" alt="UTN lecture diagram 4" />
+    <img style="max-width: 800px; max-height: 550px;" src="./img/UTN-lecture/UTN lecture 2.excalidraw.png" alt="UTN lecture diagram 2" />
+  </div>
+</div>
+
+Notes:
+
+Cuando decimos blockchain usualmente no hablamos solo de la estructura de datos sino de un sistema decentralizado.
+
+---v
+
+### Decentralizado ≠ Distribuído
+
+Notes:
+
+Cuando decimos "sistema decentralizado", no nos referimos únicamente a el aspecto distribuído del mismo.
+En un sistema distribuído, los nodos pueden todos pertenecer a la misma compañía, haciendolo centralizado.
+
+---v
+
+<div style="transform: scale(150%);">
+
+### Capas
 
 <img style="max-width: 800px; max-height: 550px" src="./img/UTN-lecture/UTN lecture 4.excalidraw.png" alt="UTN lecture diagram 4" />
 
+Notes:
+
+Estos sistemas tienen varias capas.
+La capa de red es la más baja que suele ser una librería como libp2p.
+La capa de consenso es como todas las máquinas de la red deciden quien va a producir el siguiente bloque.
+La capa de protocolo es la que define las operaciones que van en los bloques y como se procesan.
+La capa de aplicacion permite a los usuarios interactuar con el sistema.
+
 ---v
 
+### Maquina de estados
+
 <img style="max-width: 800px; max-height: 550px" src="./img/UTN-lecture/UTN lecture 5.excalidraw.png" alt="UTN lecture diagram 5" />
+
+Notes:
+
+Al final del dia, uno de estos sistemas es una maquina de estados replicada en varias maquinas.
+Es un ambiente adversarial, en el que todas las maquinas son propiedad de distintos individuos y empresas.
+En el corazon de todo eso, en la capa de protocolo, esta la funcion de transicion de estado que toma el estado anterior y un bloque y devuelve el nuevo estado.
 
 ---v
 
@@ -46,27 +114,43 @@ Ex alumno de la primera PBA en Cambridge 2022.
 
 ## Bitcoin
 
+Notes:
+
+Vamos a empezar hablando de Bitcoin dado que es la blockchain mas simple.
+
 ---v
 
+### Función de transición de estado
+
 <img style="max-width: 800px; max-height: 550px" src="./img/UTN-lecture/UTN lecture 6.excalidraw.png" alt="UTN lecture diagram 6" />
+
+Notes:
+
+La funcion de transicion de estado de Bitcoin es simplemente hacer transferencias de UTXOs.
 
 ---v
 
 <img style="max-width: 800px; max-height: 550px" src="./img/UTN-lecture/UTN lecture 7.excalidraw.png" alt="UTN lecture diagram 7" />
 
+Notes:
+
+El bloque, de manera simplificada, tiene las transferencias y el header la raiz del merkle tree de todas las transacciones del bloque.
+
 ---v
 
 <img style="max-width: 800px; max-height: 550px" src="./img/UTN-lecture/UTN lecture 8.excalidraw.png" alt="UTN lecture diagram 8" />
 
----v
+Notes:
 
-<!-- .slide: data-background-color="#000000" -->
-
-## ¿Preguntas hasta acá?
+Estas son las implementaciones de cada capa en Bitcoin.
 
 ---v
 
 <img style="max-width: 800px; max-height: 550px" src="./img/UTN-lecture/UTN lecture 9.excalidraw.png" alt="UTN lecture diagram 9" />
+
+Notes:
+
+Podemos permitir que los usuarios programen esta maquina decentralizada?
 
 ---
 
@@ -81,6 +165,10 @@ Ex alumno de la primera PBA en Cambridge 2022.
 <!-- .slide: data-background-color="#000000" -->
 
 ## Ethereum
+
+Notes:
+
+Vamos a hablar de Ethereum, EVM y Smart Contracts, que generalizan la STF y la hacen mucho mas util.
 
 ---v
 
@@ -101,12 +189,6 @@ Ex alumno de la primera PBA en Cambridge 2022.
 ---v
 
 <img style="max-width: 800px; max-height: 550px" src="./img/UTN-lecture/UTN lecture 14.excalidraw.png" alt="UTN lecture diagram 14" />
-
----v
-
-<!-- .slide: data-background-color="#000000" -->
-
-## ¿Preguntas hasta acá?
 
 ---
 
@@ -213,12 +295,6 @@ Ex alumno de la primera PBA en Cambridge 2022.
 <!-- .slide: data-background-color="#000000" -->
 
 ## DEMO
-
----v
-
-<!-- .slide: data-background-color="#000000" -->
-
-## ¿Preguntas hasta acá?
 
 ---
 
@@ -384,12 +460,6 @@ Ex alumno de la primera PBA en Cambridge 2022.
 
 ## DEMO
 
----v
-
-<!-- .slide: data-background-color="#000000" -->
-
-## ¿Preguntas hasta acá?
-
 ---
 
 <!-- .slide: data-background-color="#000000" -->
@@ -406,7 +476,11 @@ Ex alumno de la primera PBA en Cambridge 2022.
 
 ---v
 
-<div style="display: flex; justify-content: center; align-items: center; gap: 40px;">
+<img style="max-width: 800px; max-height: 550px" src="./img/UTN-lecture/jam-logo.png" alt="UTN lecture diagram 58" />
+
+---v
+
+<div style="display: flex; justify-content: center; align-items: center; gap: 40px; margin: 300px;">
   <img style="height: 220px; width: auto" src="./img/UTN-lecture/wasm-logo.png" alt="WASM logo" />
   <span style="font-size: 80px">→</span>
   <img style="height: 220px; width: auto" src="./img/UTN-lecture/risc-v-logo.png" alt="Risc-V logo" />
